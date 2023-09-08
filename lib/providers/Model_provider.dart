@@ -1,0 +1,17 @@
+import '../models copy/model.dart';
+import '../providers/base_provider.dart';
+
+class ModelProvider extends BaseProvider {
+  Model _model = Model();
+  Model get model => _model;
+
+  void setTrue_PasswordVisible() {
+    _model.passwordVisibility = true;
+    notifyListeners();
+  }
+
+  void setFalse_PasswordVisible() {
+    _model.passwordVisibility = false;
+    notifyListeners();
+  }
+}
