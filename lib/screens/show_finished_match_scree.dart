@@ -1,3 +1,5 @@
+import 'package:soccer_app_frontend/models/images_url.dart';
+
 import '/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +68,87 @@ class _ShowFinishedMatchScreenState extends State<ShowFinishedMatchScreen>
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
         elevation: 0,
+        actions: [
+          AuthServer.userData == 'admin'
+              ? IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Row(
+                          children: [
+                            Text(
+                              'Admin things',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(
+                              Icons.admin_panel_settings,
+                              color: Colors.amber,
+                            )
+                          ],
+                        ),
+                        content: const Text(
+                            'Are you sure you want to delete this match ???'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Provider.of<AuthServer>(context, listen: false)
+                                  .deleteMatch(
+                                id: viewMatchInfo['id'].toString(),
+                              );
+                              Navigator.of(context).pop();
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Center(
+                                      child: Icon(
+                                    Icons.info,
+                                    color: Colors.amber,
+                                    size: 45,
+                                  )),
+                                  content: Text(AuthServer.message),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Cancle'))
+                                  ],
+                                ),
+                              );
+                            },
+                            child: const Text('Yes'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text('Cancle'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.highlight_remove_outlined,
+                    color: Colors.white,
+                  ),
+                )
+              : const SizedBox(
+                  height: 0,
+                ),
+        ],
       ),
       body: _isLoading
           ? const Center(
@@ -115,7 +197,7 @@ class _ShowFinishedMatchScreenState extends State<ShowFinishedMatchScreen>
                               children: <Widget>[
                                 Image(
                                   image: NetworkImage(
-                                    'https://bdh.point-dev.nl/${viewMatchInfo['firstTeam']['logo']}',
+                                    '${imagesUrl.url}/${viewMatchInfo['firstTeam']['logo']}',
                                   ),
                                   height: mediaQuery.width / 6,
                                   fit: BoxFit.contain,
@@ -196,7 +278,7 @@ class _ShowFinishedMatchScreenState extends State<ShowFinishedMatchScreen>
                               children: <Widget>[
                                 Image(
                                   image: NetworkImage(
-                                    'https://bdh.point-dev.nl/${viewMatchInfo['secondTeam']['logo']}',
+                                    '${imagesUrl.url}/${viewMatchInfo['secondTeam']['logo']}',
                                   ),
                                   height: mediaQuery.width / 6,
                                   fit: BoxFit.contain,
@@ -960,7 +1042,7 @@ class SlidesForTabs extends StatelessWidget {
                             children: [
                               Image(
                                 image: NetworkImage(
-                                  'https://bdh.point-dev.nl/${viewMatchInfo['firstTeam']['logo']}',
+                                  '${imagesUrl.url}/${viewMatchInfo['firstTeam']['logo']}',
                                 ),
                                 height: mediaQuery.width / 11,
                                 fit: BoxFit.contain,
@@ -1080,7 +1162,7 @@ class SlidesForTabs extends StatelessWidget {
                             children: [
                               Image(
                                 image: NetworkImage(
-                                  'https://bdh.point-dev.nl/${viewMatchInfo['secondTeam']['logo']}',
+                                  '${imagesUrl.url}/${viewMatchInfo['secondTeam']['logo']}',
                                 ),
                                 height: mediaQuery.width / 11,
                                 fit: BoxFit.contain,

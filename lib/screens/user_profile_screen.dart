@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:soccer_app_frontend/models/images_url.dart';
 
 import '../screens/team_profile_screen.dart';
 import '../server/auth_server.dart';
@@ -244,7 +245,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                     child: Image(
                                       // height: mediaQuery.height / 30,
                                       image: NetworkImage(
-                                        'https://bdh.point-dev.nl/${userData.team['logo']}',
+                                        '${imagesUrl.url}/${userData.team['logo']}',
                                       ),
                                       fit: BoxFit.contain,
                                       alignment: Alignment.center,

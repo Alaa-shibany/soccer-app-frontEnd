@@ -1,3 +1,5 @@
+import 'package:soccer_app_frontend/models/images_url.dart';
+
 import '/styles/app_colors.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
@@ -497,7 +499,7 @@ class _adminCreateMatchScreenState extends State<adminCreateMatchScreen> {
                   )
                 : Image(
                     image: NetworkImage(
-                      'https://bdh.point-dev.nl/${item['logo']}',
+                      '${imagesUrl.url}/${item['logo']}',
                     ),
                     height: 25,
                   ),

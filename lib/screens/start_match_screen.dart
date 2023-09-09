@@ -1,3 +1,5 @@
+import 'package:soccer_app_frontend/models/images_url.dart';
+
 import '/models/map_player_result.dart';
 import '/screens/all_matches_screen.dart';
 import '/server/auth_server.dart';
@@ -219,7 +221,7 @@ class _StartMatchScreenState extends State<StartMatchScreen>
                                             children: [
                                               Image(
                                                 image: NetworkImage(
-                                                  'https://bdh.point-dev.nl/${mathcInfoForAdmin['firstTeam']['logo']}',
+                                                  '${imagesUrl.url}/${mathcInfoForAdmin['firstTeam']['logo']}',
                                                 ),
                                                 height: mediaQuery.width / 9,
                                                 fit: BoxFit.contain,
@@ -492,7 +494,7 @@ class _StartMatchScreenState extends State<StartMatchScreen>
                                       children: [
                                         Image(
                                           image: NetworkImage(
-                                            'https://bdh.point-dev.nl/${mathcInfoForAdmin['firstTeam']['logo']}',
+                                            '${imagesUrl.url}/${mathcInfoForAdmin['firstTeam']['logo']}',
                                           ),
                                           height: mediaQuery.width / 9,
                                           fit: BoxFit.contain,
@@ -556,7 +558,7 @@ class _StartMatchScreenState extends State<StartMatchScreen>
                                             children: [
                                               Image(
                                                 image: NetworkImage(
-                                                  'https://bdh.point-dev.nl/${mathcInfoForAdmin['secondTeam']['logo']}',
+                                                  '${imagesUrl.url}/${mathcInfoForAdmin['secondTeam']['logo']}',
                                                 ),
                                                 height: mediaQuery.width / 9,
                                                 fit: BoxFit.contain,
@@ -825,7 +827,7 @@ class _StartMatchScreenState extends State<StartMatchScreen>
                                       children: [
                                         Image(
                                           image: NetworkImage(
-                                            'https://bdh.point-dev.nl/${mathcInfoForAdmin['secondTeam']['logo']}',
+                                            '${imagesUrl.url}/${mathcInfoForAdmin['secondTeam']['logo']}',
                                           ),
                                           height: mediaQuery.width / 9,
                                           fit: BoxFit.contain,
@@ -1351,7 +1353,7 @@ class AdminMatchHeader extends StatelessWidget {
             children: <Widget>[
               Image(
                 image: NetworkImage(
-                  'https://bdh.point-dev.nl/${mathcInfoForAdmin['firstTeam']['logo']}',
+                  '${imagesUrl.url}/${mathcInfoForAdmin['firstTeam']['logo']}',
                 ),
                 height: mediaQuery.width / 5,
                 fit: BoxFit.contain,
@@ -1392,7 +1394,7 @@ class AdminMatchHeader extends StatelessWidget {
               ),
               Image(
                 image: NetworkImage(
-                  'https://bdh.point-dev.nl/${mathcInfoForAdmin['secondTeam']['logo']}',
+                  '${imagesUrl.url}/${mathcInfoForAdmin['secondTeam']['logo']}',
                 ),
                 height: mediaQuery.width / 5,
                 fit: BoxFit.contain,

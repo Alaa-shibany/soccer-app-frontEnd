@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soccer_app_frontend/models/images_url.dart';
 
 class FinishedMatchWidget extends StatelessWidget {
   const FinishedMatchWidget({
@@ -21,63 +22,66 @@ class FinishedMatchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textSize = mediaQuery.height / 50;
-    final imageSize = mediaQuery.height / 15;
+    final textSize = mediaQuery.height / 70;
+    final imageSize = mediaQuery.height / 18;
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: NetworkImage(
-                  'https://bdh.point-dev.nl/${teamLogoUrl1}',
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: NetworkImage(
+                    '${imagesUrl.url}/${teamLogoUrl1}',
+                  ),
+                  height: imageSize,
+                  fit: BoxFit.contain,
+                  alignment: Alignment.center,
                 ),
-                height: imageSize,
-                fit: BoxFit.contain,
-                alignment: Alignment.center,
-              ),
-              Text(
-                teamName1,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: textSize,
+                Text(
+                  teamName1,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: textSize,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: mediaQuery.width / 10,
-          ),
-          center,
-          SizedBox(
-            width: mediaQuery.width / 10,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: NetworkImage(
-                  'https://bdh.point-dev.nl/${teamLogoUrl2}',
+              ],
+            ),
+            SizedBox(
+              width: mediaQuery.width / 20,
+            ),
+            center,
+            SizedBox(
+              width: mediaQuery.width / 20,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: NetworkImage(
+                    '${imagesUrl.url}/${teamLogoUrl2}',
+                  ),
+                  fit: BoxFit.contain,
+                  height: imageSize,
+                  alignment: Alignment.center,
                 ),
-                fit: BoxFit.contain,
-                height: imageSize,
-                alignment: Alignment.center,
-              ),
-              Text(
-                teamName2,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, fontSize: textSize),
-              ),
-            ],
-          ),
-        ],
+                Text(
+                  teamName2,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: textSize),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

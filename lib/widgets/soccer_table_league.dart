@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soccer_app_frontend/models/images_url.dart';
 
 import '../screens/team_profile_screen.dart';
 
@@ -160,7 +161,7 @@ class SoccerTableLeague extends StatelessWidget {
                             child: Container(
                               child: Image(
                                 image: NetworkImage(
-                                  'https://bdh.point-dev.nl/${teams[i]['logo']}',
+                                  '${imagesUrl.url}/${teams[i]['logo']}',
                                 ),
                                 fit: BoxFit.contain,
                                 alignment: Alignment.center,

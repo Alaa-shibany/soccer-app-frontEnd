@@ -776,4 +776,27 @@ class AuthServer with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> deleteMatch({required String id}) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = await storage.getString('token');
+      Dio.Response response = await dio().delete(
+        "/deleteMatch/$id",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      message = response.data['message'];
+      notifyListeners();
+      print(
+          '................................delete match response from server');
+      print(response.data);
+      print('................................');
+    } on DioError catch (e) {
+      print(e.response!.data['message']);
+      message = e.response!.data['message'];
+      notifyListeners();
+    }
+  }
 }

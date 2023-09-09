@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 left: 10,
                                 right: 10,
                               ),
-                              width: mediaQuery.width / 1.3,
+                              width: mediaQuery.height / 2.5,
                               height: mediaQuery.height / 6,
                               decoration: BoxDecoration(
                                 color: Colors.white,

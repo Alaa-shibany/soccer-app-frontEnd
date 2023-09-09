@@ -139,19 +139,23 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           SizedBox(
             height: mediaQuery.height / 40,
           ),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, UploadFildScreen.routName);
-            },
-            child: const circleIconWidget(
-              color: Color.fromRGBO(97, 91, 254, 1),
-              widget: Icon(
-                Icons.upload,
-                color: Colors.white,
-                size: 25,
-              ),
-            ),
-          ),
+          AuthServer.userData == 'admin'
+              ? InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, UploadFildScreen.routName);
+                  },
+                  child: const circleIconWidget(
+                    color: Color.fromRGBO(97, 91, 254, 1),
+                    widget: Icon(
+                      Icons.upload,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                  ),
+                )
+              : const SizedBox(
+                  height: 0,
+                ),
           SizedBox(
             height: mediaQuery.height / 40,
           ),

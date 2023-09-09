@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soccer_app_frontend/models/images_url.dart';
 
 class MatchWidget extends StatelessWidget {
   const MatchWidget({
@@ -56,7 +57,7 @@ class MatchWidget extends StatelessWidget {
             ),
             Image(
               image: NetworkImage(
-                'https://bdh.point-dev.nl/${teamLogoUrl1}',
+                '${imagesUrl.url}/${teamLogoUrl1}',
               ),
               height: imageSize,
               fit: BoxFit.contain,
@@ -71,7 +72,7 @@ class MatchWidget extends StatelessWidget {
             ),
             Image(
               image: NetworkImage(
-                'https://bdh.point-dev.nl/${teamLogoUrl2}',
+                '${imagesUrl.url}/${teamLogoUrl2}',
               ),
               fit: BoxFit.contain,
               height: imageSize,

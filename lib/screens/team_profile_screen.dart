@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:soccer_app_frontend/models/images_url.dart';
+
 import '/models/team.dart';
 import '/screens/user_profile_screen.dart';
 import '/widgets/image_info_profile.dart';
@@ -195,7 +197,7 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
                               width: mediaQuery.width / 4.5,
                               child: Image(
                                 image: NetworkImage(
-                                  'https://bdh.point-dev.nl/${teamData!.logo}',
+                                  '${imagesUrl.url}/${teamData!.logo}',
                                 ),
                                 fit: BoxFit.contain,
                                 alignment: Alignment.topCenter,
@@ -230,7 +232,7 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
                                     ),
                                     child: Image(
                                       image: NetworkImage(
-                                        'https://bdh.point-dev.nl/${teamData.logo}',
+                                        '${imagesUrl.url}/${teamData.logo}',
                                       ),
                                       fit: BoxFit.contain,
                                     ),
