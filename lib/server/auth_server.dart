@@ -24,6 +24,7 @@ class AuthServer with ChangeNotifier {
   static LeagueStatus? _leagueStatus;
   static Map<String, dynamic> _autoMatching = {};
   static Map<String, dynamic> _veiwMatchInfo = {};
+  static Map<String, dynamic> _playerDashboardMap = {};
   static List<dynamic> _unDecleardMatches = [];
   static List<dynamic> _unFinishedMatches = [];
   static TeamTable? _teamTable;
@@ -48,6 +49,7 @@ class AuthServer with ChangeNotifier {
   List<dynamic> get finishedMatches => _finishedMatches;
   Map<String, dynamic> get mathcInfoForAdmin => _matchInfoForAdmin;
   Map<String, dynamic> get viewMatchInfoMap => _veiwMatchInfo;
+  Map<String, dynamic> get playerDashboardMap => _playerDashboardMap;
   User? user() => _user;
   TeamTable? teamTable() => _teamTable;
   BestStrikerModel? BestStrikerM() => _bestStrikerModel;
@@ -792,6 +794,29 @@ class AuthServer with ChangeNotifier {
       print(
           '................................delete match response from server');
       print(response.data);
+      print('................................');
+    } on DioError catch (e) {
+      print(e.response!.data['message']);
+      message = e.response!.data['message'];
+      notifyListeners();
+    }
+  }
+
+  Future<void> playersDashboard() async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = await storage.getString('token');
+      Dio.Response response = await dio().get(
+        "/playersDashboard",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      _playerDashboardMap = response.data;
+      notifyListeners();
+      print(
+          '................................player dashboard response from server');
+      print(_playerDashboardMap);
       print('................................');
     } on DioError catch (e) {
       print(e.response!.data['message']);

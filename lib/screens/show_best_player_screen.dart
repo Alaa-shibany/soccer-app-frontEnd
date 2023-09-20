@@ -19,7 +19,6 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
@@ -31,14 +30,11 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
       _isLoading = true;
     });
     try {
-      await Provider.of<AuthServer>(context, listen: false).getTopStrikers();
-      await Provider.of<AuthServer>(context, listen: false).getTopAssistants();
-      await Provider.of<AuthServer>(context, listen: false).getTopDefenders();
-      await Provider.of<AuthServer>(context, listen: false).getTopHonor();
-      await Provider.of<AuthServer>(context, listen: false).getTopGoalKeepers();
-      print('........................................adsfasdfasdfaddafs');
-      print(AuthServer.topAssisstants);
+      await Provider.of<AuthServer>(context, listen: false).playersDashboard();
+
       setState(() {
+        // playerDashboardMap =
+        // Provider.of<AuthServer>(context, listen: false).playerDashboardMap;
         _isLoading = false;
       });
     } catch (e) {
@@ -49,6 +45,7 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
+
     return _isLoading
         ? Scaffold(
             extendBodyBehindAppBar: true,
@@ -163,14 +160,15 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                         ],
                       ),
                       margin: const EdgeInsets.all(10),
-                      height: mediaQuery.height / 2.6,
+                      // height: mediaQuery.height / 2.6,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             //This for first team container
                             Container(
-                              height: mediaQuery.width / 8,
+                              // height: mediaQuery.width / 8,
                               decoration: const BoxDecoration(
                                   color: Color.fromRGBO(37, 48, 106, 1),
                                   borderRadius: BorderRadius.only(
@@ -191,36 +189,46 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                               ),
                             ),
                             //This for top attacker
-                            SizedBox(
-                              height: mediaQuery.height / 60,
-                            ),
-                            SizedBox(
-                              height: mediaQuery.height / 3.5,
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: AuthServer.topStriker.length > 3
-                                    ? 3
-                                    : AuthServer.topStriker.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: PlayerChangeDataCard(
-                                        subTitle: AuthServer.topStriker[index]
-                                            ['team']['name'],
-                                        name: AuthServer.topStriker[index]
-                                            ['name'],
-                                        mediaQuery: mediaQuery,
-                                        title: AuthServer.topStriker[index]
-                                            ['name'],
-                                        trailing: AuthServer.topStriker[index]
-                                                ['goals']
-                                            .toString()),
-                                  );
-                                },
-                              ),
-                            ),
+
+                            Provider.of<AuthServer>(context, listen: false)
+                                    .playerDashboardMap['topScorers']
+                                    .isEmpty
+                                ? SizedBox(
+                                    height: mediaQuery.height / 15,
+                                    child: const Center(
+                                      child: Text(
+                                        'No players here yet',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: AuthServer(context: context)
+                                        .playerDashboardMap['topScorers']
+                                        .length,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: PlayerChangeDataCard(
+                                            subTitle: AuthServer(context: context)
+                                                    .playerDashboardMap['topScorers']
+                                                [index]['team']['name'],
+                                            name: AuthServer(context: context)
+                                                    .playerDashboardMap['topScorers']
+                                                [index]['name'],
+                                            mediaQuery: mediaQuery,
+                                            title: AuthServer(context: context)
+                                                    .playerDashboardMap['topScorers']
+                                                [index]['name'],
+                                            trailing: AuthServer(context: context)
+                                                .playerDashboardMap['topScorers'][index]['goals']
+                                                .toString()),
+                                      );
+                                    },
+                                  ),
                           ],
                         ),
                       ),
@@ -244,7 +252,6 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                         ],
                       ),
                       margin: const EdgeInsets.all(10),
-                      height: mediaQuery.height / 2.6,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -275,34 +282,45 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                             SizedBox(
                               height: mediaQuery.height / 60,
                             ),
-                            SizedBox(
-                              height: mediaQuery.height / 3.5,
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: AuthServer.topAssisstants.length > 3
-                                    ? 3
-                                    : AuthServer.topAssisstants.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: PlayerChangeDataCard(
-                                        subTitle:
-                                            AuthServer.topAssisstants[index]
-                                                ['team']['name'],
-                                        name: AuthServer.topAssisstants[index]
-                                            ['name'],
-                                        mediaQuery: mediaQuery,
-                                        title: AuthServer.topAssisstants[index]
-                                            ['name'],
-                                        trailing: AuthServer
-                                            .topAssisstants[index]['assists']
-                                            .toString()),
-                                  );
-                                },
-                              ),
-                            ),
+                            Provider.of<AuthServer>(context, listen: false)
+                                    .playerDashboardMap['topAssistants']
+                                    .isEmpty
+                                ? SizedBox(
+                                    height: mediaQuery.height / 15,
+                                    child: const Center(
+                                      child: Text(
+                                        'No players here yet',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: AuthServer(context: context)
+                                        .playerDashboardMap['topAssistants']
+                                        .length,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: PlayerChangeDataCard(
+                                            subTitle: AuthServer(context: context)
+                                                    .playerDashboardMap['topAssistants']
+                                                [index]['team']['name'],
+                                            name: AuthServer(context: context).playerDashboardMap['topAssistants']
+                                                [index]['name'],
+                                            mediaQuery: mediaQuery,
+                                            title: AuthServer(context: context)
+                                                    .playerDashboardMap['topAssistants']
+                                                [index]['name'],
+                                            trailing: AuthServer(context: context)
+                                                .playerDashboardMap['topAssistants']
+                                                    [index]['goals']
+                                                .toString()),
+                                      );
+                                    },
+                                  ),
                           ],
                         ),
                       ),
@@ -326,7 +344,6 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                         ],
                       ),
                       margin: const EdgeInsets.all(10),
-                      height: mediaQuery.height / 2.6,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -357,34 +374,45 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                             SizedBox(
                               height: mediaQuery.height / 60,
                             ),
-                            SizedBox(
-                              height: mediaQuery.height / 3.5,
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: AuthServer.topGoalKeeper.length > 3
-                                    ? 3
-                                    : AuthServer.topGoalKeeper.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: PlayerChangeDataCard(
-                                        subTitle:
-                                            AuthServer.topGoalKeeper[index]
-                                                ['team']['name'],
-                                        name: AuthServer.topGoalKeeper[index]
-                                            ['name'],
-                                        mediaQuery: mediaQuery,
-                                        title: AuthServer.topGoalKeeper[index]
-                                            ['name'],
-                                        trailing: AuthServer
-                                            .topGoalKeeper[index]['saves']
-                                            .toString()),
-                                  );
-                                },
-                              ),
-                            ),
+                            Provider.of<AuthServer>(context, listen: false)
+                                    .playerDashboardMap['topKeepers']
+                                    .isEmpty
+                                ? SizedBox(
+                                    height: mediaQuery.height / 15,
+                                    child: const Center(
+                                      child: Text(
+                                        'No players here yet',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: AuthServer(context: context)
+                                        .playerDashboardMap['topKeepers']
+                                        .length,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: PlayerChangeDataCard(
+                                            subTitle: AuthServer(context: context)
+                                                    .playerDashboardMap['topKeepers']
+                                                [index]['team']['name'],
+                                            name: AuthServer(context: context)
+                                                    .playerDashboardMap['topKeepers']
+                                                [index]['name'],
+                                            mediaQuery: mediaQuery,
+                                            title: AuthServer(context: context)
+                                                    .playerDashboardMap['topKeepers']
+                                                [index]['name'],
+                                            trailing: AuthServer(context: context)
+                                                .playerDashboardMap['topKeepers'][index]['goals']
+                                                .toString()),
+                                      );
+                                    },
+                                  ),
                           ],
                         ),
                       ),
@@ -408,7 +436,6 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                         ],
                       ),
                       margin: const EdgeInsets.all(10),
-                      height: mediaQuery.height / 2.6,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -439,33 +466,45 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                             SizedBox(
                               height: mediaQuery.height / 60,
                             ),
-                            SizedBox(
-                              height: mediaQuery.height / 3.5,
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: AuthServer.topDefenders.length > 3
-                                    ? 3
-                                    : AuthServer.topDefenders.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: PlayerChangeDataCard(
-                                        subTitle: AuthServer.topDefenders[index]
-                                            ['team']['name'],
-                                        name: AuthServer.topDefenders[index]
-                                            ['name'],
-                                        mediaQuery: mediaQuery,
-                                        title: AuthServer.topDefenders[index]
-                                            ['name'],
-                                        trailing: AuthServer.topDefenders[index]
-                                                ['defences']
-                                            .toString()),
-                                  );
-                                },
-                              ),
-                            ),
+                            Provider.of<AuthServer>(context, listen: false)
+                                    .playerDashboardMap['topKeepers']
+                                    .isEmpty
+                                ? SizedBox(
+                                    height: mediaQuery.height / 15,
+                                    child: const Center(
+                                      child: Text(
+                                        'No players here yet',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: AuthServer(context: context)
+                                        .playerDashboardMap['topDefenders']
+                                        .length,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: PlayerChangeDataCard(
+                                            subTitle: AuthServer(context: context)
+                                                    .playerDashboardMap['topDefenders']
+                                                [index]['team']['name'],
+                                            name: AuthServer(context: context).playerDashboardMap['topKeepers']
+                                                [index]['name'],
+                                            mediaQuery: mediaQuery,
+                                            title: AuthServer(context: context)
+                                                    .playerDashboardMap['topDefenders']
+                                                [index]['name'],
+                                            trailing: AuthServer(context: context)
+                                                .playerDashboardMap['topDefenders']
+                                                    [index]['goals']
+                                                .toString()),
+                                      );
+                                    },
+                                  ),
                           ],
                         ),
                       ),
@@ -489,7 +528,6 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                         ],
                       ),
                       margin: const EdgeInsets.all(10),
-                      height: mediaQuery.height / 2.6,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -520,33 +558,45 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                             SizedBox(
                               height: mediaQuery.height / 60,
                             ),
-                            SizedBox(
-                              height: mediaQuery.height / 3.5,
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: AuthServer.topHonor.length > 3
-                                    ? 3
-                                    : AuthServer.topHonor.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: PlayerChangeDataCard(
-                                        subTitle: AuthServer.topHonor[index]
-                                            ['team']['name'],
-                                        name: AuthServer.topHonor[index]
-                                            ['name'],
-                                        mediaQuery: mediaQuery,
-                                        title: AuthServer.topHonor[index]
-                                            ['name'],
-                                        trailing: AuthServer.topHonor[index]
-                                                ['honor']
-                                            .toString()),
-                                  );
-                                },
-                              ),
-                            ),
+                            Provider.of<AuthServer>(context, listen: false)
+                                    .playerDashboardMap['topHonor']
+                                    .isEmpty
+                                ? SizedBox(
+                                    height: mediaQuery.height / 15,
+                                    child: const Center(
+                                      child: Text(
+                                        'No players here yet',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: AuthServer(context: context)
+                                        .playerDashboardMap['topHonor']
+                                        .length,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: PlayerChangeDataCard(
+                                            subTitle: AuthServer(context: context)
+                                                    .playerDashboardMap['topHonor']
+                                                [index]['team']['name'],
+                                            name: AuthServer(context: context).playerDashboardMap['topKeepers']
+                                                [index]['name'],
+                                            mediaQuery: mediaQuery,
+                                            title: AuthServer(context: context)
+                                                    .playerDashboardMap['topHonor']
+                                                [index]['name'],
+                                            trailing: AuthServer(context: context)
+                                                .playerDashboardMap['topHonor']
+                                                    [index]['goals']
+                                                .toString()),
+                                      );
+                                    },
+                                  ),
                           ],
                         ),
                       ),

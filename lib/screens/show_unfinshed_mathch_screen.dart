@@ -830,11 +830,11 @@ class ShowQuestions extends StatefulWidget {
 
 class _ShowQuestions extends State<ShowQuestions>
     with TickerProviderStateMixin {
-  void showDialogError() {
+  void showDialogError(String title) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: Text(AuthServer.message),
+        content: Text(title),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -859,14 +859,16 @@ class _ShowQuestions extends State<ShowQuestions>
       print(secondAnswer);
       print(thirdAnswer);
       print(fourthAnswer);
-      await Provider.of<AuthServer>(context, listen: false).Prediction(
-          contest_id: widget.viewMatchInfo['id'],
-          winner: firstAnswer,
-          question1: secondAnswer,
-          question2: thirdAnswer,
-          Double: fourthAnswer);
+      widget.viewMatchInfo['isVotingAvailable']
+          ? await Provider.of<AuthServer>(context, listen: false).Prediction(
+              contest_id: widget.viewMatchInfo['id'],
+              winner: firstAnswer,
+              question1: secondAnswer,
+              question2: thirdAnswer,
+              Double: fourthAnswer)
+          : showDialogError('You can\'t vote right now');
       AuthServer.userData == 'guest' || AuthServer.userData == 'admin'
-          ? showDialogError()
+          ? showDialogError(AuthServer.message)
           : Navigator.of(context).pushReplacementNamed(
               ShowUnFinishedMatchScreen.routName,
               arguments: widget.viewMatchInfo['id']);
