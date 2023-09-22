@@ -373,887 +373,854 @@ class SlidesForTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: SizedBox(
-        width: double.infinity,
-        height: mediaQuery.height,
-        child: TabBarView(
-          controller: controller,
-          children: [
-            //Match slide for show info screen
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: mediaQuery.width / 60,
-                  ),
-                  //this container show the title of the container
-                  Container(
-                    height: mediaQuery.width / 15,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: mediaQuery.width / 200),
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: mediaQuery.width / 20),
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(37, 48, 106, 1),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                      ),
-                    ),
-                    child: const Text(
-                      'Questions',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+      child: TabBarView(
+        controller: controller,
+        children: [
+          //Match slide for show info screen
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: mediaQuery.width / 60,
+                ),
+                //this container show the title of the container
+                Container(
+                  height: mediaQuery.width / 15,
+                  margin:
+                      EdgeInsets.symmetric(horizontal: mediaQuery.width / 200),
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(left: mediaQuery.width / 20),
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(37, 48, 106, 1),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
                     ),
                   ),
-                  //This container has the questions and the answers
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: mediaQuery.width / 200),
-                    height: mediaQuery.height / 4,
-                    padding: EdgeInsets.only(top: mediaQuery.width / 20),
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
+                  child: const Text(
+                    'Questions',
+                    style: TextStyle(
                       color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(15),
-                        bottomLeft: Radius.circular(15),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black45,
-                          offset: Offset(0, 3),
-                          blurRadius: 8,
-                        ),
-                      ],
-                    ),
-                    child: ShowQuestions(
-                      viewMatchInfo: viewMatchInfo,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  //This container has the players who scored
-                  viewMatchInfo['goals'].isNotEmpty ||
-                          viewMatchInfo['yellow_cards'].isNotEmpty ||
-                          viewMatchInfo['red_cards'].isNotEmpty
-                      ? Container(
-                          margin: EdgeInsets.symmetric(
-                              vertical: mediaQuery.height / 70,
-                              horizontal: mediaQuery.width / 40),
-                          width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //this for first team details
-                              Column(
-                                children: [
-                                  Container(
-                                    height: mediaQuery.width / 15,
-                                    width: mediaQuery.width / 2.3,
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.only(
-                                        left: mediaQuery.width / 20),
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromRGBO(37, 48, 106, 1),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(15),
-                                        topRight: Radius.circular(15),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      viewMatchInfo['firstTeam']['name'],
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                ),
+                //This container has the questions and the answers
+                Container(
+                  margin:
+                      EdgeInsets.symmetric(horizontal: mediaQuery.width / 200),
+                  height: mediaQuery.height / 4,
+                  padding: EdgeInsets.only(top: mediaQuery.width / 20),
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black45,
+                        offset: Offset(0, 3),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                  child: ShowQuestions(
+                    viewMatchInfo: viewMatchInfo,
+                  ),
+                ),
+                SizedBox(
+                  height: mediaQuery.height / 50,
+                ),
+                //This container has the players who scored
+                viewMatchInfo['goals'].isNotEmpty ||
+                        viewMatchInfo['yellow_cards'].isNotEmpty ||
+                        viewMatchInfo['red_cards'].isNotEmpty
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: mediaQuery.width / 40),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //this for first team details
+                            Column(
+                              children: [
+                                Container(
+                                  height: mediaQuery.width / 15,
+                                  width: mediaQuery.width / 2.3,
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(
+                                      left: mediaQuery.width / 20),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(37, 48, 106, 1),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15),
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: mediaQuery.width / 200,
-                                        vertical: mediaQuery.width / 200),
-                                    padding:
-                                        EdgeInsets.all(mediaQuery.width / 20),
-                                    width: mediaQuery.width / 2.3,
-                                    decoration: const BoxDecoration(
+                                  child: Text(
+                                    viewMatchInfo['firstTeam']['name'],
+                                    style: const TextStyle(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(15),
-                                        bottomLeft: Radius.circular(15),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black45,
-                                          offset: Offset(0, 3),
-                                          blurRadius: 8,
-                                        ),
-                                      ],
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    child: Expanded(
-                                      child: Column(
-                                        children: [
-                                          // this a list of player who scored
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: mediaQuery.width / 20),
-                                            child: Expanded(
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                itemCount:
-                                                    viewMatchInfo['goals']
-                                                        .length,
-                                                itemBuilder: (context, index) {
-                                                  return viewMatchInfo['goals']
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: mediaQuery.width / 200,
+                                      vertical: mediaQuery.width / 200),
+                                  padding:
+                                      EdgeInsets.all(mediaQuery.width / 20),
+                                  width: mediaQuery.width / 2.3,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(15),
+                                      bottomLeft: Radius.circular(15),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black45,
+                                        offset: Offset(0, 3),
+                                        blurRadius: 8,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      // this a list of player who scored
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: mediaQuery.width / 20),
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              viewMatchInfo['goals'].length,
+                                          itemBuilder: (context, index) {
+                                            return viewMatchInfo['goals'][index]
+                                                        ['team_id'] ==
+                                                    viewMatchInfo[
+                                                        'firstTeam_id']
+                                                ? Row(
+                                                    children: [
+                                                      Text(viewMatchInfo[
+                                                                      'goals']
                                                                   [index]
-                                                              ['team_id'] ==
-                                                          viewMatchInfo[
-                                                              'firstTeam_id']
-                                                      ? Row(
-                                                          children: [
-                                                            Text(viewMatchInfo[
-                                                                            'goals']
-                                                                        [index][
-                                                                    'player']['name']
-                                                                .toString()),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  80,
-                                                            ),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              height: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              child:
-                                                                  const Image(
-                                                                image: AssetImage(
-                                                                    'assets/images/ball.png'),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : const SizedBox(
-                                                          height: 0,
-                                                        );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          //  this a list of player who got a yellow card
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: mediaQuery.width / 20),
-                                            child: Expanded(
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                itemCount: viewMatchInfo[
-                                                        'yellow_cards']
-                                                    .length,
-                                                itemBuilder: (context, index) {
-                                                  return viewMatchInfo['yellow_cards']
-                                                                      [index]
-                                                                  ['player']
-                                                              ['team_id'] ==
-                                                          viewMatchInfo[
-                                                              'firstTeam_id']
-                                                      ? Row(
-                                                          children: [
-                                                            Text(viewMatchInfo[
-                                                                            'yellow_cards']
-                                                                        [index][
-                                                                    'player']['name']
-                                                                .toString()),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  80,
-                                                            ),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              height: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              child:
-                                                                  const Image(
-                                                                image: AssetImage(
-                                                                    'assets/images/yellow_card.png'),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : const SizedBox(
-                                                          height: 0,
-                                                        );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          //this a list of player who got a red card
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: mediaQuery.width / 20),
-                                            child: Expanded(
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                itemCount:
-                                                    viewMatchInfo['red_cards']
-                                                        .length,
-                                                itemBuilder: (context, index) {
-                                                  return viewMatchInfo['red_cards']
-                                                                          [
-                                                                          index]
-                                                                      ['player']
-                                                                  ['team_id']
-                                                              .toString() ==
-                                                          viewMatchInfo[
-                                                                  'firstTeam_id']
-                                                              .toString()
-                                                      ? Row(
-                                                          children: [
-                                                            Text(viewMatchInfo[
-                                                                            'red_cards']
-                                                                        [index][
-                                                                    'player']['name']
-                                                                .toString()),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  80,
-                                                            ),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              height: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              child:
-                                                                  const Image(
-                                                                image: AssetImage(
-                                                                    'assets/images/red_card.png'),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : const SizedBox(
-                                                          height: 0,
-                                                        );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              //this for second team details
-                              Column(
-                                children: [
-                                  Container(
-                                    height: mediaQuery.width / 15,
-                                    width: mediaQuery.width / 2.3,
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: mediaQuery.width / 200),
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.only(
-                                        left: mediaQuery.width / 20),
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromRGBO(37, 48, 106, 1),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(15),
-                                        topRight: Radius.circular(15),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      viewMatchInfo['secondTeam']['name'],
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: mediaQuery.width / 200,
-                                        vertical: mediaQuery.width / 200),
-                                    padding:
-                                        EdgeInsets.all(mediaQuery.width / 20),
-                                    width: mediaQuery.width / 2.3,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(15),
-                                        bottomLeft: Radius.circular(15),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black45,
-                                          offset: Offset(0, 3),
-                                          blurRadius: 8,
+                                                              ['player']['name']
+                                                          .toString()),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        height:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        child: const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/ball.png'),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : const SizedBox(
+                                                    height: 0,
+                                                  );
+                                          },
                                         ),
-                                      ],
-                                    ),
-                                    child: Expanded(
-                                      child: Column(
-                                        children: [
-                                          // this a list of player who scored
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: mediaQuery.width / 19),
-                                            child: Expanded(
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                itemCount:
-                                                    viewMatchInfo['goals']
-                                                        .length,
-                                                itemBuilder: (context, index) {
-                                                  return viewMatchInfo['goals']
-                                                                      [index]
-                                                                  ['team_id']
-                                                              .toString() ==
-                                                          viewMatchInfo[
-                                                                  'secondTeam_id']
-                                                              .toString()
-                                                      ? Row(
-                                                          children: [
-                                                            Text(viewMatchInfo[
-                                                                            'goals']
-                                                                        [index][
-                                                                    'player']['name']
-                                                                .toString()),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  80,
-                                                            ),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              height: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              child:
-                                                                  const Image(
-                                                                image: AssetImage(
-                                                                    'assets/images/ball.png'),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : const SizedBox(
-                                                          height: 0,
-                                                        );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          //  this a list of player who got a yellow card
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: mediaQuery.width / 20),
-                                            child: Expanded(
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                itemCount: viewMatchInfo[
-                                                        'yellow_cards']
-                                                    .length,
-                                                itemBuilder: (context, index) {
-                                                  return viewMatchInfo['yellow_cards']
-                                                                          [
-                                                                          index]
-                                                                      ['player']
-                                                                  ['team_id']
-                                                              .toString() ==
-                                                          viewMatchInfo[
-                                                                  'secondTeam_id']
-                                                              .toString()
-                                                      ? Row(
-                                                          children: [
-                                                            Text(viewMatchInfo[
-                                                                            'yellow_cards']
-                                                                        [index][
-                                                                    'player']['name']
-                                                                .toString()),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  80,
-                                                            ),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              height: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              child:
-                                                                  const Image(
-                                                                image: AssetImage(
-                                                                    'assets/images/yellow_card.png'),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : const SizedBox(
-                                                          height: 0,
-                                                        );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          //this a list of player who got a red card
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: mediaQuery.width / 20),
-                                            child: Expanded(
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                itemCount:
-                                                    viewMatchInfo['red_cards']
-                                                        .length,
-                                                itemBuilder: (context, index) {
-                                                  return viewMatchInfo['red_cards']
-                                                                          [
-                                                                          index]
-                                                                      ['player']
-                                                                  ['team_id']
-                                                              .toString() ==
-                                                          viewMatchInfo[
-                                                                  'secondTeam_id']
-                                                              .toString()
-                                                      ? Row(
-                                                          children: [
-                                                            Text(viewMatchInfo[
-                                                                            'red_cards']
-                                                                        [index][
-                                                                    'player']['name']
-                                                                .toString()),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  80,
-                                                            ),
-                                                            SizedBox(
-                                                              width: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              height: mediaQuery
-                                                                      .width /
-                                                                  20,
-                                                              child:
-                                                                  const Image(
-                                                                image: AssetImage(
-                                                                    'assets/images/red_card.png'),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : const SizedBox(
-                                                          height: 0,
-                                                        );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ],
                                       ),
+                                      //  this a list of player who got a yellow card
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: mediaQuery.width / 20),
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              viewMatchInfo['yellow_cards']
+                                                  .length,
+                                          itemBuilder: (context, index) {
+                                            return viewMatchInfo['yellow_cards']
+                                                            [index]['player']
+                                                        ['team_id'] ==
+                                                    viewMatchInfo[
+                                                        'firstTeam_id']
+                                                ? Row(
+                                                    children: [
+                                                      Text(viewMatchInfo[
+                                                                      'yellow_cards']
+                                                                  [index]
+                                                              ['player']['name']
+                                                          .toString()),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        height:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        child: const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/yellow_card.png'),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : const SizedBox(
+                                                    height: 0,
+                                                  );
+                                          },
+                                        ),
+                                      ),
+                                      //this a list of player who got a red card
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: mediaQuery.width / 20),
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              viewMatchInfo['red_cards'].length,
+                                          itemBuilder: (context, index) {
+                                            return viewMatchInfo['red_cards']
+                                                                    [index]
+                                                                ['player']
+                                                            ['team_id']
+                                                        .toString() ==
+                                                    viewMatchInfo[
+                                                            'firstTeam_id']
+                                                        .toString()
+                                                ? Row(
+                                                    children: [
+                                                      Text(viewMatchInfo[
+                                                                      'red_cards']
+                                                                  [index]
+                                                              ['player']['name']
+                                                          .toString()),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        height:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        child: const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/red_card.png'),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : const SizedBox(
+                                                    height: 0,
+                                                  );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            //this for second team details
+                            Column(
+                              children: [
+                                Container(
+                                  height: mediaQuery.width / 15,
+                                  width: mediaQuery.width / 2.3,
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: mediaQuery.width / 200),
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(
+                                      left: mediaQuery.width / 20),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(37, 48, 106, 1),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
-                      : const SizedBox(
-                          height: 0,
+                                  child: Text(
+                                    viewMatchInfo['secondTeam']['name'],
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: mediaQuery.width / 200,
+                                      vertical: mediaQuery.width / 200),
+                                  padding:
+                                      EdgeInsets.all(mediaQuery.width / 20),
+                                  width: mediaQuery.width / 2.3,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(15),
+                                      bottomLeft: Radius.circular(15),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black45,
+                                        offset: Offset(0, 3),
+                                        blurRadius: 8,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      // this a list of player who scored
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: mediaQuery.width / 19),
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              viewMatchInfo['goals'].length,
+                                          itemBuilder: (context, index) {
+                                            return viewMatchInfo['goals'][index]
+                                                            ['team_id']
+                                                        .toString() ==
+                                                    viewMatchInfo[
+                                                            'secondTeam_id']
+                                                        .toString()
+                                                ? Row(
+                                                    children: [
+                                                      Text(viewMatchInfo[
+                                                                      'goals']
+                                                                  [index]
+                                                              ['player']['name']
+                                                          .toString()),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        height:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        child: const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/ball.png'),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : const SizedBox(
+                                                    height: 0,
+                                                  );
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: mediaQuery.height / 60,
+                                      ),
+                                      //  this a list of player who got a yellow card
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: mediaQuery.width / 20),
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              viewMatchInfo['yellow_cards']
+                                                  .length,
+                                          itemBuilder: (context, index) {
+                                            return viewMatchInfo['yellow_cards']
+                                                                    [index]
+                                                                ['player']
+                                                            ['team_id']
+                                                        .toString() ==
+                                                    viewMatchInfo[
+                                                            'secondTeam_id']
+                                                        .toString()
+                                                ? Row(
+                                                    children: [
+                                                      Text(viewMatchInfo[
+                                                                      'yellow_cards']
+                                                                  [index]
+                                                              ['player']['name']
+                                                          .toString()),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        height:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        child: const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/yellow_card.png'),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : const SizedBox(
+                                                    height: 0,
+                                                  );
+                                          },
+                                        ),
+                                      ),
+                                      //this a list of player who got a red card
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: mediaQuery.width / 20),
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              viewMatchInfo['red_cards'].length,
+                                          itemBuilder: (context, index) {
+                                            return viewMatchInfo['red_cards']
+                                                                    [index]
+                                                                ['player']
+                                                            ['team_id']
+                                                        .toString() ==
+                                                    viewMatchInfo[
+                                                            'secondTeam_id']
+                                                        .toString()
+                                                ? Row(
+                                                    children: [
+                                                      Text(viewMatchInfo[
+                                                                      'red_cards']
+                                                                  [index]
+                                                              ['player']['name']
+                                                          .toString()),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        height:
+                                                            mediaQuery.width /
+                                                                20,
+                                                        child: const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/red_card.png'),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : const SizedBox(
+                                                    height: 0,
+                                                  );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
+                      )
+                    : const SizedBox(
+                        height: 0,
+                      ),
 
-                  //This container has the match ditails and the answers
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: mediaQuery.width / 200),
-                    height: mediaQuery.height / 3.1,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black45,
-                          offset: Offset(0, 3),
-                          blurRadius: 8,
+                //This container has the match ditails and the answers
+                Container(
+                  margin:
+                      EdgeInsets.symmetric(horizontal: mediaQuery.width / 200),
+                  height: mediaQuery.height / 3.1,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black45,
+                        offset: Offset(0, 3),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: mediaQuery.width / 30,
+                      ),
+                      ListTile(
+                        title: Row(
+                          children: [
+                            const Text(
+                              'Stadium',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(37, 48, 106, 1),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: mediaQuery.width / 90,
+                            ),
+                            const Icon(
+                              Icons.location_pin,
+                              color: Color.fromRGBO(37, 48, 106, 1),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: mediaQuery.width / 30,
+                        trailing: Text(viewMatchInfo['place'].toString()),
+                      ),
+                      ListTile(
+                        title: Row(
+                          children: [
+                            const Text(
+                              'Date',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(37, 48, 106, 1),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: mediaQuery.width / 90,
+                            ),
+                            const Icon(
+                              Icons.date_range_rounded,
+                              color: Color.fromRGBO(37, 48, 106, 1),
+                            )
+                          ],
                         ),
-                        ListTile(
-                          title: Row(
-                            children: [
-                              const Text(
-                                'Stadium',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(37, 48, 106, 1),
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: mediaQuery.width / 90,
-                              ),
-                              const Icon(
-                                Icons.location_pin,
-                                color: Color.fromRGBO(37, 48, 106, 1),
-                              )
-                            ],
-                          ),
-                          trailing: Text(viewMatchInfo['place'].toString()),
+                        trailing: Text(viewMatchInfo['date'].toString()),
+                      ),
+                      ListTile(
+                        title: Row(
+                          children: [
+                            const Text(
+                              'Stage',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(37, 48, 106, 1),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: mediaQuery.width / 90,
+                            ),
+                            const Icon(
+                              Icons.assistant,
+                              color: Color.fromRGBO(37, 48, 106, 1),
+                            )
+                          ],
                         ),
-                        ListTile(
-                          title: Row(
-                            children: [
-                              const Text(
-                                'Date',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(37, 48, 106, 1),
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: mediaQuery.width / 90,
-                              ),
-                              const Icon(
-                                Icons.date_range_rounded,
-                                color: Color.fromRGBO(37, 48, 106, 1),
-                              )
-                            ],
-                          ),
-                          trailing: Text(viewMatchInfo['date'].toString()),
+                        trailing: Text(viewMatchInfo['stage'].toString()),
+                      ),
+                      ListTile(
+                        title: Row(
+                          children: [
+                            const Text(
+                              'League',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(37, 48, 106, 1),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: mediaQuery.width / 90,
+                            ),
+                            Image(
+                              image:
+                                  const AssetImage('assets/images/league.png'),
+                              height: mediaQuery.width / 20,
+                            ),
+                          ],
                         ),
-                        ListTile(
-                          title: Row(
-                            children: [
-                              const Text(
-                                'Stage',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(37, 48, 106, 1),
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: mediaQuery.width / 90,
-                              ),
-                              const Icon(
-                                Icons.assistant,
-                                color: Color.fromRGBO(37, 48, 106, 1),
-                              )
-                            ],
-                          ),
-                          trailing: Text(viewMatchInfo['stage'].toString()),
-                        ),
-                        ListTile(
-                          title: Row(
-                            children: [
-                              const Text(
+                        trailing: viewMatchInfo['league'] == 1
+                            ? const Text(
                                 'League',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(37, 48, 106, 1),
-                                    fontWeight: FontWeight.bold),
+                              )
+                            : const Text(
+                                'Friendly',
                               ),
-                              SizedBox(
-                                width: mediaQuery.width / 90,
-                              ),
-                              Image(
-                                image: const AssetImage(
-                                    'assets/images/league.png'),
-                                height: mediaQuery.width / 20,
-                              ),
-                            ],
-                          ),
-                          trailing: viewMatchInfo['league'] == 1
-                              ? const Text(
-                                  'League',
-                                )
-                              : const Text(
-                                  'Friendly',
-                                ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            //Info slide for show info screen
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  //for the first team
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(255, 0, 0, 0)
-                              .withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    margin: const EdgeInsets.all(10),
-                    height: mediaQuery.height / 1.81,
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        //This for first team container
-                        Container(
-                          height: mediaQuery.width / 8,
-                          decoration: const BoxDecoration(
-                              color: Color.fromRGBO(37, 48, 106, 1),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                topRight: Radius.circular(15),
-                              )),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: NetworkImage(
-                                  '${imagesUrl.url}/${viewMatchInfo['firstTeam']['logo']}',
-                                ),
-                                height: mediaQuery.width / 11,
-                                fit: BoxFit.contain,
-                                alignment: Alignment.center,
-                              ),
-                              SizedBox(
-                                width: mediaQuery.width / 30,
-                              ),
-                              Text(
-                                '${viewMatchInfo['firstTeam']['name']}',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: mediaQuery.height / 45),
-                              ),
-                            ],
-                          ),
-                        ),
-                        //This for first team captain
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              UserProfileScreen.routName,
-                              arguments: viewMatchInfo['firstTeam']['captain']
-                                  ['id'],
-                            );
-                          },
-                          child: PlayerChangeDataCard(
-                            name: viewMatchInfo['firstTeam']['captain']['name'],
-                            mediaQuery: mediaQuery,
-                            title:
-                                '${viewMatchInfo['firstTeam']['captain']['name']}',
-                            trailing: 'captain',
-                          ),
-                        ),
-                        //This for first team goal keeper
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              UserProfileScreen.routName,
-                              arguments: viewMatchInfo['firstTeam']
-                                  ['goalKeeper']['id'],
-                            );
-                          },
-                          child: PlayerChangeDataCard(
-                            name: viewMatchInfo['firstTeam']['goalKeeper']
-                                ['name'],
-                            mediaQuery: mediaQuery,
-                            title:
-                                '${viewMatchInfo['firstTeam']['goalKeeper']['name']}',
-                            trailing: 'goalKeeper',
-                          ),
-                        ),
-                        //This for attacker of first team
-                        SizedBox(
-                          height: mediaQuery.height / 2.9,
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            itemCount:
-                                viewMatchInfo['firstTeam']['attackers'].length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                      UserProfileScreen.routName,
-                                      arguments: viewMatchInfo['firstTeam']
-                                          ['attackers'][index]['id']);
-                                },
-                                child: PlayerChangeDataCard(
-                                    name: viewMatchInfo['firstTeam']
-                                        ['attackers'][index]['name'],
-                                    mediaQuery: mediaQuery,
-                                    title: viewMatchInfo['firstTeam']
-                                        ['attackers'][index]['name'],
-                                    trailing: 'attackers'),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+          ),
+          //Info slide for show info screen
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                //for the first team
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color:
+                            const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                   ),
-                  //for the second team
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(255, 0, 0, 0)
-                              .withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    margin: const EdgeInsets.all(10),
-                    height: mediaQuery.height / 1.81,
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        //This for second team container
-                        Container(
-                          height: mediaQuery.width / 8,
-                          decoration: const BoxDecoration(
-                              color: Color.fromRGBO(37, 48, 106, 1),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                topRight: Radius.circular(15),
-                              )),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: NetworkImage(
-                                  '${imagesUrl.url}/${viewMatchInfo['secondTeam']['logo']}',
-                                ),
-                                height: mediaQuery.width / 11,
-                                fit: BoxFit.contain,
-                                alignment: Alignment.center,
+                  margin: const EdgeInsets.all(10),
+                  height: mediaQuery.height / 1.81,
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      //This for first team container
+                      Container(
+                        height: mediaQuery.width / 8,
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(37, 48, 106, 1),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                            )),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image(
+                              image: NetworkImage(
+                                '${imagesUrl.url}/${viewMatchInfo['firstTeam']['logo']}',
                               ),
-                              SizedBox(
-                                width: mediaQuery.width / 30,
-                              ),
-                              Text(
-                                '${viewMatchInfo['secondTeam']['name']}',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: mediaQuery.height / 45),
-                              ),
-                            ],
-                          ),
+                              height: mediaQuery.width / 11,
+                              fit: BoxFit.contain,
+                              alignment: Alignment.center,
+                            ),
+                            SizedBox(
+                              width: mediaQuery.width / 30,
+                            ),
+                            Text(
+                              '${viewMatchInfo['firstTeam']['name']}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: mediaQuery.height / 45),
+                            ),
+                          ],
                         ),
-                        //This for second team captain
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              UserProfileScreen.routName,
-                              arguments: viewMatchInfo['secondTeam']['captain']
-                                  ['id'],
-                            );
-                          },
-                          child: PlayerChangeDataCard(
-                            name: viewMatchInfo['secondTeam']['captain']
-                                ['name'],
-                            mediaQuery: mediaQuery,
-                            title:
-                                '${viewMatchInfo['secondTeam']['captain']['name']}',
-                            trailing: 'captain',
-                          ),
+                      ),
+                      //This for first team captain
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            UserProfileScreen.routName,
+                            arguments: viewMatchInfo['firstTeam']['captain']
+                                ['id'],
+                          );
+                        },
+                        child: PlayerChangeDataCard(
+                          name: viewMatchInfo['firstTeam']['captain']['name'],
+                          mediaQuery: mediaQuery,
+                          title:
+                              '${viewMatchInfo['firstTeam']['captain']['name']}',
+                          trailing: 'captain',
                         ),
-                        //This for second team goal keeper
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              UserProfileScreen.routName,
-                              arguments: viewMatchInfo['secondTeam']
-                                  ['goalKeeper']['id'],
-                            );
-                          },
-                          child: PlayerChangeDataCard(
-                            name: viewMatchInfo['secondTeam']['goalKeeper']
-                                ['name'],
-                            mediaQuery: mediaQuery,
-                            title:
-                                '${viewMatchInfo['secondTeam']['goalKeeper']['name']}',
-                            trailing: 'goalKeeper',
-                          ),
+                      ),
+                      //This for first team goal keeper
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            UserProfileScreen.routName,
+                            arguments: viewMatchInfo['firstTeam']['goalKeeper']
+                                ['id'],
+                          );
+                        },
+                        child: PlayerChangeDataCard(
+                          name: viewMatchInfo['firstTeam']['goalKeeper']
+                              ['name'],
+                          mediaQuery: mediaQuery,
+                          title:
+                              '${viewMatchInfo['firstTeam']['goalKeeper']['name']}',
+                          trailing: 'goalKeeper',
                         ),
-                        //This for attacker of second team
-                        Container(
-                          height: mediaQuery.height / 2.9,
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            itemCount:
-                                viewMatchInfo['secondTeam']['attackers'].length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
+                      ),
+                      //This for attacker of first team
+                      SizedBox(
+                        height: mediaQuery.height / 2.9,
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount:
+                              viewMatchInfo['firstTeam']['attackers'].length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
                                     UserProfileScreen.routName,
-                                    arguments: viewMatchInfo['secondTeam']
-                                        ['attackers'][index]['id'],
-                                  );
-                                },
-                                child: PlayerChangeDataCard(
-                                    name: viewMatchInfo['secondTeam']
-                                        ['attackers'][index]['name'],
-                                    mediaQuery: mediaQuery,
-                                    title: viewMatchInfo['secondTeam']
-                                        ['attackers'][index]['name'],
-                                    trailing: 'attackers'),
-                              );
-                            },
-                          ),
+                                    arguments: viewMatchInfo['firstTeam']
+                                        ['attackers'][index]['id']);
+                              },
+                              child: PlayerChangeDataCard(
+                                  name: viewMatchInfo['firstTeam']['attackers']
+                                      [index]['name'],
+                                  mediaQuery: mediaQuery,
+                                  title: viewMatchInfo['firstTeam']['attackers']
+                                      [index]['name'],
+                                  trailing: 'attackers'),
+                            );
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                //for the second team
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color:
+                            const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  margin: const EdgeInsets.all(10),
+                  height: mediaQuery.height / 1.81,
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      //This for second team container
+                      Container(
+                        height: mediaQuery.width / 8,
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(37, 48, 106, 1),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                            )),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image(
+                              image: NetworkImage(
+                                '${imagesUrl.url}/${viewMatchInfo['secondTeam']['logo']}',
+                              ),
+                              height: mediaQuery.width / 11,
+                              fit: BoxFit.contain,
+                              alignment: Alignment.center,
+                            ),
+                            SizedBox(
+                              width: mediaQuery.width / 30,
+                            ),
+                            Text(
+                              '${viewMatchInfo['secondTeam']['name']}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: mediaQuery.height / 45),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //This for second team captain
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            UserProfileScreen.routName,
+                            arguments: viewMatchInfo['secondTeam']['captain']
+                                ['id'],
+                          );
+                        },
+                        child: PlayerChangeDataCard(
+                          name: viewMatchInfo['secondTeam']['captain']['name'],
+                          mediaQuery: mediaQuery,
+                          title:
+                              '${viewMatchInfo['secondTeam']['captain']['name']}',
+                          trailing: 'captain',
+                        ),
+                      ),
+                      //This for second team goal keeper
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            UserProfileScreen.routName,
+                            arguments: viewMatchInfo['secondTeam']['goalKeeper']
+                                ['id'],
+                          );
+                        },
+                        child: PlayerChangeDataCard(
+                          name: viewMatchInfo['secondTeam']['goalKeeper']
+                              ['name'],
+                          mediaQuery: mediaQuery,
+                          title:
+                              '${viewMatchInfo['secondTeam']['goalKeeper']['name']}',
+                          trailing: 'goalKeeper',
+                        ),
+                      ),
+                      //This for attacker of second team
+                      Container(
+                        height: mediaQuery.height / 2.9,
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount:
+                              viewMatchInfo['secondTeam']['attackers'].length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                  UserProfileScreen.routName,
+                                  arguments: viewMatchInfo['secondTeam']
+                                      ['attackers'][index]['id'],
+                                );
+                              },
+                              child: PlayerChangeDataCard(
+                                  name: viewMatchInfo['secondTeam']['attackers']
+                                      [index]['name'],
+                                  mediaQuery: mediaQuery,
+                                  title: viewMatchInfo['secondTeam']
+                                      ['attackers'][index]['name'],
+                                  trailing: 'attackers'),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -1550,10 +1517,12 @@ class _ShowQuestions extends State<ShowQuestions>
                     ),
             ],
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: mediaQuery.width / 50),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: mediaQuery.width / 50),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: currentQuestionIndex == 0
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.spaceBetween,
               children: [
                 if (currentQuestionIndex > 0)
                   TextButton(
@@ -1571,22 +1540,18 @@ class _ShowQuestions extends State<ShowQuestions>
                 const SizedBox(width: 20.0),
                 currentQuestionIndex < questions.length - 1 &&
                         questions[currentQuestionIndex + 1] != null
-                    ? Positioned(
-                        bottom: 00,
-                        right: 0,
-                        child: TextButton(
-                          onPressed: () {
-                            changeQuestion(
-                                (currentQuestionIndex + 1) % questions.length);
-                            setState(() {
-                              currentState = 0;
-                            });
-                          },
-                          child: const Text(
-                            'Next',
-                            style: TextStyle(
-                              color: Color.fromRGBO(37, 48, 106, 1),
-                            ),
+                    ? TextButton(
+                        onPressed: () {
+                          changeQuestion(
+                              (currentQuestionIndex + 1) % questions.length);
+                          setState(() {
+                            currentState = 0;
+                          });
+                        },
+                        child: const Text(
+                          'Next',
+                          style: TextStyle(
+                            color: Color.fromRGBO(37, 48, 106, 1),
                           ),
                         ),
                       )

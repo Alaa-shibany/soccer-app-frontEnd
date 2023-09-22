@@ -910,597 +910,583 @@ class _ShowQuestions extends State<ShowQuestions>
     ];
 
     final mediaQuery = MediaQuery.of(context).size;
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              child: Text(questions[currentQuestionIndex]!,
-                  key: ValueKey<String>(questions[currentQuestionIndex]!),
-                  style: TextStyle(
-                      fontSize: mediaQuery.width / 25,
-                      fontWeight: FontWeight.bold)),
-              transitionBuilder: (child, animation) {
-                final inAnimation = Tween<Offset>(
-                  begin: const Offset(4.0, 0.0),
-                  end: Offset.zero,
-                ).animate(animation);
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            child: Text(questions[currentQuestionIndex]!,
+                key: ValueKey<String>(questions[currentQuestionIndex]!),
+                style: TextStyle(
+                    fontSize: mediaQuery.width / 25,
+                    fontWeight: FontWeight.bold)),
+            transitionBuilder: (child, animation) {
+              final inAnimation = Tween<Offset>(
+                begin: const Offset(4.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation);
 
-                final outAnimation = Tween<Offset>(
-                  begin: const Offset(-4.0, 0.0),
-                  end: Offset.zero,
-                ).animate(animation);
+              final outAnimation = Tween<Offset>(
+                begin: const Offset(-4.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation);
 
-                return SlideTransition(
-                  position: currentState == 0 ? inAnimation : outAnimation,
-                  child: child,
-                );
-              },
-            ),
-            SizedBox(height: mediaQuery.width / 50),
-            widget.viewMatchInfo['userPrediction'] == null
-                ? Stack(
-                    children: [
-                      currentQuestionIndex == 0
-                          //first question
-                          ? Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: mediaQuery.width / 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: Text(
-                                          '1',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: mediaQuery.width / 20),
-                                        ),
-                                        color: circle1Q1Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle1Q1Pressed = true;
-                                            circle2Q1Pressed = false;
-                                            circle3Q1Pressed = false;
-                                            firstAnswer = 1;
-                                          });
-                                        },
+              return SlideTransition(
+                position: currentState == 0 ? inAnimation : outAnimation,
+                child: child,
+              );
+            },
+          ),
+          SizedBox(height: mediaQuery.width / 50),
+          widget.viewMatchInfo['userPrediction'] == null
+              ? Stack(
+                  children: [
+                    currentQuestionIndex == 0
+                        //first question
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: mediaQuery.width / 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: Text(
+                                        '1',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: mediaQuery.width / 20),
                                       ),
-                                      Text(widget.viewMatchInfo['firstTeam']
-                                          ['name']),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: Text(
-                                          'X',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: mediaQuery.width / 20),
-                                        ),
-                                        color: circle2Q1Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle2Q1Pressed = true;
-                                            circle1Q1Pressed = false;
-                                            circle3Q1Pressed = false;
-                                            firstAnswer = 0;
-                                          });
-                                        },
+                                      color: circle1Q1Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle1Q1Pressed = true;
+                                          circle2Q1Pressed = false;
+                                          circle3Q1Pressed = false;
+                                          firstAnswer = 1;
+                                        });
+                                      },
+                                    ),
+                                    Text(widget.viewMatchInfo['firstTeam']
+                                        ['name']),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: Text(
+                                        'X',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: mediaQuery.width / 20),
                                       ),
-                                      const Text('Draw')
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: Text(
-                                          '2',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: mediaQuery.width / 20),
-                                        ),
-                                        color: circle3Q1Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle3Q1Pressed = true;
-                                            circle1Q1Pressed = false;
-                                            circle2Q1Pressed = false;
-                                            firstAnswer = 2;
-                                          });
-                                        },
+                                      color: circle2Q1Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle2Q1Pressed = true;
+                                          circle1Q1Pressed = false;
+                                          circle3Q1Pressed = false;
+                                          firstAnswer = 0;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Draw')
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: Text(
+                                        '2',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: mediaQuery.width / 20),
                                       ),
-                                      Text(widget.viewMatchInfo['secondTeam']
-                                          ['name']),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(
-                              height: 0,
+                                      color: circle3Q1Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle3Q1Pressed = true;
+                                          circle1Q1Pressed = false;
+                                          circle2Q1Pressed = false;
+                                          firstAnswer = 2;
+                                        });
+                                      },
+                                    ),
+                                    Text(widget.viewMatchInfo['secondTeam']
+                                        ['name']),
+                                  ],
+                                ),
+                              ],
                             ),
-                      currentQuestionIndex == 1
-                          //second question
-                          ? Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: mediaQuery.width / 4),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: const SizedBox(
-                                          width: 0,
-                                        ),
-                                        color: circle1Q2Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle1Q2Pressed = true;
-                                            circle2Q2Pressed = false;
-                                            secondAnswer = 1;
-                                          });
-                                        },
-                                      ),
-                                      Text('Yes'),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: const SizedBox(
-                                          width: 0,
-                                        ),
-                                        color: circle2Q2Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle2Q2Pressed = true;
-                                            circle1Q2Pressed = false;
-                                            secondAnswer = 0;
-                                          });
-                                        },
-                                      ),
-                                      Text('No')
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(
-                              height: 0,
-                            ),
-                      currentQuestionIndex == 2
-                          //third question
-                          ? Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: mediaQuery.width / 4),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: const SizedBox(
-                                          width: 0,
-                                        ),
-                                        color: circle1Q3Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle1Q3Pressed = true;
-                                            circle2Q3Pressed = false;
-                                            thirdAnswer = 1;
-                                          });
-                                        },
-                                      ),
-                                      Text('Yes'),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: const SizedBox(
-                                          width: 0,
-                                        ),
-                                        color: circle2Q3Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle2Q3Pressed = true;
-                                            circle1Q3Pressed = false;
-                                            thirdAnswer = 0;
-                                          });
-                                        },
-                                      ),
-                                      Text('No')
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(
-                              height: 0,
-                            ),
-                      currentQuestionIndex == 3
-                          //fourth question
-                          ? Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: mediaQuery.width / 4),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: const SizedBox(
-                                          width: 0,
-                                        ),
-                                        color: circle1Q4Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle1Q4Pressed = true;
-                                            circle2Q4Pressed = false;
-                                            fourthAnswer = 1;
-                                          });
-                                        },
-                                      ),
-                                      Text('Yes'),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Circle(
-                                        widget: const SizedBox(
-                                          width: 0,
-                                        ),
-                                        color: circle2Q4Pressed
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        onPressed: () {
-                                          setState(() {
-                                            circle2Q4Pressed = true;
-                                            circle1Q4Pressed = false;
-                                            fourthAnswer = 0;
-                                          });
-                                        },
-                                      ),
-                                      Text('No')
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(
-                              height: 0,
-                            ),
-                    ],
-                  )
-                : Stack(
-                    children: [
-                      currentQuestionIndex == 0
-                          ? Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: mediaQuery.width / 40),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(widget.viewMatchInfo['firstTeam']
-                                          ['name']),
-                                      SizedBox(width: mediaQuery.width / 30),
-                                      Expanded(
-                                        flex: (55 * 100).toInt(),
-                                        child: _buildAnimatedPercentageBar(
-                                            ((widget.viewMatchInfo[
-                                                            'winnerIs1'] *
-                                                        100) /
-                                                    (widget.viewMatchInfo[
-                                                            'winnerIs1'] +
-                                                        widget.viewMatchInfo[
-                                                            'winnerIs0'] +
-                                                        widget.viewMatchInfo[
-                                                            'winnerIs2']))
-                                                .toString(),
-                                            (widget.viewMatchInfo['winnerIs1'] *
-                                                    100) /
-                                                (widget.viewMatchInfo[
-                                                        'winnerIs1'] +
-                                                    widget.viewMatchInfo[
-                                                        'winnerIs0'] +
-                                                    widget.viewMatchInfo[
-                                                        'winnerIs2']),
-                                            Colors.amber),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      const Text('Draw'),
-                                      SizedBox(width: mediaQuery.width / 30),
-                                      Expanded(
-                                        flex: (55 * 100).toInt(),
-                                        child: _buildAnimatedPercentageBar(
-                                            ((widget.viewMatchInfo[
-                                                            'winnerIs0'] *
-                                                        100) /
-                                                    (widget.viewMatchInfo[
-                                                            'winnerIs1'] +
-                                                        widget.viewMatchInfo[
-                                                            'winnerIs0'] +
-                                                        widget.viewMatchInfo[
-                                                            'winnerIs2']))
-                                                .toString(),
-                                            (widget.viewMatchInfo['winnerIs0'] *
-                                                    100) /
-                                                (widget.viewMatchInfo[
-                                                        'winnerIs1'] +
-                                                    widget.viewMatchInfo[
-                                                        'winnerIs0'] +
-                                                    widget.viewMatchInfo[
-                                                        'winnerIs2']),
-                                            Colors.red),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      Text(widget.viewMatchInfo['secondTeam']
-                                          ['name']),
-                                      SizedBox(width: mediaQuery.width / 30),
-                                      Expanded(
-                                        child: _buildAnimatedPercentageBar(
-                                            ((widget.viewMatchInfo[
-                                                            'winnerIs2'] *
-                                                        100) /
-                                                    (widget.viewMatchInfo[
-                                                            'winnerIs1'] +
-                                                        widget.viewMatchInfo[
-                                                            'winnerIs0'] +
-                                                        widget.viewMatchInfo[
-                                                            'winnerIs2']))
-                                                .toString(),
-                                            (widget.viewMatchInfo['winnerIs2'] *
-                                                    100) /
-                                                (widget.viewMatchInfo[
-                                                        'winnerIs1'] +
-                                                    widget.viewMatchInfo[
-                                                        'winnerIs0'] +
-                                                    widget.viewMatchInfo[
-                                                        'winnerIs2']),
-                                            Colors.purple),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(
-                              width: 0,
-                            ),
-                      currentQuestionIndex == 1
-                          ? Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: mediaQuery.width / 40),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text('Yes'),
-                                      SizedBox(width: mediaQuery.width / 30),
-                                      Expanded(
-                                        flex: (55 * 100).toInt(),
-                                        child: _buildAnimatedPercentageBar(
-                                            ((widget.viewMatchInfo['fqIsYes'] *
-                                                        100) /
-                                                    (widget.viewMatchInfo[
-                                                            'fqIsYes'] +
-                                                        widget.viewMatchInfo[
-                                                            'fqIsNo']))
-                                                .toString(),
-                                            (widget.viewMatchInfo['fqIsYes'] *
-                                                    100) /
-                                                (widget.viewMatchInfo[
-                                                        'fqIsYes'] +
-                                                    widget.viewMatchInfo[
-                                                        'fqIsNo']),
-                                            Colors.amber),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      const Text('No'),
-                                      SizedBox(width: mediaQuery.width / 30),
-                                      Expanded(
-                                        flex: (55 * 100).toInt(),
-                                        child: _buildAnimatedPercentageBar(
-                                            ((widget.viewMatchInfo['fqIsNo'] *
-                                                        100) /
-                                                    (widget.viewMatchInfo[
-                                                            'fqIsYes'] +
-                                                        widget.viewMatchInfo[
-                                                            'fqIsNo']))
-                                                .toString(),
-                                            (widget.viewMatchInfo['fqIsNo'] *
-                                                    100) /
-                                                (widget.viewMatchInfo[
-                                                        'fqIsYes'] +
-                                                    widget.viewMatchInfo[
-                                                        'fqIsNo']),
-                                            Colors.red),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(
-                              width: 0,
-                            ),
-                      currentQuestionIndex == 2
-                          ? Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: mediaQuery.width / 40),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text('Yes'),
-                                      SizedBox(width: mediaQuery.width / 30),
-                                      Expanded(
-                                        flex: (55 * 100).toInt(),
-                                        child: _buildAnimatedPercentageBar(
-                                            ((widget.viewMatchInfo['sqIsYes'] *
-                                                        100) /
-                                                    (widget.viewMatchInfo[
-                                                            'sqIsYes'] +
-                                                        widget.viewMatchInfo[
-                                                            'sqIsNo']))
-                                                .toString(),
-                                            (widget.viewMatchInfo['sqIsYes'] *
-                                                    100) /
-                                                (widget.viewMatchInfo[
-                                                        'sqIsYes'] +
-                                                    widget.viewMatchInfo[
-                                                        'sqIsNo']),
-                                            Colors.amber),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      const Text('No'),
-                                      SizedBox(width: mediaQuery.width / 30),
-                                      Expanded(
-                                        flex: (55 * 100).toInt(),
-                                        child: _buildAnimatedPercentageBar(
-                                            ((widget.viewMatchInfo['sqIsNo'] *
-                                                        100) /
-                                                    (widget.viewMatchInfo[
-                                                            'sqIsYes'] +
-                                                        widget.viewMatchInfo[
-                                                            'sqIsNo']))
-                                                .toString(),
-                                            (widget.viewMatchInfo['sqIsNo'] *
-                                                    100) /
-                                                (widget.viewMatchInfo[
-                                                        'sqIsYes'] +
-                                                    widget.viewMatchInfo[
-                                                        'sqIsNo']),
-                                            Colors.red),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(
-                              width: 0,
-                            ),
-                    ],
-                  ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: mediaQuery.width / 50),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (currentQuestionIndex > 0)
-                    TextButton(
-                      onPressed: () {
-                        changeQuestion(currentQuestionIndex - 1);
-                        setState(() {
-                          currentState = 1;
-                        });
-                      },
-                      child: const Text(
-                        'Previous',
-                        style: TextStyle(color: Color.fromRGBO(37, 48, 106, 1)),
-                      ),
-                    ),
-                  const SizedBox(width: 20.0),
-                  currentQuestionIndex < questions.length - 1 &&
-                          questions[currentQuestionIndex + 1] != null
-                      ? Positioned(
-                          bottom: 00,
-                          right: 0,
-                          child: TextButton(
-                            onPressed: () {
-                              changeQuestion((currentQuestionIndex + 1) %
-                                  questions.length);
-                              setState(() {
-                                currentState = 0;
-                              });
-                            },
-                            child: const Text(
-                              'Next',
-                              style: TextStyle(
-                                color: Color.fromRGBO(37, 48, 106, 1),
-                              ),
-                            ),
+                          )
+                        : const SizedBox(
+                            height: 0,
                           ),
-                        )
-                      : widget.viewMatchInfo['userPrediction'] == null
-                          ? ElevatedButton(
-                              onPressed: () {
-                                if (widget.viewMatchInfo['userPrediction'] ==
-                                    null) {
-                                  done();
-                                } else {
-                                  print('hello');
-                                }
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        const Color.fromRGBO(37, 48, 106, 1)),
-                              ),
-                              child: const Text(
-                                'Done',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            )
-                          : const SizedBox(
-                              height: 0,
-                            )
-                ],
-              ),
+                    currentQuestionIndex == 1
+                        //second question
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: mediaQuery.width / 4),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: const SizedBox(
+                                        width: 0,
+                                      ),
+                                      color: circle1Q2Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle1Q2Pressed = true;
+                                          circle2Q2Pressed = false;
+                                          secondAnswer = 1;
+                                        });
+                                      },
+                                    ),
+                                    Text('Yes'),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: const SizedBox(
+                                        width: 0,
+                                      ),
+                                      color: circle2Q2Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle2Q2Pressed = true;
+                                          circle1Q2Pressed = false;
+                                          secondAnswer = 0;
+                                        });
+                                      },
+                                    ),
+                                    Text('No')
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(
+                            height: 0,
+                          ),
+                    currentQuestionIndex == 2
+                        //third question
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: mediaQuery.width / 4),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: const SizedBox(
+                                        width: 0,
+                                      ),
+                                      color: circle1Q3Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle1Q3Pressed = true;
+                                          circle2Q3Pressed = false;
+                                          thirdAnswer = 1;
+                                        });
+                                      },
+                                    ),
+                                    Text('Yes'),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: const SizedBox(
+                                        width: 0,
+                                      ),
+                                      color: circle2Q3Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle2Q3Pressed = true;
+                                          circle1Q3Pressed = false;
+                                          thirdAnswer = 0;
+                                        });
+                                      },
+                                    ),
+                                    Text('No')
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(
+                            height: 0,
+                          ),
+                    currentQuestionIndex == 3
+                        //fourth question
+                        ? Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: mediaQuery.width / 4),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: const SizedBox(
+                                        width: 0,
+                                      ),
+                                      color: circle1Q4Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle1Q4Pressed = true;
+                                          circle2Q4Pressed = false;
+                                          fourthAnswer = 1;
+                                        });
+                                      },
+                                    ),
+                                    Text('Yes'),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Circle(
+                                      widget: const SizedBox(
+                                        width: 0,
+                                      ),
+                                      color: circle2Q4Pressed
+                                          ? Colors.green
+                                          : Colors.grey,
+                                      onPressed: () {
+                                        setState(() {
+                                          circle2Q4Pressed = true;
+                                          circle1Q4Pressed = false;
+                                          fourthAnswer = 0;
+                                        });
+                                      },
+                                    ),
+                                    Text('No')
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(
+                            height: 0,
+                          ),
+                  ],
+                )
+              : Stack(
+                  children: [
+                    currentQuestionIndex == 0
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: mediaQuery.width / 40),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(widget.viewMatchInfo['firstTeam']
+                                        ['name']),
+                                    SizedBox(width: mediaQuery.width / 30),
+                                    Expanded(
+                                      flex: (55 * 100).toInt(),
+                                      child: _buildAnimatedPercentageBar(
+                                          ((widget.viewMatchInfo['winnerIs1'] *
+                                                      100) /
+                                                  (widget.viewMatchInfo[
+                                                          'winnerIs1'] +
+                                                      widget.viewMatchInfo[
+                                                          'winnerIs0'] +
+                                                      widget.viewMatchInfo[
+                                                          'winnerIs2']))
+                                              .toString(),
+                                          (widget.viewMatchInfo['winnerIs1'] *
+                                                  100) /
+                                              (widget.viewMatchInfo[
+                                                      'winnerIs1'] +
+                                                  widget.viewMatchInfo[
+                                                      'winnerIs0'] +
+                                                  widget.viewMatchInfo[
+                                                      'winnerIs2']),
+                                          Colors.amber),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    const Text('Draw'),
+                                    SizedBox(width: mediaQuery.width / 30),
+                                    Expanded(
+                                      flex: (55 * 100).toInt(),
+                                      child: _buildAnimatedPercentageBar(
+                                          ((widget.viewMatchInfo['winnerIs0'] *
+                                                      100) /
+                                                  (widget.viewMatchInfo[
+                                                          'winnerIs1'] +
+                                                      widget.viewMatchInfo[
+                                                          'winnerIs0'] +
+                                                      widget.viewMatchInfo[
+                                                          'winnerIs2']))
+                                              .toString(),
+                                          (widget.viewMatchInfo['winnerIs0'] *
+                                                  100) /
+                                              (widget.viewMatchInfo[
+                                                      'winnerIs1'] +
+                                                  widget.viewMatchInfo[
+                                                      'winnerIs0'] +
+                                                  widget.viewMatchInfo[
+                                                      'winnerIs2']),
+                                          Colors.red),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    Text(widget.viewMatchInfo['secondTeam']
+                                        ['name']),
+                                    SizedBox(width: mediaQuery.width / 30),
+                                    Expanded(
+                                      child: _buildAnimatedPercentageBar(
+                                          ((widget.viewMatchInfo['winnerIs2'] *
+                                                      100) /
+                                                  (widget.viewMatchInfo[
+                                                          'winnerIs1'] +
+                                                      widget.viewMatchInfo[
+                                                          'winnerIs0'] +
+                                                      widget.viewMatchInfo[
+                                                          'winnerIs2']))
+                                              .toString(),
+                                          (widget.viewMatchInfo['winnerIs2'] *
+                                                  100) /
+                                              (widget.viewMatchInfo[
+                                                      'winnerIs1'] +
+                                                  widget.viewMatchInfo[
+                                                      'winnerIs0'] +
+                                                  widget.viewMatchInfo[
+                                                      'winnerIs2']),
+                                          Colors.purple),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(
+                            width: 0,
+                          ),
+                    currentQuestionIndex == 1
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: mediaQuery.width / 40),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text('Yes'),
+                                    SizedBox(width: mediaQuery.width / 30),
+                                    Expanded(
+                                      flex: (55 * 100).toInt(),
+                                      child: _buildAnimatedPercentageBar(
+                                          ((widget.viewMatchInfo['fqIsYes'] *
+                                                      100) /
+                                                  (widget.viewMatchInfo[
+                                                          'fqIsYes'] +
+                                                      widget.viewMatchInfo[
+                                                          'fqIsNo']))
+                                              .toString(),
+                                          (widget.viewMatchInfo['fqIsYes'] *
+                                                  100) /
+                                              (widget.viewMatchInfo['fqIsYes'] +
+                                                  widget
+                                                      .viewMatchInfo['fqIsNo']),
+                                          Colors.amber),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    const Text('No'),
+                                    SizedBox(width: mediaQuery.width / 30),
+                                    Expanded(
+                                      flex: (55 * 100).toInt(),
+                                      child: _buildAnimatedPercentageBar(
+                                          ((widget.viewMatchInfo['fqIsNo'] *
+                                                      100) /
+                                                  (widget.viewMatchInfo[
+                                                          'fqIsYes'] +
+                                                      widget.viewMatchInfo[
+                                                          'fqIsNo']))
+                                              .toString(),
+                                          (widget.viewMatchInfo['fqIsNo'] *
+                                                  100) /
+                                              (widget.viewMatchInfo['fqIsYes'] +
+                                                  widget
+                                                      .viewMatchInfo['fqIsNo']),
+                                          Colors.red),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(
+                            width: 0,
+                          ),
+                    currentQuestionIndex == 2
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: mediaQuery.width / 40),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text('Yes'),
+                                    SizedBox(width: mediaQuery.width / 30),
+                                    Expanded(
+                                      flex: (55 * 100).toInt(),
+                                      child: _buildAnimatedPercentageBar(
+                                          ((widget.viewMatchInfo['sqIsYes'] *
+                                                      100) /
+                                                  (widget.viewMatchInfo[
+                                                          'sqIsYes'] +
+                                                      widget.viewMatchInfo[
+                                                          'sqIsNo']))
+                                              .toString(),
+                                          (widget.viewMatchInfo['sqIsYes'] *
+                                                  100) /
+                                              (widget.viewMatchInfo['sqIsYes'] +
+                                                  widget
+                                                      .viewMatchInfo['sqIsNo']),
+                                          Colors.amber),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    const Text('No'),
+                                    SizedBox(width: mediaQuery.width / 30),
+                                    Expanded(
+                                      flex: (55 * 100).toInt(),
+                                      child: _buildAnimatedPercentageBar(
+                                          ((widget.viewMatchInfo['sqIsNo'] *
+                                                      100) /
+                                                  (widget.viewMatchInfo[
+                                                          'sqIsYes'] +
+                                                      widget.viewMatchInfo[
+                                                          'sqIsNo']))
+                                              .toString(),
+                                          (widget.viewMatchInfo['sqIsNo'] *
+                                                  100) /
+                                              (widget.viewMatchInfo['sqIsYes'] +
+                                                  widget
+                                                      .viewMatchInfo['sqIsNo']),
+                                          Colors.red),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(
+                            width: 0,
+                          ),
+                  ],
+                ),
+          SizedBox(
+            height: mediaQuery.height / 70,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: mediaQuery.width / 30),
+            child: Row(
+              mainAxisAlignment: currentQuestionIndex == 0
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.spaceBetween,
+              children: [
+                if (currentQuestionIndex > 0)
+                  TextButton(
+                    onPressed: () {
+                      changeQuestion(currentQuestionIndex - 1);
+                      setState(() {
+                        currentState = 1;
+                      });
+                    },
+                    child: const Text(
+                      'Previous',
+                      style: TextStyle(color: Color.fromRGBO(37, 48, 106, 1)),
+                    ),
+                  ),
+                currentQuestionIndex < questions.length - 1 &&
+                        questions[currentQuestionIndex + 1] != null
+                    ? TextButton(
+                        onPressed: () {
+                          changeQuestion(
+                              (currentQuestionIndex + 1) % questions.length);
+                          setState(() {
+                            currentState = 0;
+                          });
+                        },
+                        child: const Text(
+                          'Next',
+                          style: TextStyle(
+                            color: Color.fromRGBO(37, 48, 106, 1),
+                          ),
+                        ),
+                      )
+                    : widget.viewMatchInfo['userPrediction'] == null
+                        ? ElevatedButton(
+                            onPressed: () {
+                              if (widget.viewMatchInfo['userPrediction'] ==
+                                  null) {
+                                done();
+                              } else {
+                                print('hello');
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color.fromRGBO(37, 48, 106, 1)),
+                            ),
+                            child: const Text(
+                              'Done',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        : const SizedBox(
+                            height: 0,
+                          )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -190,30 +190,24 @@ class _TestState extends State<Test> {
                   ), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                   painter: Background(),
                 ),
-                Expanded(
-                  child: ListView(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        primary: false,
-                        padding: EdgeInsets.only(top: 20),
-                        itemCount: tabelInfo.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            child: SoccerTableLeague(
-                              id: -1,
-                              mediaQuery: mediaQuery,
-                              leagueName: tabelInfo.keys.elementAt(index),
-                              teams: tabelInfo.values.elementAt(index),
-                            ),
-                          );
-                        },
+                ListView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  padding: EdgeInsets.only(top: 20),
+                  itemCount: tabelInfo.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      child: SoccerTableLeague(
+                        id: -1,
+                        mediaQuery: mediaQuery,
+                        leagueName: tabelInfo.keys.elementAt(index),
+                        teams: tabelInfo.values.elementAt(index),
                       ),
-                      SizedBox(
-                        height: mediaQuery.height / 20,
-                      )
-                    ],
-                  ),
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: mediaQuery.height / 20,
                 ),
               ],
             ),

@@ -236,415 +236,396 @@ class SlidesForTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: SizedBox(
-        width: double.infinity,
-        height: mediaQuery.height,
-        child: TabBarView(
-          controller: controller,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    finishedMatches.isEmpty
-                        ? const SizedBox(
-                            height: 0,
-                          )
-                        : Container(
-                            padding: EdgeInsets.all(mediaQuery.width / 90),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(15),
-                                  bottomRight: Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black45,
-                                  offset: Offset(0, 3),
-                                  blurRadius: 8,
-                                ),
-                              ],
+      child: TabBarView(
+        controller: controller,
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                finishedMatches.isEmpty
+                    ? const SizedBox(
+                        height: 0,
+                      )
+                    : Container(
+                        padding: EdgeInsets.all(mediaQuery.width / 90),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black45,
+                              offset: Offset(0, 3),
+                              blurRadius: 8,
                             ),
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              primary: false,
-                              shrinkWrap: true,
-                              reverse: true,
-                              itemCount: finishedMatches.length > 6
-                                  ? 6
-                                  : finishedMatches.length,
-                              itemBuilder: (context, index) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    ShowFinishedMatchScreen.routName,
-                                    arguments: finishedMatches.reversed
-                                        .elementAt(index)['id'],
-                                  );
-                                },
-                                child: MatchWidget(
-                                  matchType: 1,
-                                  teamLogoUrl1: finishedMatches.reversed
-                                      .elementAt(index)['first_team']['logo'],
-                                  teamLogoUrl2: finishedMatches.reversed
-                                      .elementAt(index)['second_team']['logo'],
-                                  teamName1: finishedMatches.reversed
-                                      .elementAt(index)['first_team']['name'],
-                                  teamName2: finishedMatches.reversed
-                                      .elementAt(index)['second_team']['name'],
-                                  center: Container(
-                                    margin: EdgeInsets.only(
-                                        top: mediaQuery.width / 70),
-                                    child: Column(
+                          ],
+                        ),
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          reverse: true,
+                          itemCount: finishedMatches.length > 6
+                              ? 6
+                              : finishedMatches.length,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                ShowFinishedMatchScreen.routName,
+                                arguments: finishedMatches.reversed
+                                    .elementAt(index)['id'],
+                              );
+                            },
+                            child: MatchWidget(
+                              matchType: 1,
+                              teamLogoUrl1: finishedMatches.reversed
+                                  .elementAt(index)['first_team']['logo'],
+                              teamLogoUrl2: finishedMatches.reversed
+                                  .elementAt(index)['second_team']['logo'],
+                              teamName1: finishedMatches.reversed
+                                  .elementAt(index)['first_team']['name'],
+                              teamName2: finishedMatches.reversed
+                                  .elementAt(index)['second_team']['name'],
+                              center: Container(
+                                margin:
+                                    EdgeInsets.only(top: mediaQuery.width / 70),
+                                child: Column(
+                                  children: [
+                                    Row(
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              Provider.of<AuthServer>(context,
-                                                      listen: false)
-                                                  .finishedMatches
-                                                  .reversed
-                                                  .elementAt(
-                                                      index)['firstTeamScore']
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize:
-                                                      mediaQuery.width / 30),
-                                            ),
-                                            SizedBox(
-                                              width: mediaQuery.width / 70,
-                                            ),
-                                            Text(
-                                              ' - ',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: mediaQuery.width / 30,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: mediaQuery.width / 70,
-                                            ),
-                                            Text(
-                                              Provider.of<AuthServer>(context,
-                                                      listen: false)
-                                                  .finishedMatches
-                                                  .reversed
-                                                  .elementAt(
-                                                      index)['secondTeamScore']
-                                                  .toString(),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: mediaQuery.width / 30,
-                                              ),
-                                            ),
-                                          ],
+                                        Text(
+                                          Provider.of<AuthServer>(context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .reversed
+                                              .elementAt(
+                                                  index)['firstTeamScore']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: mediaQuery.width / 30),
+                                        ),
+                                        SizedBox(
+                                          width: mediaQuery.width / 70,
                                         ),
                                         Text(
-                                          finishedMatches.reversed
-                                              .elementAt(index)['date'],
+                                          ' - ',
                                           style: TextStyle(
-                                              fontSize: mediaQuery.width / 50,
-                                              color: const Color.fromARGB(
-                                                  255, 49, 49, 49)),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: mediaQuery.width / 30,
+                                          ),
                                         ),
-                                        finishedMatches.reversed.elementAt(
-                                                    index)['league'] ==
-                                                1
-                                            ? Row(
-                                                children: [
-                                                  Text(
-                                                    'League',
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            mediaQuery.height /
-                                                                90,
-                                                        color: Colors.grey),
-                                                  ),
-                                                  Image(
-                                                    image: const AssetImage(
-                                                        'assets/images/matchLeague.png'),
-                                                    height:
-                                                        mediaQuery.height / 70,
-                                                  ),
-                                                ],
-                                              )
-                                            : Text(
-                                                'Friendly',
+                                        SizedBox(
+                                          width: mediaQuery.width / 70,
+                                        ),
+                                        Text(
+                                          Provider.of<AuthServer>(context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .reversed
+                                              .elementAt(
+                                                  index)['secondTeamScore']
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: mediaQuery.width / 30,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      finishedMatches.reversed
+                                          .elementAt(index)['date'],
+                                      style: TextStyle(
+                                          fontSize: mediaQuery.width / 50,
+                                          color: const Color.fromARGB(
+                                              255, 49, 49, 49)),
+                                    ),
+                                    finishedMatches.reversed
+                                                .elementAt(index)['league'] ==
+                                            1
+                                        ? Row(
+                                            children: [
+                                              Text(
+                                                'League',
                                                 style: TextStyle(
                                                     fontSize:
                                                         mediaQuery.height / 90,
                                                     color: Colors.grey),
                                               ),
-                                      ],
-                                    ),
-                                  ),
-                                  user: AuthServer.userData!,
-                                  customWidget: const SizedBox(
-                                    width: 0,
-                                  ),
-                                  mediaQuery: mediaQuery,
+                                              Image(
+                                                image: const AssetImage(
+                                                    'assets/images/matchLeague.png'),
+                                                height: mediaQuery.height / 70,
+                                              ),
+                                            ],
+                                          )
+                                        : Text(
+                                            'Friendly',
+                                            style: TextStyle(
+                                                fontSize:
+                                                    mediaQuery.height / 90,
+                                                color: Colors.grey),
+                                          ),
+                                  ],
                                 ),
                               ),
+                              user: AuthServer.userData!,
+                              customWidget: const SizedBox(
+                                width: 0,
+                              ),
+                              mediaQuery: mediaQuery,
                             ),
                           ),
-                    SizedBox(
-                      height: mediaQuery.width / 20,
-                    ),
-                    unFinishedMatches.isEmpty
-                        ? const SizedBox(
-                            height: 0,
-                          )
-                        : Container(
-                            padding: EdgeInsets.all(mediaQuery.width / 40),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black45,
-                                  offset: Offset(0, 3),
-                                  blurRadius: 8,
-                                ),
-                              ],
+                        ),
+                      ),
+                SizedBox(
+                  height: mediaQuery.width / 20,
+                ),
+                unFinishedMatches.isEmpty
+                    ? const SizedBox(
+                        height: 0,
+                      )
+                    : Container(
+                        padding: EdgeInsets.all(mediaQuery.width / 40),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black45,
+                              offset: Offset(0, 3),
+                              blurRadius: 8,
                             ),
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              primary: false,
-                              shrinkWrap: true,
-                              itemCount: unFinishedMatches.length > 10
-                                  ? 10
-                                  : unFinishedMatches.length,
-                              itemBuilder: (context, index) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    ShowUnFinishedMatchScreen.routName,
-                                    arguments: unFinishedMatches[index]['id'],
-                                  );
-                                },
-                                child: MatchWidget(
-                                  matchType: 1,
-                                  teamLogoUrl1: unFinishedMatches[index]
-                                      ['first_team']['logo'],
-                                  teamLogoUrl2: unFinishedMatches[index]
-                                      ['second_team']['logo'],
-                                  teamName1: unFinishedMatches[index]
-                                      ['first_team']['name'],
-                                  teamName2: unFinishedMatches[index]
-                                      ['second_team']['name'],
-                                  center: Column(
-                                    children: [
-                                      Text(
-                                        unFinishedMatches[index]['date'],
-                                        style: TextStyle(
-                                            fontSize: mediaQuery.height / 80,
-                                            color: Colors.grey),
-                                      ),
-                                      unFinishedMatches[index]['league'] == 1
-                                          ? Row(
-                                              children: [
-                                                Text(
-                                                  'League',
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          mediaQuery.height /
-                                                              90,
-                                                      color: Colors.grey),
-                                                ),
-                                                Image(
-                                                  image: const AssetImage(
-                                                      'assets/images/matchLeague.png'),
-                                                  height:
-                                                      mediaQuery.height / 70,
-                                                ),
-                                              ],
-                                            )
-                                          : Text(
-                                              'Friendly',
+                          ],
+                        ),
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount: unFinishedMatches.length > 10
+                              ? 10
+                              : unFinishedMatches.length,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                ShowUnFinishedMatchScreen.routName,
+                                arguments: unFinishedMatches[index]['id'],
+                              );
+                            },
+                            child: MatchWidget(
+                              matchType: 1,
+                              teamLogoUrl1: unFinishedMatches[index]
+                                  ['first_team']['logo'],
+                              teamLogoUrl2: unFinishedMatches[index]
+                                  ['second_team']['logo'],
+                              teamName1: unFinishedMatches[index]['first_team']
+                                  ['name'],
+                              teamName2: unFinishedMatches[index]['second_team']
+                                  ['name'],
+                              center: Column(
+                                children: [
+                                  Text(
+                                    unFinishedMatches[index]['date'],
+                                    style: TextStyle(
+                                        fontSize: mediaQuery.height / 80,
+                                        color: Colors.grey),
+                                  ),
+                                  unFinishedMatches[index]['league'] == 1
+                                      ? Row(
+                                          children: [
+                                            Text(
+                                              'League',
                                               style: TextStyle(
                                                   fontSize:
                                                       mediaQuery.height / 90,
                                                   color: Colors.grey),
                                             ),
-                                    ],
-                                  ),
-                                  user: AuthServer.userData!,
-                                  customWidget: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pushReplacementNamed(
-                                                StartMatchScreen.routName,
-                                                arguments:
-                                                    unFinishedMatches[index]
-                                                        ['id']);
-                                      },
-                                      child: SizedBox(
-                                          width: mediaQuery.width / 10,
-                                          height: mediaQuery.height / 35,
-                                          child: const Text(
-                                            'start',
-                                            textAlign: TextAlign.center,
-                                          ))),
-                                  mediaQuery: mediaQuery,
-                                ),
-                              ),
-                            ),
-                          ),
-                  ],
-                ),
-              ),
-            ),
-            finishedMatches.isEmpty
-                ? const SizedBox(
-                    height: 0,
-                  )
-                : Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(mediaQuery.width / 40),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(15),
-                                  bottomRight: Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black45,
-                                  offset: Offset(0, 3),
-                                  blurRadius: 8,
-                                ),
-                              ],
-                            ),
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              primary: false,
-                              shrinkWrap: true,
-                              itemCount: finishedMatches.length,
-                              itemBuilder: (context, index) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    ShowFinishedMatchScreen.routName,
-                                    arguments: finishedMatches[index]['id'],
-                                  );
-                                },
-                                child: MatchWidget(
-                                  matchType: 1,
-                                  teamLogoUrl1: finishedMatches.reversed
-                                      .elementAt(index)['first_team']['logo'],
-                                  teamLogoUrl2: finishedMatches.reversed
-                                      .elementAt(index)['second_team']['logo'],
-                                  teamName1: finishedMatches.reversed
-                                      .elementAt(index)['first_team']['name'],
-                                  teamName2: finishedMatches.reversed
-                                      .elementAt(index)['second_team']['name'],
-                                  center: Container(
-                                    margin: EdgeInsets.only(
-                                        top: mediaQuery.width / 70),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              Provider.of<AuthServer>(context,
-                                                      listen: false)
-                                                  .finishedMatches
-                                                  .reversed
-                                                  .elementAt(
-                                                      index)['firstTeamScore']
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize:
-                                                      mediaQuery.width / 30),
-                                            ),
-                                            SizedBox(
-                                              width: mediaQuery.width / 70,
-                                            ),
-                                            Text(
-                                              ' - ',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: mediaQuery.width / 30,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: mediaQuery.width / 70,
-                                            ),
-                                            Text(
-                                              Provider.of<AuthServer>(context,
-                                                      listen: false)
-                                                  .finishedMatches
-                                                  .reversed
-                                                  .elementAt(
-                                                      index)['secondTeamScore']
-                                                  .toString(),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: mediaQuery.width / 30,
-                                              ),
+                                            Image(
+                                              image: const AssetImage(
+                                                  'assets/images/matchLeague.png'),
+                                              height: mediaQuery.height / 70,
                                             ),
                                           ],
+                                        )
+                                      : Text(
+                                          'Friendly',
+                                          style: TextStyle(
+                                              fontSize: mediaQuery.height / 90,
+                                              color: Colors.grey),
+                                        ),
+                                ],
+                              ),
+                              user: AuthServer.userData!,
+                              customWidget: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushReplacementNamed(
+                                        StartMatchScreen.routName,
+                                        arguments: unFinishedMatches[index]
+                                            ['id']);
+                                  },
+                                  child: SizedBox(
+                                      width: mediaQuery.width / 10,
+                                      height: mediaQuery.height / 35,
+                                      child: const Text(
+                                        'start',
+                                        textAlign: TextAlign.center,
+                                      ))),
+                              mediaQuery: mediaQuery,
+                            ),
+                          ),
+                        ),
+                      ),
+              ],
+            ),
+          ),
+          finishedMatches.isEmpty
+              ? const SizedBox(
+                  height: 0,
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(mediaQuery.width / 40),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black45,
+                              offset: Offset(0, 3),
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount: finishedMatches.length,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                ShowFinishedMatchScreen.routName,
+                                arguments: finishedMatches[index]['id'],
+                              );
+                            },
+                            child: MatchWidget(
+                              matchType: 1,
+                              teamLogoUrl1: finishedMatches.reversed
+                                  .elementAt(index)['first_team']['logo'],
+                              teamLogoUrl2: finishedMatches.reversed
+                                  .elementAt(index)['second_team']['logo'],
+                              teamName1: finishedMatches.reversed
+                                  .elementAt(index)['first_team']['name'],
+                              teamName2: finishedMatches.reversed
+                                  .elementAt(index)['second_team']['name'],
+                              center: Container(
+                                margin:
+                                    EdgeInsets.only(top: mediaQuery.width / 70),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          Provider.of<AuthServer>(context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .reversed
+                                              .elementAt(
+                                                  index)['firstTeamScore']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: mediaQuery.width / 30),
+                                        ),
+                                        SizedBox(
+                                          width: mediaQuery.width / 70,
                                         ),
                                         Text(
-                                          finishedMatches.reversed
-                                              .elementAt(index)['date'],
+                                          ' - ',
                                           style: TextStyle(
-                                              fontSize: mediaQuery.width / 50,
-                                              color: const Color.fromARGB(
-                                                  255, 49, 49, 49)),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: mediaQuery.width / 30,
+                                          ),
                                         ),
-                                        finishedMatches.reversed.elementAt(
-                                                    index)['league'] ==
-                                                1
-                                            ? Row(
-                                                children: [
-                                                  Text(
-                                                    'League',
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            mediaQuery.height /
-                                                                90,
-                                                        color: Colors.grey),
-                                                  ),
-                                                  Image(
-                                                    image: const AssetImage(
-                                                        'assets/images/matchLeague.png'),
-                                                    height:
-                                                        mediaQuery.height / 70,
-                                                  ),
-                                                ],
-                                              )
-                                            : Text(
-                                                'Friendly',
+                                        SizedBox(
+                                          width: mediaQuery.width / 70,
+                                        ),
+                                        Text(
+                                          Provider.of<AuthServer>(context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .reversed
+                                              .elementAt(
+                                                  index)['secondTeamScore']
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: mediaQuery.width / 30,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      finishedMatches.reversed
+                                          .elementAt(index)['date'],
+                                      style: TextStyle(
+                                          fontSize: mediaQuery.width / 50,
+                                          color: const Color.fromARGB(
+                                              255, 49, 49, 49)),
+                                    ),
+                                    finishedMatches.reversed
+                                                .elementAt(index)['league'] ==
+                                            1
+                                        ? Row(
+                                            children: [
+                                              Text(
+                                                'League',
                                                 style: TextStyle(
                                                     fontSize:
                                                         mediaQuery.height / 90,
                                                     color: Colors.grey),
                                               ),
-                                      ],
-                                    ),
-                                  ),
-                                  user: AuthServer.userData!,
-                                  customWidget: const SizedBox(
-                                    width: 0,
-                                  ),
-                                  mediaQuery: mediaQuery,
+                                              Image(
+                                                image: const AssetImage(
+                                                    'assets/images/matchLeague.png'),
+                                                height: mediaQuery.height / 70,
+                                              ),
+                                            ],
+                                          )
+                                        : Text(
+                                            'Friendly',
+                                            style: TextStyle(
+                                                fontSize:
+                                                    mediaQuery.height / 90,
+                                                color: Colors.grey),
+                                          ),
+                                  ],
                                 ),
                               ),
+                              user: AuthServer.userData!,
+                              customWidget: const SizedBox(
+                                width: 0,
+                              ),
+                              mediaQuery: mediaQuery,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-          ],
-        ),
+                ),
+          Text('data')
+        ],
       ),
     );
   }
