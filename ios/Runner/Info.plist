@@ -20,8 +20,9 @@
         </dict>
     </dict>
 </dict>
-
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to capture photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo gallery to pick images.</string>
 	<key>CFBundleDevelopmentRegion</key>

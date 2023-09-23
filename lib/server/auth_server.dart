@@ -259,6 +259,7 @@ class AuthServer with ChangeNotifier {
           headers: {'Authorization': 'Bearer $myToken'},
         ),
       );
+      message = response.data['message'];
       notifyListeners();
       print('................................upload data info');
       print(response.data);

@@ -53,9 +53,10 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
         image: _image,
       )) {
         print('Yes');
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (context) => const AlertDialog(
             content: Text('Done you can move on with your life'),
           ),
         );
