@@ -240,7 +240,7 @@ class AuthServer with ChangeNotifier {
     }
   }
 
-  Future<void> uploadTeamImage({var id, File? image}) async {
+  Future<bool> uploadTeamImage({var id, File? image}) async {
     // ignore: unused_local_variable
     var body = {
       'image': image,
@@ -263,8 +263,10 @@ class AuthServer with ChangeNotifier {
       print('................................upload data info');
       print(response.data);
       print('................................');
+      return true;
     } catch (e) {
       print(e);
+      return false;
     }
   }
 

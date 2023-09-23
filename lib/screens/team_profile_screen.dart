@@ -43,22 +43,23 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
     } on PlatformException catch (e) {
       print(e);
     }
+    // ignore: use_build_context_synchronously
     var id = Provider.of<AuthServer>(context, listen: false).team()!.id;
+
     try {
-      await Provider.of<AuthServer>(context, listen: false).uploadTeamImage(
+      // ignore: use_build_context_synchronously
+      if (await Provider.of<AuthServer>(context, listen: false).uploadTeamImage(
         id: id,
         image: _image,
-      );
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> uploadImage() async {
-    _pickImage();
-    try {
-      await Provider.of<AuthServer>(context, listen: false)
-          .uploadTeamImage(id: 1, image: _image);
+      )) {
+        print('Yes');
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: Text('Done you can move on with your life'),
+          ),
+        );
+      }
     } catch (e) {
       print(e);
     }
