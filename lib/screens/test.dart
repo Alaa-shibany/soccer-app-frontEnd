@@ -193,7 +193,7 @@ class _TestState extends State<Test> {
                 ListView.builder(
                   shrinkWrap: true,
                   primary: false,
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 20, bottom: 50),
                   itemCount: tabelInfo.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(

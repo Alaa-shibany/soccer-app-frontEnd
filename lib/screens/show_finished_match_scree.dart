@@ -471,8 +471,9 @@ class SlidesForTabs extends StatelessWidget {
                                   margin: EdgeInsets.symmetric(
                                       horizontal: mediaQuery.width / 200,
                                       vertical: mediaQuery.width / 200),
-                                  padding:
-                                      EdgeInsets.all(mediaQuery.width / 20),
+                                  padding: EdgeInsets.only(
+                                      top: mediaQuery.width / 20,
+                                      bottom: mediaQuery.width / 20),
                                   width: mediaQuery.width / 2.3,
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
@@ -672,8 +673,9 @@ class SlidesForTabs extends StatelessWidget {
                                   margin: EdgeInsets.symmetric(
                                       horizontal: mediaQuery.width / 200,
                                       vertical: mediaQuery.width / 200),
-                                  padding:
-                                      EdgeInsets.all(mediaQuery.width / 20),
+                                  padding: EdgeInsets.only(
+                                      top: mediaQuery.width / 20,
+                                      bottom: mediaQuery.width / 20),
                                   width: mediaQuery.width / 2.3,
                                   decoration: const BoxDecoration(
                                     color: Colors.white,

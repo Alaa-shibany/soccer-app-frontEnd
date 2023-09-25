@@ -277,7 +277,7 @@ class PlayerForTeam extends StatelessWidget with ChangeNotifier {
           width: double.infinity,
           height: mediaQuery.height / 15,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(37, 48, 106, 1),
+            color: const Color.fromRGBO(37, 48, 106, 1),
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(

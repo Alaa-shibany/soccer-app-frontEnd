@@ -999,7 +999,7 @@ class _StartMatchScreenState extends State<StartMatchScreen>
                                         ElevatedButton(
                                             onPressed: () =>
                                                 Navigator.of(context).pop(),
-                                            child: const Text('Cansle')),
+                                            child: const Text('Cancel')),
                                         SizedBox(
                                           width: mediaQuery.width / 10,
                                         ),
