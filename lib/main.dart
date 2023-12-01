@@ -1,3 +1,5 @@
+import 'package:soccer_app_frontend/screens/transfare_admin_screen.dart';
+
 import '../providers/Model_provider.dart';
 import '../providers/base_provider.dart';
 import '../providers/onboarding_proivder.dart';
@@ -99,6 +101,8 @@ class _MyAppState extends State<MyApp> {
                 const ShowFinishedMatchScreen(),
             ShowUnFinishedMatchScreen.routName: (context) =>
                 const ShowUnFinishedMatchScreen(),
+            adminTransfareScreen.routeName: (context) =>
+                const adminTransfareScreen(),
           },
         ),
       ),

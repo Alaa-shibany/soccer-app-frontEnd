@@ -221,7 +221,7 @@ class _StartMatchScreenState extends State<StartMatchScreen>
                                             children: [
                                               Image(
                                                 image: NetworkImage(
-                                                  '${imagesUrl.url}/${mathcInfoForAdmin['firstTeam']['logo']}',
+                                                  '${imagesUrl.url}${mathcInfoForAdmin['firstTeam']['logo']}',
                                                 ),
                                                 height: mediaQuery.width / 9,
                                                 fit: BoxFit.contain,
@@ -494,7 +494,7 @@ class _StartMatchScreenState extends State<StartMatchScreen>
                                       children: [
                                         Image(
                                           image: NetworkImage(
-                                            '${imagesUrl.url}/${mathcInfoForAdmin['firstTeam']['logo']}',
+                                            '${imagesUrl.url}${mathcInfoForAdmin['firstTeam']['logo']}',
                                           ),
                                           height: mediaQuery.width / 9,
                                           fit: BoxFit.contain,
@@ -558,7 +558,7 @@ class _StartMatchScreenState extends State<StartMatchScreen>
                                             children: [
                                               Image(
                                                 image: NetworkImage(
-                                                  '${imagesUrl.url}/${mathcInfoForAdmin['secondTeam']['logo']}',
+                                                  '${imagesUrl.url}${mathcInfoForAdmin['secondTeam']['logo']}',
                                                 ),
                                                 height: mediaQuery.width / 9,
                                                 fit: BoxFit.contain,
@@ -1353,7 +1353,7 @@ class AdminMatchHeader extends StatelessWidget {
             children: <Widget>[
               Image(
                 image: NetworkImage(
-                  '${imagesUrl.url}/${mathcInfoForAdmin['firstTeam']['logo']}',
+                  '${imagesUrl.url}${mathcInfoForAdmin['firstTeam']['logo']}',
                 ),
                 height: mediaQuery.width / 5,
                 fit: BoxFit.contain,
@@ -1394,7 +1394,7 @@ class AdminMatchHeader extends StatelessWidget {
               ),
               Image(
                 image: NetworkImage(
-                  '${imagesUrl.url}/${mathcInfoForAdmin['secondTeam']['logo']}',
+                  '${imagesUrl.url}${mathcInfoForAdmin['secondTeam']['logo']}',
                 ),
                 height: mediaQuery.width / 5,
                 fit: BoxFit.contain,

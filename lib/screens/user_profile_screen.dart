@@ -65,15 +65,52 @@ class _UserProfileScreenState extends State<UserProfileScreen>
               ? CustomScrollView(
                   slivers: <Widget>[
                     SliverAppBar(
+                      title: IconButton(
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              content:
+                                  const Text('Choose what do you want to do'),
+                              title: Text('Image picker'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Change image',
+                                    style: TextStyle(color: Colors.green),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Delete image',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                       leading: Builder(
-                        builder: (context) => IconButton(
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                          icon: const Icon(
-                            Icons.menu_rounded,
-                            color: Colors.white,
-                          ),
+                        builder: (context) => Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              icon: const Icon(
+                                Icons.menu_rounded,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       actions: [
@@ -245,7 +282,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                     child: Image(
                                       // height: mediaQuery.height / 30,
                                       image: NetworkImage(
-                                        '${imagesUrl.url}/${userData.team['logo']}',
+                                        '${imagesUrl.url}${userData.team['logo']}',
                                       ),
                                       fit: BoxFit.contain,
                                       alignment: Alignment.center,

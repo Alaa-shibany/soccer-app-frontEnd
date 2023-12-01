@@ -195,7 +195,7 @@ class _ShowUnFinishedMatchScreenState extends State<ShowUnFinishedMatchScreen>
                               children: <Widget>[
                                 Image(
                                   image: NetworkImage(
-                                    '${imagesUrl.url}/${viewMatchInfo['firstTeam']['logo']}',
+                                    '${imagesUrl.url}${viewMatchInfo['firstTeam']['logo']}',
                                   ),
                                   height: mediaQuery.width / 6,
                                   fit: BoxFit.contain,
@@ -383,7 +383,7 @@ class SlidesForTabs extends StatelessWidget {
                 Container(
                     margin: EdgeInsets.symmetric(
                         horizontal: mediaQuery.width / 200),
-                    height: mediaQuery.height / 4,
+                    // height: mediaQuery.height / 4,
                     padding: EdgeInsets.only(top: mediaQuery.width / 20),
                     width: double.infinity,
                     decoration: const BoxDecoration(
@@ -679,7 +679,7 @@ class SlidesForTabs extends StatelessWidget {
                             children: [
                               Image(
                                 image: NetworkImage(
-                                  '${imagesUrl.url}/${viewMatchInfo['secondTeam']['logo']}',
+                                  '${imagesUrl.url}${viewMatchInfo['secondTeam']['logo']}',
                                 ),
                                 height: mediaQuery.width / 11,
                                 fit: BoxFit.contain,
@@ -1222,9 +1222,8 @@ class _ShowQuestions extends State<ShowQuestions>
                                                           'winnerIs0'] +
                                                       widget.viewMatchInfo[
                                                           'winnerIs2']))
-                                              .toString(),
-                                          (widget.viewMatchInfo['winnerIs1'] *
-                                                  100) /
+                                              .toStringAsFixed(1),
+                                          (widget.viewMatchInfo['winnerIs1']) /
                                               (widget.viewMatchInfo[
                                                       'winnerIs1'] +
                                                   widget.viewMatchInfo[
@@ -1251,9 +1250,8 @@ class _ShowQuestions extends State<ShowQuestions>
                                                           'winnerIs0'] +
                                                       widget.viewMatchInfo[
                                                           'winnerIs2']))
-                                              .toString(),
-                                          (widget.viewMatchInfo['winnerIs0'] *
-                                                  100) /
+                                              .toStringAsFixed(1),
+                                          (widget.viewMatchInfo['winnerIs0']) /
                                               (widget.viewMatchInfo[
                                                       'winnerIs1'] +
                                                   widget.viewMatchInfo[
@@ -1280,9 +1278,8 @@ class _ShowQuestions extends State<ShowQuestions>
                                                           'winnerIs0'] +
                                                       widget.viewMatchInfo[
                                                           'winnerIs2']))
-                                              .toString(),
-                                          (widget.viewMatchInfo['winnerIs2'] *
-                                                  100) /
+                                              .toStringAsFixed(1),
+                                          (widget.viewMatchInfo['winnerIs2']) /
                                               (widget.viewMatchInfo[
                                                       'winnerIs1'] +
                                                   widget.viewMatchInfo[
@@ -1319,9 +1316,8 @@ class _ShowQuestions extends State<ShowQuestions>
                                                           'fqIsYes'] +
                                                       widget.viewMatchInfo[
                                                           'fqIsNo']))
-                                              .toString(),
-                                          (widget.viewMatchInfo['fqIsYes'] *
-                                                  100) /
+                                              .toStringAsFixed(1),
+                                          (widget.viewMatchInfo['fqIsYes']) /
                                               (widget.viewMatchInfo['fqIsYes'] +
                                                   widget
                                                       .viewMatchInfo['fqIsNo']),
@@ -1343,9 +1339,8 @@ class _ShowQuestions extends State<ShowQuestions>
                                                           'fqIsYes'] +
                                                       widget.viewMatchInfo[
                                                           'fqIsNo']))
-                                              .toString(),
-                                          (widget.viewMatchInfo['fqIsNo'] *
-                                                  100) /
+                                              .toStringAsFixed(1),
+                                          (widget.viewMatchInfo['fqIsNo']) /
                                               (widget.viewMatchInfo['fqIsYes'] +
                                                   widget
                                                       .viewMatchInfo['fqIsNo']),
@@ -1379,9 +1374,8 @@ class _ShowQuestions extends State<ShowQuestions>
                                                           'sqIsYes'] +
                                                       widget.viewMatchInfo[
                                                           'sqIsNo']))
-                                              .toString(),
-                                          (widget.viewMatchInfo['sqIsYes'] *
-                                                  100) /
+                                              .toStringAsFixed(1),
+                                          (widget.viewMatchInfo['sqIsYes']) /
                                               (widget.viewMatchInfo['sqIsYes'] +
                                                   widget
                                                       .viewMatchInfo['sqIsNo']),
@@ -1403,9 +1397,8 @@ class _ShowQuestions extends State<ShowQuestions>
                                                           'sqIsYes'] +
                                                       widget.viewMatchInfo[
                                                           'sqIsNo']))
-                                              .toString(),
-                                          (widget.viewMatchInfo['sqIsNo'] *
-                                                  100) /
+                                              .toStringAsFixed(1),
+                                          (widget.viewMatchInfo['sqIsNo']) /
                                               (widget.viewMatchInfo['sqIsYes'] +
                                                   widget
                                                       .viewMatchInfo['sqIsNo']),

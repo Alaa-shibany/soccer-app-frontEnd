@@ -35,7 +35,7 @@ class FinishedMatchWidget extends StatelessWidget {
               children: [
                 Image(
                   image: NetworkImage(
-                    '${imagesUrl.url}/${teamLogoUrl1}',
+                    '${imagesUrl.url}${teamLogoUrl1}',
                   ),
                   height: imageSize,
                   fit: BoxFit.contain,
@@ -65,7 +65,7 @@ class FinishedMatchWidget extends StatelessWidget {
               children: [
                 Image(
                   image: NetworkImage(
-                    '${imagesUrl.url}/${teamLogoUrl2}',
+                    '${imagesUrl.url}${teamLogoUrl2}',
                   ),
                   fit: BoxFit.contain,
                   height: imageSize,

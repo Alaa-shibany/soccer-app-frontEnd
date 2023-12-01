@@ -1,3 +1,6 @@
+import 'package:soccer_app_frontend/screens/part_tow_admin_screen.dart';
+import 'package:soccer_app_frontend/screens/shop_screen.dart';
+
 import '/models/league_part_settings.dart';
 import '/screens/all_matches_screen.dart';
 import '/screens/event_screen.dart';
@@ -9,6 +12,7 @@ import '/widgets/bottom%20_bar_with_circles.dart';
 import '/widgets/chatGPT_widget.dart';
 import '/widgets/finished_match_home_widget.dart';
 import '/widgets/navigation_drawer.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _isLoading = true;
     });
+    print('////////////////////////////////////////////////////');
+    print(Provider.of<AuthServer>(context, listen: false)
+        .leagueStatue()!
+        .currentStage);
+    print('////////////////////////////////////////////////////');
     try {
       await Provider.of<AuthServer>(context, listen: false).League();
       print(Provider.of<AuthServer>(context, listen: false)
@@ -48,11 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             LeaguePartSettings.isPartOneLocked = false;
           });
-        }
-        if (Provider.of<AuthServer>(context, listen: false)
+        } else if (Provider.of<AuthServer>(context, listen: false)
                 .leagueStatue()!
                 .currentStage ==
-            'PART TOW') {
+            'PART TWO') {
           setState(() {
             LeaguePartSettings.isPartOneLocked = false;
             LeaguePartSettings.isPartTowLocked = false;
@@ -111,6 +119,18 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ShopScreen(),
+                      ));
+                    },
+                    icon: Icon(
+                      Iconsax.shop5,
+                      color: AppColors.mainColor,
+                    ))
+              ],
             ),
             body: Stack(
               children: [
@@ -412,7 +432,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: mediaQuery.width / 6,
                                     ),
                                     TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) =>
+                                                PartTwoScreen(),
+                                          ));
+                                        },
                                         child: const Text('part tow lock')),
                                   ],
                                 )

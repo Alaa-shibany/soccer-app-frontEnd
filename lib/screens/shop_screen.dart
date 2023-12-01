@@ -1,47 +1,46 @@
-import '/screens/user_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:soccer_app_frontend/models/images_url.dart';
+import 'package:soccer_app_frontend/screens/transfare_admin_screen.dart';
+import 'package:soccer_app_frontend/screens/user_profile_screen.dart';
+import 'package:soccer_app_frontend/server/auth_server.dart';
+import 'package:soccer_app_frontend/widgets/app_bar_custom.dart';
 
 import '../common_widgets/BackgroundPaint.dart';
-import '../server/auth_server.dart';
-import '../widgets/app_bar_custom.dart';
 import '../widgets/navigation_drawer.dart';
 
-class BestStrikerScreen extends StatefulWidget {
-  const BestStrikerScreen({super.key});
+class ShopScreen extends StatefulWidget {
+  const ShopScreen({super.key});
 
   @override
-  State<BestStrikerScreen> createState() => _BestStrikerScreenState();
+  State<ShopScreen> createState() => _ShopScreenState();
 }
 
-class _BestStrikerScreenState extends State<BestStrikerScreen> {
+class _ShopScreenState extends State<ShopScreen> {
   bool _isLoading = false;
-  List<dynamic> bestStrikersList = [];
+  List bestPlayers = [];
   List<dynamic> searchHistory = [];
   Map<String, dynamic> tabelInfo = {};
 
   @override
   void initState() {
+    getData();
     super.initState();
-    getBestStrikers();
   }
 
-  Future<void> getBestStrikers() async {
+  Future<void> getData() async {
     setState(() {
       _isLoading = true;
     });
     try {
-      await Provider.of<AuthServer>(context, listen: false).BestStriker();
+      await Provider.of<AuthServer>(context, listen: false).getBestPlayers();
       setState(() {
-        bestStrikersList = Provider.of<AuthServer>(context, listen: false)
-            .BestStrikerM()!
-            .bestStrikerList;
-        for (int i = 0; i < bestStrikersList.length; i++) {
-          searchHistory.add(bestStrikersList[i]['name']);
+        bestPlayers = AuthServer.topPlayer;
+        for (int i = 0; i < bestPlayers.length; i++) {
+          searchHistory.add(bestPlayers[i]['name']);
         }
-
         _isLoading = false;
       });
     } catch (e) {
@@ -59,6 +58,11 @@ class _BestStrikerScreenState extends State<BestStrikerScreen> {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
+              title: Text(
+                'Player transfer market',
+                style: TextStyle(
+                    fontSize: mediaQuery.height / 50, color: Colors.white),
+              ),
               leading: Builder(
                 builder: (context) => IconButton(
                   onPressed: () {
@@ -94,7 +98,10 @@ class _BestStrikerScreenState extends State<BestStrikerScreen> {
                   ), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                   painter: Background(),
                 ),
-                const AppBarCustom(),
+                const Positioned(
+                  // top: 0,
+                  child: AppBarCustom(),
+                ),
                 Center(
                   child: Lottie.asset(
                       width: mediaQuery.width / 3,
@@ -105,8 +112,13 @@ class _BestStrikerScreenState extends State<BestStrikerScreen> {
           )
         : Scaffold(
             drawer: NavigationDrawerWidget(),
-            backgroundColor: Colors.transparent,
+            extendBodyBehindAppBar: true,
             appBar: AppBar(
+              title: Text(
+                'Player transfer market',
+                style: TextStyle(
+                    fontSize: mediaQuery.height / 50, color: Colors.white),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0,
               leading: Builder(
@@ -126,7 +138,7 @@ class _BestStrikerScreenState extends State<BestStrikerScreen> {
                     showSearch(
                         context: context,
                         delegate: MySearchDelegate(
-                            bestStrikersList: bestStrikersList,
+                            bestStrikersList: bestPlayers,
                             history:
                                 searchHistory.map((e) => e.toString()).toList(),
                             tabelInfo: tabelInfo,
@@ -161,81 +173,58 @@ class _BestStrikerScreenState extends State<BestStrikerScreen> {
                   painter: Background(),
                 ),
                 Column(
-                  children: <Widget>[
-                    Stack(
-                      children: [
-                        Container(
-                          // height: mediaQuery.height / 18,
-                          margin: EdgeInsets.only(
-                              right: mediaQuery.width / 20,
-                              left: mediaQuery.width / 20,
-                              top: mediaQuery.width / 12),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(4),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color.fromARGB(255, 0, 0, 0)
-                                    .withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(
-                                    0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: const ListTile(
-                            title: Text(
-                              'player name',
-                              style: TextStyle(
-                                color: Colors.black54,
-                              ),
-                            ),
-                            trailing: Text(
-                              'goals',
-                              style: TextStyle(
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  // mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const AppBarCustom(),
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  top: mediaQuery.height / 25,
-                                  bottom: mediaQuery.height / 11),
+                            SizedBox(
                               child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                primary: false,
+                                padding: const EdgeInsets.all(0),
                                 shrinkWrap: true,
-                                itemCount: bestStrikersList.length <= 20
-                                    ? bestStrikersList.length
-                                    : 20,
-                                itemBuilder: (context, index) =>
-                                    GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                        UserProfileScreen.routName,
-                                        arguments: bestStrikersList[index]
-                                            ['id']);
-                                  },
-                                  child: PlayerForTeam(
-                                    subtitle: bestStrikersList[index]['team']
-                                        ['name'],
-                                    mediaQuery: mediaQuery,
-                                    name: bestStrikersList[index]['name'],
-                                    goals: bestStrikersList[index]['goals']
-                                        .toString(),
-                                    number: (index + 1).toString(),
-                                  ),
-                                ),
+                                primary: false,
+                                itemCount: bestPlayers.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          UserProfileScreen.routName,
+                                          arguments: bestPlayers[index]['id']);
+                                    },
+                                    child: PlayerCard(
+                                        url:
+                                            '${imagesUrl.url}${bestPlayers[index]['team']['logo']}',
+                                        iconBtn: IconButton(
+                                          icon: Icon(
+                                            Icons.swap_horiz_rounded,
+                                            color: Colors.amber,
+                                            size: mediaQuery.height / 30,
+                                          ),
+                                          onPressed: () {
+                                            AuthServer.userData == 'admin'
+                                                ? Navigator.of(context)
+                                                    .pushNamed(
+                                                        adminTransfareScreen
+                                                            .routeName,
+                                                        arguments:
+                                                            bestPlayers[index]
+                                                                ['id'])
+                                                : null;
+                                          },
+                                        ),
+                                        mediaQuery: mediaQuery,
+                                        name: bestPlayers[index]['name'],
+                                        goals: bestPlayers[index]['score'] < 5
+                                            ? '5'
+                                            : bestPlayers[index]['score']
+                                                .toString(),
+                                        number: (index + 1).toString(),
+                                        subtitle:
+                                            '${bestPlayers[index]['team']['name']}'),
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -251,14 +240,16 @@ class _BestStrikerScreenState extends State<BestStrikerScreen> {
 }
 
 // ignore: must_be_immutable
-class PlayerForTeam extends StatelessWidget with ChangeNotifier {
-  PlayerForTeam({
+class PlayerCard extends StatelessWidget with ChangeNotifier {
+  PlayerCard({
     super.key,
     required this.mediaQuery,
     required this.name,
     required this.goals,
     required this.number,
     required this.subtitle,
+    required this.iconBtn,
+    required this.url,
   });
 
   final Size mediaQuery;
@@ -266,6 +257,8 @@ class PlayerForTeam extends StatelessWidget with ChangeNotifier {
   final String goals;
   final String number;
   final String subtitle;
+  final Widget iconBtn;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -357,26 +350,37 @@ class PlayerForTeam extends StatelessWidget with ChangeNotifier {
                   color: Color.fromRGBO(37, 48, 106, 1),
                   fontWeight: FontWeight.bold),
             ),
-            subtitle: Text(
-              subtitle,
-              style: const TextStyle(
-                color: Color.fromRGBO(37, 48, 106, 100),
-              ),
+            subtitle: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image(
+                  image: NetworkImage(
+                    url,
+                  ),
+                  height: mediaQuery.height / 50,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(
+                  width: mediaQuery.width / 30,
+                ),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    color: Color.fromRGBO(37, 48, 106, 100),
+                  ),
+                ),
+              ],
             ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image(
-                    image: const AssetImage('assets/images/ball.png'),
-                    height: mediaQuery.height / 40),
-                SizedBox(
-                  width: mediaQuery.width / 40,
-                ),
+                iconBtn,
                 Text(
                   goals,
-                  style: const TextStyle(
-                    color: Colors.black54,
-                  ),
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: MediaQuery.of(context).size.width / 30,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -441,11 +445,23 @@ class MySearchDelegate extends SearchDelegate {
         Navigator.of(context).pushNamed(UserProfileScreen.routName,
             arguments: resultPlayer['id']);
       },
-      child: PlayerForTeam(
+      child: PlayerCard(
+        url: '${imagesUrl.url}${resultPlayer['team']['logo']}',
+        iconBtn: IconButton(
+          icon: Icon(
+            Icons.swap_horiz_rounded,
+            color: Colors.amber,
+            size: mediaQuery.height / 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(adminTransfareScreen.routeName,
+                arguments: resultPlayer['id']);
+          },
+        ),
         subtitle: resultPlayer['team']['name'],
         mediaQuery: mediaQuery,
         name: resultPlayer['name'],
-        goals: resultPlayer['goals'].toString(),
+        goals: resultPlayer['score'].toString(),
         number: (index).toString(),
       ),
     );

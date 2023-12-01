@@ -43,7 +43,7 @@ class MatchWidget extends StatelessWidget {
             SizedBox(
               child: Text(
                 teamName1,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.end,
                 style: TextStyle(
@@ -57,7 +57,7 @@ class MatchWidget extends StatelessWidget {
             ),
             Image(
               image: NetworkImage(
-                '${imagesUrl.url}/${teamLogoUrl1}',
+                '${imagesUrl.url}${teamLogoUrl1}',
               ),
               height: imageSize,
               fit: BoxFit.contain,
@@ -72,7 +72,7 @@ class MatchWidget extends StatelessWidget {
             ),
             Image(
               image: NetworkImage(
-                '${imagesUrl.url}/${teamLogoUrl2}',
+                '${imagesUrl.url}${teamLogoUrl2}',
               ),
               fit: BoxFit.contain,
               height: imageSize,
@@ -85,8 +85,8 @@ class MatchWidget extends StatelessWidget {
               width: mediaQuery.width / 8,
               child: Text(
                 teamName2,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                // overflow: TextOverflow.ellipsis,
                 style:
                     TextStyle(fontWeight: FontWeight.bold, fontSize: textSize),
               ),

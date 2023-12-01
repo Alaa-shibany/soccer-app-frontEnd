@@ -263,11 +263,12 @@ class SlidesForTabs extends StatelessWidget {
                           ],
                         ),
                         child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           reverse: true,
-                          itemCount: finishedMatches.length > 6
-                              ? 6
+                          itemCount: finishedMatches.length > 10
+                              ? 10
                               : finishedMatches.length,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
@@ -388,7 +389,9 @@ class SlidesForTabs extends StatelessWidget {
                         height: 0,
                       )
                     : Container(
-                        padding: EdgeInsets.all(mediaQuery.width / 40),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: mediaQuery.width / 40,
+                            vertical: mediaQuery.height / 80),
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -407,9 +410,7 @@ class SlidesForTabs extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           primary: false,
                           shrinkWrap: true,
-                          itemCount: unFinishedMatches.length > 10
-                              ? 10
-                              : unFinishedMatches.length,
+                          itemCount: unFinishedMatches.length,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushNamed(
@@ -508,14 +509,15 @@ class SlidesForTabs extends StatelessWidget {
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.zero,
-                          primary: false,
                           shrinkWrap: true,
+                          reverse: true,
                           itemCount: finishedMatches.length,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushNamed(
                                 ShowFinishedMatchScreen.routName,
-                                arguments: finishedMatches[index]['id'],
+                                arguments: finishedMatches.reversed
+                                    .elementAt(index)['id'],
                               );
                             },
                             child: MatchWidget(
@@ -624,7 +626,6 @@ class SlidesForTabs extends StatelessWidget {
                     ],
                   ),
                 ),
-          Text('data')
         ],
       ),
     );

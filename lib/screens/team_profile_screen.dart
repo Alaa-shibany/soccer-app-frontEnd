@@ -199,7 +199,7 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
                               width: mediaQuery.width / 4.5,
                               child: Image(
                                 image: NetworkImage(
-                                  '${imagesUrl.url}/${teamData!.logo}',
+                                  '${imagesUrl.url}${teamData!.logo}',
                                 ),
                                 fit: BoxFit.contain,
                                 alignment: Alignment.topCenter,
@@ -234,7 +234,7 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
                                     ),
                                     child: Image(
                                       image: NetworkImage(
-                                        '${imagesUrl.url}/${teamData.logo}',
+                                        '${imagesUrl.url}${teamData.logo}',
                                       ),
                                       fit: BoxFit.contain,
                                     ),

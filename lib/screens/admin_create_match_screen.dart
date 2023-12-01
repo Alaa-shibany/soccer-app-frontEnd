@@ -499,7 +499,7 @@ class _adminCreateMatchScreenState extends State<adminCreateMatchScreen> {
                   )
                 : Image(
                     image: NetworkImage(
-                      '${imagesUrl.url}/${item['logo']}',
+                      '${imagesUrl.url}${item['logo']}',
                     ),
                     height: 25,
                   ),

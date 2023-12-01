@@ -161,7 +161,7 @@ class SoccerTableLeague extends StatelessWidget {
                             child: Container(
                               child: Image(
                                 image: NetworkImage(
-                                  '${imagesUrl.url}/${teams[i]['logo']}',
+                                  '${imagesUrl.url}${teams[i]['logo']}',
                                 ),
                                 fit: BoxFit.contain,
                                 alignment: Alignment.center,

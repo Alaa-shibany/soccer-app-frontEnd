@@ -2,6 +2,8 @@
 
 import 'dart:io';
 
+import 'package:soccer_app_frontend/styles/app_colors.dart';
+
 import '/server/auth_server.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -74,45 +76,140 @@ class _UploadFildScreenState extends State<UploadFildScreen> {
   @override
   Widget build(BuildContext context) {
     Future<void> openFilePicker() async {
-      File _exclFile;
+      File? _exclFile;
+      //  final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      // if (image == null) return;
+      // File? imgPath = File(image.path);
+      // imgPath = await _cropImage(imageFile: imgPath);
+      // setState(() {
+      //   _image = imgPath;
+      // });
 
       FilePickerResult? resultFile = await FilePicker.platform.pickFiles();
       if (resultFile != null) {
-        if (resultFile.files.first.extension != 'xlsx') {
-          showToastMassage('You must select an excl file');
-          return;
-        }
-
-        _exclFile = File(resultFile.files.single.path!);
+        setState(() {
+          _exclFile = File(resultFile.files.single.path!);
+        });
         setState(() {
           widget._isLoading = true;
         });
         try {
+          // ignore: use_build_context_synchronously
           await Provider.of<AuthServer>(context, listen: false)
-              .uploadData(_exclFile);
-          print(_exclFile.uri);
-          // showToastMassage('Success');
+              .uploadData(_exclFile!);
+          showToastMassage('Success');
+          setState(() {
+            widget._isLoading = false;
+          });
         } catch (e) {
           print(e);
         }
-        setState(() {
-          widget._isLoading = false;
-        });
       } else {
         showToastMassage('You have to select an excl file');
       }
     }
 
+    void showDialogError() {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Row(
+            children: [
+              Text(
+                'Admin things',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Icon(
+                Icons.admin_panel_settings,
+                color: Colors.amber,
+              )
+            ],
+          ),
+          content:
+              const Text('Are you sure you want to RESTART the league ???'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Provider.of<AuthServer>(context, listen: false).restartLeague();
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Center(
+                        child: Icon(
+                      Icons.info,
+                      color: Colors.amber,
+                      size: 45,
+                    )),
+                    content: Text(AuthServer.message),
+                    actions: [
+                      TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('Cancle'))
+                    ],
+                  ),
+                );
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancle'),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: TextButton(
-          child: const Text('upload excl flile'),
-          onPressed: () {
-            openFilePicker();
-          },
-        ),
-      ),
+      body: widget._isLoading
+          ? const Center(
+              child: SingleChildScrollView(),
+            )
+          : Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    child: Text(
+                      'Pick excel file',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          AppColors.ProfileColor),
+                    ),
+                    onPressed: () {
+                      openFilePicker();
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 20,
+                  ),
+                  ElevatedButton(
+                    child: Text(
+                      'Restart league',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red),
+                    ),
+                    onPressed: () {
+                      showDialogError();
+                    },
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

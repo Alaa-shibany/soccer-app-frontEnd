@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import '/models/map_player_result.dart';
 import '/models/team.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../models/best_striker.dart';
 import '../models/league_status.dart';
@@ -35,6 +35,7 @@ class AuthServer with ChangeNotifier {
   static Map<String, dynamic> _matchInfoForAdmin = {};
   static List<dynamic> _finishedMatches = [];
   static List<dynamic> topStriker = [];
+  static List<dynamic> topPlayer = [];
   static List<dynamic> topGoalKeeper = [];
   static List<dynamic> topAssisstants = [];
   static List<dynamic> topPredictors = [];
@@ -165,39 +166,57 @@ class AuthServer with ChangeNotifier {
   }
 
   Future<void> uploadData(File exclFile) async {
+    print(exclFile.path);
+
     final SharedPreferences storage = await SharedPreferences.getInstance();
+    var tempDir = await getApplicationDocumentsDirectory();
+    String fullPath = tempDir.path + "/response.xlsx";
+    print('full path ${fullPath}');
     try {
+      // Get the chosen file path
       String? myToken = await storage.getString('token');
-      // String fileName = exclFile.path.split('/').last;
+      String fileName = exclFile.path.split('/').last;
       FormData formData = FormData.fromMap({
-        'excel_file': await MultipartFile.fromFile(exclFile.path),
+        "excel": MultipartFile.fromFileSync(exclFile.path, filename: fileName),
       });
       Dio.Response response = await dio().post(
         "/excelInput",
         data: formData,
+        onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
         options: Dio.Options(
-          headers: {'Authorization': 'Bearer $myToken'},
-        ),
+            headers: {'Authorization': 'Bearer $myToken'},
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! < 500;
+            }),
       );
-      // Get the documents directory for the app
-      // Directory appDocumentsDirectory =
-      //     await getApplicationDocumentsDirectory();
-      // String filePath = '${appDocumentsDirectory.path}/downloaded_excel.xlsx';
-
-      // // Write the response content to a file
-      // File downloadedFile = File(filePath);
-      // await downloadedFile.writeAsBytes(response.data);
-
-      // // Show a message or navigate to the downloaded file
-      // // For example:
-      // // ScaffoldMessenger.of(context).showSnackBar(
-      // //   SnackBar(content: Text('Excel file downloaded')),
-      // // );
+      print(
+          '............................................ excil file status code');
+      print(response.statusCode);
       print('................................upload data info');
       print(response.data);
       print('................................');
+      print(response.headers);
+      File file = File(fullPath);
+      var raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } on DioError catch (e) {
+      print('................................error upload data info');
+      message = e.response!.data['message'];
+      notifyListeners();
+      print(e.response!.data['message']);
     } catch (e) {
       print(e);
+    }
+  }
+
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      print((received / total * 100).toStringAsFixed(0) + "%");
     }
   }
 
@@ -819,6 +838,103 @@ class AuthServer with ChangeNotifier {
       print(
           '................................player dashboard response from server');
       print(_playerDashboardMap);
+      print('................................');
+    } on DioError catch (e) {
+      print(e.response!.data['message']);
+      message = e.response!.data['message'];
+      notifyListeners();
+    }
+  }
+
+  Future<void> restartLeague() async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = storage.getString('token');
+      Dio.Response response = await dio().delete(
+        "/admin/restartLeague",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      message = response.data['message'];
+      notifyListeners();
+      print(
+          '................................restart league response from server');
+      print(response.data);
+      print('................................');
+    } on DioError catch (e) {
+      print(e.response!.data['message']);
+      message = e.response!.data['message'];
+      notifyListeners();
+    }
+  }
+
+  Future<void> retreatMatchResults(String id) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = storage.getString('token');
+      Dio.Response response = await dio().post(
+        "/retreatMatchResults/$id",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      message = response.data['message'];
+      notifyListeners();
+      print(
+          '................................retreatMatchResults response from server');
+      print(response.data);
+      print('................................');
+    } on DioError catch (e) {
+      print(e.response!.data['message']);
+      message = e.response!.data['message'];
+      notifyListeners();
+    }
+  }
+
+  Future<void> getBestPlayers() async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = storage.getString('token');
+      Dio.Response response = await dio().get(
+        "/topPlayer",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      topPlayer = response.data;
+      notifyListeners();
+      print('................................top player response from server');
+      print(response.data);
+      print('................................');
+    } on DioError catch (e) {
+      print(e.response!.data['message']);
+      message = e.response!.data['message'];
+      notifyListeners();
+    }
+  }
+
+  Future<void> startPartTow(String grade7, String grade8, String grade9) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    var body = {
+      'teamsInEachClass(7)': grade7,
+      'teamsInEachClass(8)': grade8,
+      'teamsInEachClass(9)': grade9,
+    };
+    try {
+      String? myToken = storage.getString('token');
+      Dio.Response response = await dio().post(
+        "/admin/advanceToPartTwo",
+        data: body,
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      message = response.data['message'];
+      notifyListeners();
+      print(
+          '................................start part tow response from server');
+      print(response.data);
       print('................................');
     } on DioError catch (e) {
       print(e.response!.data['message']);

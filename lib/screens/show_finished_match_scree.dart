@@ -105,8 +105,8 @@ class _ShowFinishedMatchScreenState extends State<ShowFinishedMatchScreen>
                           TextButton(
                             onPressed: () {
                               Provider.of<AuthServer>(context, listen: false)
-                                  .deleteMatch(
-                                id: viewMatchInfo['id'].toString(),
+                                  .retreatMatchResults(
+                                viewMatchInfo['id'].toString(),
                               );
                               Navigator.of(context).pop();
                               showDialog(
@@ -197,7 +197,7 @@ class _ShowFinishedMatchScreenState extends State<ShowFinishedMatchScreen>
                               children: <Widget>[
                                 Image(
                                   image: NetworkImage(
-                                    '${imagesUrl.url}/${viewMatchInfo['firstTeam']['logo']}',
+                                    '${imagesUrl.url}${viewMatchInfo['firstTeam']['logo']}',
                                   ),
                                   height: mediaQuery.width / 6,
                                   fit: BoxFit.contain,
@@ -278,7 +278,7 @@ class _ShowFinishedMatchScreenState extends State<ShowFinishedMatchScreen>
                               children: <Widget>[
                                 Image(
                                   image: NetworkImage(
-                                    '${imagesUrl.url}/${viewMatchInfo['secondTeam']['logo']}',
+                                    '${imagesUrl.url}${viewMatchInfo['secondTeam']['logo']}',
                                   ),
                                   height: mediaQuery.width / 6,
                                   fit: BoxFit.contain,
@@ -439,16 +439,18 @@ class SlidesForTabs extends StatelessWidget {
                         viewMatchInfo['red_cards'].isNotEmpty
                     ? Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: mediaQuery.width / 40),
+                            horizontal: mediaQuery.width / 90),
                         child: Row(
+                          // mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //this for first team details
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
                                   height: mediaQuery.width / 15,
-                                  width: mediaQuery.width / 2.3,
+                                  width: mediaQuery.width / 2.1,
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.only(
                                       left: mediaQuery.width / 20),
@@ -461,9 +463,10 @@ class SlidesForTabs extends StatelessWidget {
                                   ),
                                   child: Text(
                                     viewMatchInfo['firstTeam']['name'],
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
+                                      fontSize: mediaQuery.height / 60,
                                     ),
                                   ),
                                 ),
@@ -474,7 +477,7 @@ class SlidesForTabs extends StatelessWidget {
                                   padding: EdgeInsets.only(
                                       top: mediaQuery.width / 20,
                                       bottom: mediaQuery.width / 20),
-                                  width: mediaQuery.width / 2.3,
+                                  width: mediaQuery.width / 2.1,
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.only(
@@ -490,11 +493,12 @@ class SlidesForTabs extends StatelessWidget {
                                     ],
                                   ),
                                   child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       // this a list of player who scored
                                       Container(
                                         margin: EdgeInsets.only(
-                                            left: mediaQuery.width / 20),
+                                            left: mediaQuery.width / 50),
                                         child: ListView.builder(
                                           padding: EdgeInsets.zero,
                                           shrinkWrap: true,
@@ -506,17 +510,9 @@ class SlidesForTabs extends StatelessWidget {
                                                     viewMatchInfo[
                                                         'firstTeam_id']
                                                 ? Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
-                                                      Text(viewMatchInfo[
-                                                                      'goals']
-                                                                  [index]
-                                                              ['player']['name']
-                                                          .toString()),
-                                                      SizedBox(
-                                                        width:
-                                                            mediaQuery.width /
-                                                                80,
-                                                      ),
                                                       SizedBox(
                                                         width:
                                                             mediaQuery.width /
@@ -524,11 +520,41 @@ class SlidesForTabs extends StatelessWidget {
                                                         height:
                                                             mediaQuery.width /
                                                                 20,
-                                                        child: const Image(
-                                                          image: AssetImage(
-                                                              'assets/images/ball.png'),
+                                                        child: Image(
+                                                          image:
+                                                              const AssetImage(
+                                                            'assets/images/ball.png',
+                                                          ),
+                                                          height: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                          width:
+                                                              mediaQuery.width /
+                                                                  60,
                                                         ),
-                                                      )
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      Text(
+                                                        viewMatchInfo['goals']
+                                                                        [index]
+                                                                    ['player']
+                                                                ['name']
+                                                            .toString(),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                          fontSize: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                        ),
+                                                      ),
                                                     ],
                                                   )
                                                 : const SizedBox(
@@ -540,7 +566,7 @@ class SlidesForTabs extends StatelessWidget {
                                       //  this a list of player who got a yellow card
                                       Container(
                                         margin: EdgeInsets.only(
-                                            left: mediaQuery.width / 20),
+                                            left: mediaQuery.width / 50),
                                         child: ListView.builder(
                                           padding: EdgeInsets.zero,
                                           primary: false,
@@ -555,17 +581,9 @@ class SlidesForTabs extends StatelessWidget {
                                                     viewMatchInfo[
                                                         'firstTeam_id']
                                                 ? Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
-                                                      Text(viewMatchInfo[
-                                                                      'yellow_cards']
-                                                                  [index]
-                                                              ['player']['name']
-                                                          .toString()),
-                                                      SizedBox(
-                                                        width:
-                                                            mediaQuery.width /
-                                                                80,
-                                                      ),
                                                       SizedBox(
                                                         width:
                                                             mediaQuery.width /
@@ -573,11 +591,39 @@ class SlidesForTabs extends StatelessWidget {
                                                         height:
                                                             mediaQuery.width /
                                                                 20,
-                                                        child: const Image(
-                                                          image: AssetImage(
+                                                        child: Image(
+                                                          height: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                          width:
+                                                              mediaQuery.width /
+                                                                  60,
+                                                          image: const AssetImage(
                                                               'assets/images/yellow_card.png'),
                                                         ),
-                                                      )
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      Text(
+                                                        viewMatchInfo['yellow_cards']
+                                                                        [index]
+                                                                    ['player']
+                                                                ['name']
+                                                            .toString(),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                          fontSize: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                        ),
+                                                      ),
                                                     ],
                                                   )
                                                 : const SizedBox(
@@ -589,7 +635,7 @@ class SlidesForTabs extends StatelessWidget {
                                       //this a list of player who got a red card
                                       Container(
                                         margin: EdgeInsets.only(
-                                            left: mediaQuery.width / 20),
+                                            left: mediaQuery.width / 50),
                                         child: ListView.builder(
                                           padding: EdgeInsets.zero,
                                           primary: false,
@@ -606,17 +652,9 @@ class SlidesForTabs extends StatelessWidget {
                                                             'firstTeam_id']
                                                         .toString()
                                                 ? Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
-                                                      Text(viewMatchInfo[
-                                                                      'red_cards']
-                                                                  [index]
-                                                              ['player']['name']
-                                                          .toString()),
-                                                      SizedBox(
-                                                        width:
-                                                            mediaQuery.width /
-                                                                80,
-                                                      ),
                                                       SizedBox(
                                                         width:
                                                             mediaQuery.width /
@@ -624,11 +662,39 @@ class SlidesForTabs extends StatelessWidget {
                                                         height:
                                                             mediaQuery.width /
                                                                 20,
-                                                        child: const Image(
-                                                          image: AssetImage(
+                                                        child: Image(
+                                                          width:
+                                                              mediaQuery.width /
+                                                                  60,
+                                                          height: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                          image: const AssetImage(
                                                               'assets/images/red_card.png'),
                                                         ),
-                                                      )
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      Text(
+                                                        viewMatchInfo['red_cards']
+                                                                        [index]
+                                                                    ['player']
+                                                                ['name']
+                                                            .toString(),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                          fontSize: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                        ),
+                                                      ),
                                                     ],
                                                   )
                                                 : const SizedBox(
@@ -642,15 +708,13 @@ class SlidesForTabs extends StatelessWidget {
                                 ),
                               ],
                             ),
-
                             //this for second team details
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
                                   height: mediaQuery.width / 15,
-                                  width: mediaQuery.width / 2.3,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: mediaQuery.width / 200),
+                                  width: mediaQuery.width / 2.1,
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.only(
                                       left: mediaQuery.width / 20),
@@ -663,9 +727,10 @@ class SlidesForTabs extends StatelessWidget {
                                   ),
                                   child: Text(
                                     viewMatchInfo['secondTeam']['name'],
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
+                                      fontSize: mediaQuery.height / 60,
                                     ),
                                   ),
                                 ),
@@ -676,7 +741,7 @@ class SlidesForTabs extends StatelessWidget {
                                   padding: EdgeInsets.only(
                                       top: mediaQuery.width / 20,
                                       bottom: mediaQuery.width / 20),
-                                  width: mediaQuery.width / 2.3,
+                                  width: mediaQuery.width / 2.1,
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.only(
@@ -692,11 +757,12 @@ class SlidesForTabs extends StatelessWidget {
                                     ],
                                   ),
                                   child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       // this a list of player who scored
                                       Container(
                                         margin: EdgeInsets.only(
-                                            left: mediaQuery.width / 19),
+                                            left: mediaQuery.width / 50),
                                         child: ListView.builder(
                                           padding: EdgeInsets.zero,
                                           shrinkWrap: true,
@@ -704,23 +770,13 @@ class SlidesForTabs extends StatelessWidget {
                                               viewMatchInfo['goals'].length,
                                           itemBuilder: (context, index) {
                                             return viewMatchInfo['goals'][index]
-                                                            ['team_id']
-                                                        .toString() ==
+                                                        ['team_id'] ==
                                                     viewMatchInfo[
-                                                            'secondTeam_id']
-                                                        .toString()
+                                                        'secondTeam_id']
                                                 ? Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
-                                                      Text(viewMatchInfo[
-                                                                      'goals']
-                                                                  [index]
-                                                              ['player']['name']
-                                                          .toString()),
-                                                      SizedBox(
-                                                        width:
-                                                            mediaQuery.width /
-                                                                80,
-                                                      ),
                                                       SizedBox(
                                                         width:
                                                             mediaQuery.width /
@@ -728,11 +784,41 @@ class SlidesForTabs extends StatelessWidget {
                                                         height:
                                                             mediaQuery.width /
                                                                 20,
-                                                        child: const Image(
-                                                          image: AssetImage(
-                                                              'assets/images/ball.png'),
+                                                        child: Image(
+                                                          image:
+                                                              const AssetImage(
+                                                            'assets/images/ball.png',
+                                                          ),
+                                                          height: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                          width:
+                                                              mediaQuery.width /
+                                                                  60,
                                                         ),
-                                                      )
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      Text(
+                                                        viewMatchInfo['goals']
+                                                                        [index]
+                                                                    ['player']
+                                                                ['name']
+                                                            .toString(),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                          fontSize: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                        ),
+                                                      ),
                                                     ],
                                                   )
                                                 : const SizedBox(
@@ -741,13 +827,10 @@ class SlidesForTabs extends StatelessWidget {
                                           },
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: mediaQuery.height / 60,
-                                      ),
                                       //  this a list of player who got a yellow card
                                       Container(
                                         margin: EdgeInsets.only(
-                                            left: mediaQuery.width / 20),
+                                            left: mediaQuery.width / 50),
                                         child: ListView.builder(
                                           padding: EdgeInsets.zero,
                                           primary: false,
@@ -757,25 +840,14 @@ class SlidesForTabs extends StatelessWidget {
                                                   .length,
                                           itemBuilder: (context, index) {
                                             return viewMatchInfo['yellow_cards']
-                                                                    [index]
-                                                                ['player']
-                                                            ['team_id']
-                                                        .toString() ==
+                                                            [index]['player']
+                                                        ['team_id'] ==
                                                     viewMatchInfo[
-                                                            'secondTeam_id']
-                                                        .toString()
+                                                        'secondTeam_id']
                                                 ? Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
-                                                      Text(viewMatchInfo[
-                                                                      'yellow_cards']
-                                                                  [index]
-                                                              ['player']['name']
-                                                          .toString()),
-                                                      SizedBox(
-                                                        width:
-                                                            mediaQuery.width /
-                                                                80,
-                                                      ),
                                                       SizedBox(
                                                         width:
                                                             mediaQuery.width /
@@ -783,11 +855,39 @@ class SlidesForTabs extends StatelessWidget {
                                                         height:
                                                             mediaQuery.width /
                                                                 20,
-                                                        child: const Image(
-                                                          image: AssetImage(
+                                                        child: Image(
+                                                          height: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                          width:
+                                                              mediaQuery.width /
+                                                                  60,
+                                                          image: const AssetImage(
                                                               'assets/images/yellow_card.png'),
                                                         ),
-                                                      )
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      Text(
+                                                        viewMatchInfo['yellow_cards']
+                                                                        [index]
+                                                                    ['player']
+                                                                ['name']
+                                                            .toString(),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                          fontSize: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                        ),
+                                                      ),
                                                     ],
                                                   )
                                                 : const SizedBox(
@@ -799,7 +899,7 @@ class SlidesForTabs extends StatelessWidget {
                                       //this a list of player who got a red card
                                       Container(
                                         margin: EdgeInsets.only(
-                                            left: mediaQuery.width / 20),
+                                            left: mediaQuery.width / 50),
                                         child: ListView.builder(
                                           padding: EdgeInsets.zero,
                                           primary: false,
@@ -816,17 +916,9 @@ class SlidesForTabs extends StatelessWidget {
                                                             'secondTeam_id']
                                                         .toString()
                                                 ? Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
-                                                      Text(viewMatchInfo[
-                                                                      'red_cards']
-                                                                  [index]
-                                                              ['player']['name']
-                                                          .toString()),
-                                                      SizedBox(
-                                                        width:
-                                                            mediaQuery.width /
-                                                                80,
-                                                      ),
                                                       SizedBox(
                                                         width:
                                                             mediaQuery.width /
@@ -834,11 +926,39 @@ class SlidesForTabs extends StatelessWidget {
                                                         height:
                                                             mediaQuery.width /
                                                                 20,
-                                                        child: const Image(
-                                                          image: AssetImage(
+                                                        child: Image(
+                                                          width:
+                                                              mediaQuery.width /
+                                                                  60,
+                                                          height: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                          image: const AssetImage(
                                                               'assets/images/red_card.png'),
                                                         ),
-                                                      )
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            mediaQuery.width /
+                                                                80,
+                                                      ),
+                                                      Text(
+                                                        viewMatchInfo['red_cards']
+                                                                        [index]
+                                                                    ['player']
+                                                                ['name']
+                                                            .toString(),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                          fontSize: mediaQuery
+                                                                  .height /
+                                                              60,
+                                                        ),
+                                                      ),
                                                     ],
                                                   )
                                                 : const SizedBox(
@@ -1013,7 +1133,7 @@ class SlidesForTabs extends StatelessWidget {
                           children: [
                             Image(
                               image: NetworkImage(
-                                '${imagesUrl.url}/${viewMatchInfo['firstTeam']['logo']}',
+                                '${imagesUrl.url}${viewMatchInfo['firstTeam']['logo']}',
                               ),
                               height: mediaQuery.width / 11,
                               fit: BoxFit.contain,
@@ -1133,7 +1253,7 @@ class SlidesForTabs extends StatelessWidget {
                           children: [
                             Image(
                               image: NetworkImage(
-                                '${imagesUrl.url}/${viewMatchInfo['secondTeam']['logo']}',
+                                '${imagesUrl.url}${viewMatchInfo['secondTeam']['logo']}',
                               ),
                               height: mediaQuery.width / 11,
                               fit: BoxFit.contain,
