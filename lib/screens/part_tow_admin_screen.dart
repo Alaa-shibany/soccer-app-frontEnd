@@ -148,6 +148,17 @@ class _PartTwoScreenState extends State<PartTwoScreen> {
                     grade8Advanced.toString(),
                     grade9Advanced.toString(),
                   );
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      content: Text(AuthServer.message),
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () => Navigator.of(context).pop,
+                            child: const Text('ok'))
+                      ],
+                    ),
+                  );
                 },
                 child: const Text('Submit'))
           ],

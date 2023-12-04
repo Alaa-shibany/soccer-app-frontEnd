@@ -459,6 +459,7 @@ class PlayerInTheTeam extends StatelessWidget {
                     arguments: teamData!.captain['id']);
               },
               child: PlayerForTeam(
+                profilePicture: teamData!.captain['profilePicture'],
                 mediaQuery: mediaQuery,
                 name: teamData!.captain['name'],
                 position: 'captain',
@@ -473,6 +474,7 @@ class PlayerInTheTeam extends StatelessWidget {
                     arguments: teamData!.goalKeeper['id']);
               },
               child: PlayerForTeam(
+                profilePicture: teamData!.goalKeeper['profilePicture'],
                 mediaQuery: mediaQuery,
                 name: teamData!.goalKeeper['name'],
                 position: 'goalKeeper',
@@ -492,6 +494,7 @@ class PlayerInTheTeam extends StatelessWidget {
                       arguments: teamData!.attackers[index]['id']);
                 },
                 child: PlayerForTeam(
+                  profilePicture: teamData!.attackers[index]['profilePicture'],
                   mediaQuery: mediaQuery,
                   name: teamData!.attackers[index]['name'],
                   position: 'attacker',
@@ -514,12 +517,14 @@ class PlayerForTeam extends StatelessWidget with ChangeNotifier {
     required this.name,
     required this.position,
     required this.number,
+    required this.profilePicture,
   });
 
   final Size mediaQuery;
   final String name;
   final String position;
   final String number;
+  final String? profilePicture;
 
   @override
   Widget build(BuildContext context) {
@@ -595,12 +600,24 @@ class PlayerForTeam extends StatelessWidget with ChangeNotifier {
                 backgroundColor: const Color.fromRGBO(37, 48, 106, 1),
                 child: Container(
                   padding: const EdgeInsets.all(1),
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    child: Icon(
-                      CupertinoIcons.person,
-                      color: Color.fromRGBO(37, 48, 106, 1),
-                    ),
+                    child: profilePicture == null
+                        ? Icon(
+                            CupertinoIcons.person,
+                            color: const Color.fromRGBO(37, 48, 106, 1),
+                            size: mediaQuery.height / 35,
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(360),
+                            child: Image(
+                              image: NetworkImage(
+                                '${imagesUrl.url}$profilePicture',
+                              ),
+                              fit: BoxFit.contain,
+                              alignment: Alignment.topCenter,
+                            ),
+                          ),
                   ),
                 ),
               ),

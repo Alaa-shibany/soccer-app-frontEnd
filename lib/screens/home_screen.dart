@@ -40,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
       _isLoading = true;
     });
     print('////////////////////////////////////////////////////');
-    print(Provider.of<AuthServer>(context, listen: false)
-        .leagueStatue()!
-        .currentStage);
+    // print(Provider.of<AuthServer>(context, listen: false)
+    //     .leagueStatue()!
+    //     .currentStage);
     print('////////////////////////////////////////////////////');
     try {
       await Provider.of<AuthServer>(context, listen: false).League();

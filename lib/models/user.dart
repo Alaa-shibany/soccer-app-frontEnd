@@ -11,8 +11,9 @@ class User {
   final String? position;
   final int? cards;
   final Map<String, dynamic> team;
+  final String? profilePicture;
 
-  User(this.team, this.id,
+  User(this.team, this.id, this.profilePicture,
       {this.score = 0,
       this.honor = 0,
       this.prediction = 0,
@@ -36,5 +37,6 @@ class User {
         defences = json['defences'],
         position = json['position'],
         cards = json['cards'],
-        team = json['team'];
+        team = json['team'],
+        profilePicture = json['profilePicture'];
 }

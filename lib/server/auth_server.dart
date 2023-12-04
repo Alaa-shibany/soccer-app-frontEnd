@@ -942,4 +942,85 @@ class AuthServer with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<bool> changeUserImage(
+      {required File? image, required var onlyDelete, required var id}) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    print('hello');
+    try {
+      String? myToken = await storage.getString('token');
+      // String fileName = image!.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(image!.path),
+        'onlyDelete?': onlyDelete,
+      });
+      // Instead of including FormData directly, convert it to a Map
+      Dio.Response response = await dio().post(
+        "/changeProfilePicture/$id",
+        data: formData, // Convert the entire body to FormData
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+
+      print(
+          '................................change user image response from server');
+      print(response.data);
+      print('................................');
+      return true;
+    } on DioException catch (a) {
+      print('nice error');
+      print(a.error);
+      print(a);
+      print(a.requestOptions);
+      print(a.message);
+      print(a.response);
+
+      return false;
+    } catch (e) {
+      print('catch error');
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> deleteUserImage(
+      {required var onlyDelete, required var id}) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    print('hello');
+    try {
+      String? myToken = await storage.getString('token');
+      // String fileName = image!.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        'onlyDelete?': onlyDelete,
+      });
+      // Instead of including FormData directly, convert it to a Map
+      Dio.Response response = await dio().post(
+        "/changeProfilePicture/$id",
+        data: formData, // Convert the entire body to FormData
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+
+      print(
+          '................................change user image response from server');
+      print(response.data);
+      print('................................');
+      return true;
+    } on DioException catch (a) {
+      print('nice error');
+      print(a.error);
+      print(a);
+      print(a.requestOptions);
+      print(a.message);
+      print(a.response);
+
+      return false;
+    } catch (e) {
+      print('catch error');
+      print(e);
+      return false;
+    }
+  }
 }

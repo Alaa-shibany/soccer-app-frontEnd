@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:soccer_app_frontend/models/images_url.dart';
 
@@ -21,10 +26,66 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen>
     with TickerProviderStateMixin {
   bool _isLoading = true;
+  File? _image;
+
+  Future _pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      File? imgPath = File(image.path);
+      imgPath = await _cropImage(imageFile: imgPath);
+
+      setState(() {
+        _image = imgPath;
+      });
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    // ignore: use_build_context_synchronously
+    final id = ModalRoute.of(context)!.settings.arguments as int;
+    try {
+      await Provider.of<AuthServer>(context, listen: false).changeUserImage(
+        id: id,
+        image: _image,
+        onlyDelete: 0,
+      );
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+      Navigator.of(context)
+          .pushReplacementNamed(UserProfileScreen.routName, arguments: id);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future _deleteImage() async {
+    // ignore: use_build_context_synchronously
+    final id = ModalRoute.of(context)!.settings.arguments as int;
+    try {
+      await Provider.of<AuthServer>(context, listen: false).deleteUserImage(
+        id: id,
+        onlyDelete: 1,
+      );
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+      Navigator.of(context)
+          .pushReplacementNamed(UserProfileScreen.routName, arguments: id);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<File?> _cropImage({required File imageFile}) async {
+    CroppedFile? croppedImage =
+        await ImageCropper().cropImage(sourcePath: imageFile.path);
+    if (croppedImage == null) return null;
+    return File(croppedImage.path);
+  }
 
   @override
   void initState() {
     super.initState();
+
     Future.delayed(Duration.zero).then((value) => playerInfo(context));
   }
 
@@ -65,38 +126,6 @@ class _UserProfileScreenState extends State<UserProfileScreen>
               ? CustomScrollView(
                   slivers: <Widget>[
                     SliverAppBar(
-                      title: IconButton(
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              content:
-                                  const Text('Choose what do you want to do'),
-                              title: Text('Image picker'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'Change image',
-                                    style: TextStyle(color: Colors.green),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'Delete image',
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
                       leading: Builder(
                         builder: (context) => Row(
                           mainAxisSize: MainAxisSize.min,
@@ -115,6 +144,42 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                       ),
                       actions: [
                         IconButton(
+                          icon: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                content:
+                                    const Text('Choose what do you want to do'),
+                                title: Text('Image picker'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      _pickImage();
+                                    },
+                                    child: const Text(
+                                      'Change image',
+                                      style: TextStyle(color: Colors.green),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      _deleteImage();
+                                    },
+                                    child: const Text(
+                                      'Delete image',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -131,12 +196,25 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                             centerTitle: true,
                             background: HederUserProfile(
                               mediaQuery: mediaQuery,
-                              Icon(
-                                CupertinoIcons.person,
-                                color: const Color.fromRGBO(37, 48, 106, 1),
-                                size: mediaQuery.height / 20,
-                              ),
-                              name: userData!.name!,
+                              // ignore: unnecessary_null_comparison
+                              userData!.profilePicture == null
+                                  ? Icon(
+                                      CupertinoIcons.person,
+                                      color:
+                                          const Color.fromRGBO(37, 48, 106, 1),
+                                      size: mediaQuery.height / 20,
+                                    )
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(360),
+                                      child: Image(
+                                        image: NetworkImage(
+                                          '${imagesUrl.url}${userData.profilePicture}',
+                                        ),
+                                        fit: BoxFit.contain,
+                                        alignment: Alignment.topCenter,
+                                      ),
+                                    ),
+                              name: userData.name!,
                               subtitle: userData.position!,
                             ),
                             title: height < 100
