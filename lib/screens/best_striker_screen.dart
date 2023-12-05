@@ -1,3 +1,5 @@
+import 'package:soccer_app_frontend/models/images_url.dart';
+
 import '/screens/user_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -227,6 +229,8 @@ class _BestStrikerScreenState extends State<BestStrikerScreen> {
                                             ['id']);
                                   },
                                   child: PlayerForTeam(
+                                    profilePicture: bestStrikersList[index]
+                                        ['profilePicture'],
                                     subtitle: bestStrikersList[index]['team']
                                         ['name'],
                                     mediaQuery: mediaQuery,
@@ -252,20 +256,21 @@ class _BestStrikerScreenState extends State<BestStrikerScreen> {
 
 // ignore: must_be_immutable
 class PlayerForTeam extends StatelessWidget with ChangeNotifier {
-  PlayerForTeam({
-    super.key,
-    required this.mediaQuery,
-    required this.name,
-    required this.goals,
-    required this.number,
-    required this.subtitle,
-  });
+  PlayerForTeam(
+      {super.key,
+      required this.mediaQuery,
+      required this.name,
+      required this.goals,
+      required this.number,
+      required this.subtitle,
+      required this.profilePicture});
 
   final Size mediaQuery;
   final String name;
   final String goals;
   final String number;
   final String subtitle;
+  final String? profilePicture;
 
   @override
   Widget build(BuildContext context) {
@@ -341,12 +346,24 @@ class PlayerForTeam extends StatelessWidget with ChangeNotifier {
                 backgroundColor: const Color.fromRGBO(37, 48, 106, 1),
                 child: Container(
                   padding: const EdgeInsets.all(1),
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    child: Icon(
-                      CupertinoIcons.person,
-                      color: Color.fromRGBO(37, 48, 106, 1),
-                    ),
+                    child: profilePicture == null
+                        ? Icon(
+                            CupertinoIcons.person,
+                            color: const Color.fromRGBO(37, 48, 106, 1),
+                            size: mediaQuery.height / 35,
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(360),
+                            child: Image(
+                              image: NetworkImage(
+                                '${imagesUrl.url}$profilePicture',
+                              ),
+                              fit: BoxFit.contain,
+                              alignment: Alignment.topCenter,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -442,6 +459,7 @@ class MySearchDelegate extends SearchDelegate {
             arguments: resultPlayer['id']);
       },
       child: PlayerForTeam(
+        profilePicture: resultPlayer['profilePicture'],
         subtitle: resultPlayer['team']['name'],
         mediaQuery: mediaQuery,
         name: resultPlayer['name'],

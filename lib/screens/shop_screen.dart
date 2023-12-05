@@ -194,6 +194,8 @@ class _ShopScreenState extends State<ShopScreen> {
                                           arguments: bestPlayers[index]['id']);
                                     },
                                     child: PlayerCard(
+                                        profilePicture: bestPlayers[index]
+                                            ['profilePicture'],
                                         url:
                                             '${imagesUrl.url}${bestPlayers[index]['team']['logo']}',
                                         iconBtn: IconButton(
@@ -250,6 +252,7 @@ class PlayerCard extends StatelessWidget with ChangeNotifier {
     required this.subtitle,
     required this.iconBtn,
     required this.url,
+    required this.profilePicture,
   });
 
   final Size mediaQuery;
@@ -259,6 +262,7 @@ class PlayerCard extends StatelessWidget with ChangeNotifier {
   final String subtitle;
   final Widget iconBtn;
   final String url;
+  final String? profilePicture;
 
   @override
   Widget build(BuildContext context) {
@@ -334,12 +338,24 @@ class PlayerCard extends StatelessWidget with ChangeNotifier {
                 backgroundColor: const Color.fromRGBO(37, 48, 106, 1),
                 child: Container(
                   padding: const EdgeInsets.all(1),
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    child: Icon(
-                      CupertinoIcons.person,
-                      color: Color.fromRGBO(37, 48, 106, 1),
-                    ),
+                    child: profilePicture == null
+                        ? Icon(
+                            CupertinoIcons.person,
+                            color: const Color.fromRGBO(37, 48, 106, 1),
+                            size: mediaQuery.height / 35,
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(360),
+                            child: Image(
+                              image: NetworkImage(
+                                '${imagesUrl.url}$profilePicture',
+                              ),
+                              fit: BoxFit.contain,
+                              alignment: Alignment.topCenter,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -446,6 +462,7 @@ class MySearchDelegate extends SearchDelegate {
             arguments: resultPlayer['id']);
       },
       child: PlayerCard(
+        profilePicture: resultPlayer['profilePicture'],
         url: '${imagesUrl.url}${resultPlayer['team']['logo']}',
         iconBtn: IconButton(
           icon: Icon(

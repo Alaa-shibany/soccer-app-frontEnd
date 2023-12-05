@@ -94,6 +94,15 @@ class _adminTransfareScreenState extends State<adminTransfareScreen> {
     print('...........................................');
   }
 
+  transferPlayer(int position, int id, int transfer_to_id) async {
+    try {
+      await Provider.of<AuthServer>(context, listen: false).transferPlayer(
+          transfer_to_id: transfer_to_id, position: position, id: id);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
@@ -230,8 +239,26 @@ class _adminTransfareScreenState extends State<adminTransfareScreen> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    print(firstTeam_id);
-                    print(position);
+                    print("team id => $firstTeam_id");
+                    print("position => $position");
+                    print("player id => ${userData.id}");
+                    transferPlayer(position, userData.id!, firstTeam_id);
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Notification'),
+                        content: Text(AuthServer.message),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            child: const Text('ok'),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     primary: AppColors.mainColor,

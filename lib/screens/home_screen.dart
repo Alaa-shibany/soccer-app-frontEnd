@@ -176,6 +176,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .id);
                               },
                               child: headProfileWidget(
+                                profilePicture: AuthServer.userData == 'admin'
+                                    ? null
+                                    : AuthServer.userData == 'guest'
+                                        ? null
+                                        : Provider.of<AuthServer>(context,
+                                                listen: false)
+                                            .user()!
+                                            .profilePicture,
                                 name: AuthServer.userData == 'admin'
                                     ? 'Admin'
                                     : AuthServer.userData == 'guest'

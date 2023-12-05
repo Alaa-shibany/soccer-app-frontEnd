@@ -1162,6 +1162,8 @@ class SlidesForTabs extends StatelessWidget {
                           );
                         },
                         child: PlayerChangeDataCard(
+                          profilePicture: viewMatchInfo['firstTeam']['captain']
+                              ['profilePicture'],
                           name: viewMatchInfo['firstTeam']['captain']['name'],
                           mediaQuery: mediaQuery,
                           title:
@@ -1179,6 +1181,8 @@ class SlidesForTabs extends StatelessWidget {
                           );
                         },
                         child: PlayerChangeDataCard(
+                          profilePicture: viewMatchInfo['firstTeam']
+                              ['goalKeeper']['profilePicture'],
                           name: viewMatchInfo['firstTeam']['goalKeeper']
                               ['name'],
                           mediaQuery: mediaQuery,
@@ -1205,6 +1209,8 @@ class SlidesForTabs extends StatelessWidget {
                                         ['attackers'][index]['id']);
                               },
                               child: PlayerChangeDataCard(
+                                  profilePicture: viewMatchInfo['firstTeam']
+                                      ['attackers'][index]['profilePicture'],
                                   name: viewMatchInfo['firstTeam']['attackers']
                                       [index]['name'],
                                   mediaQuery: mediaQuery,
@@ -1282,6 +1288,8 @@ class SlidesForTabs extends StatelessWidget {
                           );
                         },
                         child: PlayerChangeDataCard(
+                          profilePicture: viewMatchInfo['secondTeam']['captain']
+                              ['profilePicture'],
                           name: viewMatchInfo['secondTeam']['captain']['name'],
                           mediaQuery: mediaQuery,
                           title:
@@ -1299,6 +1307,8 @@ class SlidesForTabs extends StatelessWidget {
                           );
                         },
                         child: PlayerChangeDataCard(
+                          profilePicture: viewMatchInfo['secondTeam']
+                              ['goalKeeper']['profilePicture'],
                           name: viewMatchInfo['secondTeam']['goalKeeper']
                               ['name'],
                           mediaQuery: mediaQuery,
@@ -1326,6 +1336,8 @@ class SlidesForTabs extends StatelessWidget {
                                 );
                               },
                               child: PlayerChangeDataCard(
+                                  profilePicture: viewMatchInfo['secondTeam']
+                                      ['attackers'][index]['profilePicture'],
                                   name: viewMatchInfo['secondTeam']['attackers']
                                       [index]['name'],
                                   mediaQuery: mediaQuery,
@@ -1854,7 +1866,8 @@ class PlayerChangeDataCard extends StatefulWidget {
       required this.mediaQuery,
       required this.title,
       required this.trailing,
-      required this.name});
+      required this.name,
+      required this.profilePicture});
 
   final Size mediaQuery;
   final String name;
@@ -1862,6 +1875,7 @@ class PlayerChangeDataCard extends StatefulWidget {
   // final int secondTeamScore;
   final String title;
   final String trailing;
+  final String? profilePicture;
 
   @override
   State<PlayerChangeDataCard> createState() => PlayerChangeDataCardState();
@@ -1887,9 +1901,20 @@ class PlayerChangeDataCardState extends State<PlayerChangeDataCard> {
               ),
             ],
           ),
-          child: const Icon(
-            Icons.person,
-          ),
+          child: widget.profilePicture == null
+              ? const Icon(
+                  Icons.person,
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(360),
+                  child: Image(
+                    image: NetworkImage(
+                      '${imagesUrl.url}${widget.profilePicture}',
+                    ),
+                    fit: BoxFit.contain,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
         ),
         title: Text(
           widget.title,

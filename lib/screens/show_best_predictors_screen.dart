@@ -1,3 +1,5 @@
+import 'package:soccer_app_frontend/models/images_url.dart';
+
 import '/server/auth_server.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -184,6 +186,9 @@ class _showBestPredictorEvetnScreenState
                                 return GestureDetector(
                                   onTap: () {},
                                   child: PlayerChangeDataCard(
+                                      profilePicture:
+                                          AuthServer.topPredictors[index]
+                                              ['profilePicture'],
                                       subTitle: AuthServer.topPredictors[index]
                                           ['team']['name'],
                                       name: AuthServer.topPredictors[index]
@@ -209,13 +214,15 @@ class _showBestPredictorEvetnScreenState
 }
 
 class PlayerChangeDataCard extends StatefulWidget {
-  PlayerChangeDataCard(
-      {super.key,
-      required this.mediaQuery,
-      required this.title,
-      required this.subTitle,
-      required this.trailing,
-      required this.name});
+  PlayerChangeDataCard({
+    super.key,
+    required this.mediaQuery,
+    required this.title,
+    required this.subTitle,
+    required this.trailing,
+    required this.name,
+    required this.profilePicture,
+  });
 
   final Size mediaQuery;
   final String name;
@@ -224,7 +231,7 @@ class PlayerChangeDataCard extends StatefulWidget {
   final String title;
   final String subTitle;
   final String trailing;
-
+  final String? profilePicture;
   @override
   State<PlayerChangeDataCard> createState() => PlayerChangeDataCardState();
 }
@@ -255,9 +262,20 @@ class PlayerChangeDataCardState extends State<PlayerChangeDataCard> {
               ),
             ],
           ),
-          child: const Icon(
-            Icons.person,
-          ),
+          child: widget.profilePicture == null
+              ? const Icon(
+                  Icons.person,
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(360),
+                  child: Image(
+                    image: NetworkImage(
+                      '${imagesUrl.url}${widget.profilePicture}',
+                    ),
+                    fit: BoxFit.contain,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
         ),
         title: Text(
           widget.title,

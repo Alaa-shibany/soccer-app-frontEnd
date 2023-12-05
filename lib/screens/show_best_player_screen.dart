@@ -1,3 +1,5 @@
+import 'package:soccer_app_frontend/models/images_url.dart';
+
 import '/server/auth_server.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -213,19 +215,20 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                                       return GestureDetector(
                                         onTap: () {},
                                         child: PlayerChangeDataCard(
+                                            profilePicture: AuthServer(context: context).playerDashboardMap['topScorers']
+                                                [index]['profilePicture'],
                                             nameTitle: 'Goals',
                                             subTitle: AuthServer(context: context)
                                                     .playerDashboardMap['topScorers']
                                                 [index]['team']['name'],
-                                            name: AuthServer(context: context)
-                                                    .playerDashboardMap['topScorers']
+                                            name: AuthServer(context: context).playerDashboardMap['topScorers']
                                                 [index]['name'],
                                             mediaQuery: mediaQuery,
-                                            title: AuthServer(context: context)
-                                                    .playerDashboardMap['topScorers']
+                                            title: AuthServer(context: context).playerDashboardMap['topScorers']
                                                 [index]['name'],
                                             trailing: AuthServer(context: context)
-                                                .playerDashboardMap['topScorers'][index]['goals']
+                                                .playerDashboardMap['topScorers']
+                                                    [index]['goals']
                                                 .toString()),
                                       );
                                     },
@@ -306,6 +309,8 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                                       return GestureDetector(
                                         onTap: () {},
                                         child: PlayerChangeDataCard(
+                                            profilePicture: AuthServer(context: context).playerDashboardMap['topAssistants']
+                                                [index]['profilePicture'],
                                             nameTitle: 'Assists',
                                             subTitle: AuthServer(context: context)
                                                     .playerDashboardMap['topAssistants']
@@ -313,8 +318,7 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                                             name: AuthServer(context: context).playerDashboardMap['topAssistants']
                                                 [index]['name'],
                                             mediaQuery: mediaQuery,
-                                            title: AuthServer(context: context)
-                                                    .playerDashboardMap['topAssistants']
+                                            title: AuthServer(context: context).playerDashboardMap['topAssistants']
                                                 [index]['name'],
                                             trailing: AuthServer(context: context)
                                                 .playerDashboardMap['topAssistants']
@@ -399,19 +403,20 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                                       return GestureDetector(
                                         onTap: () {},
                                         child: PlayerChangeDataCard(
+                                            profilePicture: AuthServer(context: context).playerDashboardMap['topKeepers']
+                                                [index]['profilePicture'],
                                             nameTitle: 'Saves',
                                             subTitle: AuthServer(context: context)
                                                     .playerDashboardMap['topKeepers']
                                                 [index]['team']['name'],
-                                            name: AuthServer(context: context)
-                                                    .playerDashboardMap['topKeepers']
+                                            name: AuthServer(context: context).playerDashboardMap['topKeepers']
                                                 [index]['name'],
                                             mediaQuery: mediaQuery,
-                                            title: AuthServer(context: context)
-                                                    .playerDashboardMap['topKeepers']
+                                            title: AuthServer(context: context).playerDashboardMap['topKeepers']
                                                 [index]['name'],
                                             trailing: AuthServer(context: context)
-                                                .playerDashboardMap['topKeepers'][index]['saves']
+                                                .playerDashboardMap['topKeepers']
+                                                    [index]['saves']
                                                 .toString()),
                                       );
                                     },
@@ -489,16 +494,17 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                                         .length,
                                     itemBuilder: (context, index) {
                                       return PlayerChangeDataCard(
+                                          profilePicture:
+                                              AuthServer(context: context).playerDashboardMap['topDefenders']
+                                                  [index]['profilePicture'],
                                           nameTitle: 'Defences',
                                           subTitle: AuthServer(context: context)
                                                   .playerDashboardMap['topDefenders']
                                               [index]['team']['name'],
-                                          name: AuthServer(context: context)
-                                                  .playerDashboardMap['topDefenders']
+                                          name: AuthServer(context: context).playerDashboardMap['topDefenders']
                                               [index]['name'],
                                           mediaQuery: mediaQuery,
-                                          title: AuthServer(context: context)
-                                                  .playerDashboardMap['topDefenders']
+                                          title: AuthServer(context: context).playerDashboardMap['topDefenders']
                                               [index]['name'],
                                           trailing: AuthServer(context: context)
                                               .playerDashboardMap['topDefenders']
@@ -582,19 +588,20 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
                                       return GestureDetector(
                                         onTap: () {},
                                         child: PlayerChangeDataCard(
+                                            profilePicture: AuthServer(context: context).playerDashboardMap['topHonor']
+                                                [index]['profilePicture'],
                                             nameTitle: 'Honors',
                                             subTitle: AuthServer(context: context)
                                                     .playerDashboardMap['topHonor']
                                                 [index]['team']['name'],
-                                            name: AuthServer(context: context)
-                                                    .playerDashboardMap['topHonor']
+                                            name: AuthServer(context: context).playerDashboardMap['topHonor']
                                                 [index]['name'],
                                             mediaQuery: mediaQuery,
-                                            title: AuthServer(context: context)
-                                                    .playerDashboardMap['topHonor']
+                                            title: AuthServer(context: context).playerDashboardMap['topHonor']
                                                 [index]['name'],
                                             trailing: AuthServer(context: context)
-                                                .playerDashboardMap['topHonor'][index]['honor']
+                                                .playerDashboardMap['topHonor']
+                                                    [index]['honor']
                                                 .toString()),
                                       );
                                     },
@@ -611,14 +618,16 @@ class _showBestPlayerEvetnScreenState extends State<showBestPlayerEvetnScreen>
 }
 
 class PlayerChangeDataCard extends StatefulWidget {
-  PlayerChangeDataCard(
-      {super.key,
-      required this.mediaQuery,
-      required this.title,
-      required this.subTitle,
-      required this.trailing,
-      required this.name,
-      required this.nameTitle});
+  PlayerChangeDataCard({
+    super.key,
+    required this.mediaQuery,
+    required this.title,
+    required this.subTitle,
+    required this.trailing,
+    required this.name,
+    required this.nameTitle,
+    required this.profilePicture,
+  });
 
   final Size mediaQuery;
   final String name;
@@ -628,6 +637,7 @@ class PlayerChangeDataCard extends StatefulWidget {
   final String subTitle;
   final String trailing;
   final String nameTitle;
+  final String? profilePicture;
 
   @override
   State<PlayerChangeDataCard> createState() => PlayerChangeDataCardState();
@@ -659,9 +669,20 @@ class PlayerChangeDataCardState extends State<PlayerChangeDataCard> {
               ),
             ],
           ),
-          child: const Icon(
-            Icons.person,
-          ),
+          child: widget.profilePicture == null
+              ? const Icon(
+                  Icons.person,
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(360),
+                  child: Image(
+                    image: NetworkImage(
+                      '${imagesUrl.url}${widget.profilePicture}',
+                    ),
+                    fit: BoxFit.contain,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
         ),
         title: Text(
           widget.title,

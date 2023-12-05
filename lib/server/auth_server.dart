@@ -1023,4 +1023,44 @@ class AuthServer with ChangeNotifier {
       return false;
     }
   }
+
+  Future<void> transferPlayer(
+      {required int transfer_to_id,
+      required int position,
+      required int id}) async {
+    print('hello');
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = await storage.getString('token');
+
+      Dio.Response response = await dio().post(
+        "/transferPlayer/$id",
+        data: {
+          'position': position,
+          'transfer_to_id': transfer_to_id
+        }, // Convert the entire body to FormData
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      if (response.statusCode! < 400) {
+        message = 'good...every thing is ok';
+        notifyListeners();
+      }
+      print(
+          '................................change user image response from server');
+      print(response.data);
+      print('................................');
+    } on DioException catch (a) {
+      print(a.error);
+      if (a.response!.statusCode! >= 500) {
+        message = 'something went wrong please try again later';
+      } else {
+        message = a.response!.data['message'];
+      }
+    } catch (e) {
+      print('catch error');
+      print(e);
+    }
+  }
 }
