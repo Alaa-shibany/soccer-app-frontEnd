@@ -1,4 +1,5 @@
-import '/screens/best_striker_screen.dart';
+import 'package:soccer_app_frontend/screens/part_two_matches_screen.dart';
+
 import '/screens/test.dart';
 import '/widgets/app_bar_custom.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -20,10 +21,10 @@ class _PartTowScreenState extends State<PartTowScreen> {
   int index = 0;
 
   final screens = [
+    const PartTwoMatchesScreen(),
     Test(),
     Test(),
     Test(),
-    const BestStrikerScreen(),
   ];
 
   String getSubtitle() {
@@ -59,7 +60,7 @@ class _PartTowScreenState extends State<PartTowScreen> {
       Padding(
         padding: EdgeInsets.all(mediaQuery.height / 90),
         child: Image(
-          image: const AssetImage('assets/images/partTow.png'),
+          image: const AssetImage('assets/images/partTwoMatchesBtn.png'),
           height: mediaQuery.height / 30,
           fit: BoxFit.contain,
         ),
@@ -67,7 +68,7 @@ class _PartTowScreenState extends State<PartTowScreen> {
       Padding(
         padding: EdgeInsets.all(mediaQuery.height / 90),
         child: Image(
-          image: const AssetImage('assets/images/partTow.png'),
+          image: const AssetImage('assets/images/partTow7.png'),
           height: mediaQuery.height / 30,
           fit: BoxFit.contain,
         ),
@@ -75,7 +76,7 @@ class _PartTowScreenState extends State<PartTowScreen> {
       Padding(
         padding: EdgeInsets.all(mediaQuery.height / 90),
         child: Image(
-          image: const AssetImage('assets/images/partTow.png'),
+          image: const AssetImage('assets/images/partTow8.png'),
           height: mediaQuery.height / 30,
           fit: BoxFit.contain,
         ),
@@ -83,7 +84,7 @@ class _PartTowScreenState extends State<PartTowScreen> {
       Padding(
         padding: EdgeInsets.all(mediaQuery.height / 90),
         child: Image(
-          image: const AssetImage('assets/icons/playersIcon.png'),
+          image: const AssetImage('assets/images/partTow9.png'),
           height: mediaQuery.height / 30,
           fit: BoxFit.contain,
         ),

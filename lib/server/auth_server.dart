@@ -32,6 +32,7 @@ class AuthServer with ChangeNotifier {
   static var _userData;
   static String message = 'User name or password is wrong';
   Map<String, dynamic> userRespons = {};
+  static Map<String, dynamic> partTowMatchesMap = {};
   static Map<String, dynamic> _matchInfoForAdmin = {};
   static List<dynamic> _finishedMatches = [];
   static List<dynamic> topStriker = [];
@@ -1049,6 +1050,36 @@ class AuthServer with ChangeNotifier {
       }
       print(
           '................................change user image response from server');
+      print(response.data);
+      print('................................');
+    } on DioException catch (a) {
+      print(a.error);
+      if (a.response!.statusCode! >= 500) {
+        message = 'something went wrong please try again later';
+      } else {
+        message = a.response!.data['message'];
+      }
+    } catch (e) {
+      print('catch error');
+      print(e);
+    }
+  }
+
+  Future<void> partTowMatches() async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = await storage.getString('token');
+
+      Dio.Response response = await dio().get(
+        "/partTwoMatches",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      partTowMatchesMap = response.data;
+      notifyListeners();
+      print(
+          '................................part two matches response from server');
       print(response.data);
       print('................................');
     } on DioException catch (a) {
