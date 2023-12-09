@@ -95,6 +95,7 @@ flutter:
     - images/onboardingScreen/1.jpg
     - images/onboardingScreen/2.jpg
     - images/onboardingScreen/3.jpg
+    - assets/images/partTowMatch.png
     - assets/lotties/
     - assets/images/champions1.png
     - assets/images/partTow7.png

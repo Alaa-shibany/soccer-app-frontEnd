@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:soccer_app_frontend/screens/show_unfinshed_mathch_screen.dart';
 import 'package:soccer_app_frontend/screens/start_match_screen.dart';
 import 'package:soccer_app_frontend/server/auth_server.dart';
-import 'package:soccer_app_frontend/widgets/match_widget.dart';
+import 'package:soccer_app_frontend/widgets/match_part_tow_widget.dart';
 
 import '../common_widgets/BackgroundPaint.dart';
 import '../widgets/app_bar_custom.dart';
@@ -171,17 +171,9 @@ class _PartTwoMatchesScreenState extends State<PartTwoMatchesScreen> {
                                 horizontal: mediaQuery.width / 40,
                                 vertical: mediaQuery.height / 80),
                             decoration: const BoxDecoration(
-                              color: Colors.white,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(15),
                                   topRight: Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black45,
-                                  offset: Offset(0, 3),
-                                  blurRadius: 8,
-                                ),
-                              ],
                             ),
                             child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -197,7 +189,7 @@ class _PartTwoMatchesScreenState extends State<PartTwoMatchesScreen> {
                                         ['id'],
                                   );
                                 },
-                                child: MatchWidget(
+                                child: MatchPartTowWidget(
                                   matchType: 1,
                                   teamLogoUrl1: matches['unFinished'][index]
                                       ['first_team']['logo'],
@@ -208,6 +200,7 @@ class _PartTwoMatchesScreenState extends State<PartTwoMatchesScreen> {
                                   teamName2: matches['unFinished'][index]
                                       ['second_team']['name'],
                                   center: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         matches['unFinished'][index]['date'],
