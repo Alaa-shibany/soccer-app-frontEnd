@@ -206,7 +206,7 @@ class _PartTwoMatchesScreenState extends State<PartTwoMatchesScreen> {
                                         matches['unFinished'][index]['date'],
                                         style: TextStyle(
                                             fontSize: mediaQuery.height / 80,
-                                            color: Colors.grey),
+                                            color: Colors.black87),
                                       ),
                                       matches['unFinished'][index]['league'] ==
                                               1
@@ -218,7 +218,7 @@ class _PartTwoMatchesScreenState extends State<PartTwoMatchesScreen> {
                                                       fontSize:
                                                           mediaQuery.height /
                                                               90,
-                                                      color: Colors.grey),
+                                                      color: Colors.black87),
                                                 ),
                                                 Image(
                                                   image: const AssetImage(
@@ -233,7 +233,7 @@ class _PartTwoMatchesScreenState extends State<PartTwoMatchesScreen> {
                                               style: TextStyle(
                                                   fontSize:
                                                       mediaQuery.height / 90,
-                                                  color: Colors.grey),
+                                                  color: Colors.black87),
                                             ),
                                     ],
                                   ),

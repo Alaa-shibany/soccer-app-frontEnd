@@ -1,6 +1,8 @@
+import 'package:soccer_app_frontend/screens/part_tow_grade7_screen.dart';
+import 'package:soccer_app_frontend/screens/part_tow_grade8_screen.dart';
+import 'package:soccer_app_frontend/screens/part_tow_grade9_screen.dart';
 import 'package:soccer_app_frontend/screens/part_two_matches_screen.dart';
 
-import '/screens/test.dart';
 import '/widgets/app_bar_custom.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +24,9 @@ class _PartTowScreenState extends State<PartTowScreen> {
 
   final screens = [
     const PartTwoMatchesScreen(),
-    Test(),
-    Test(),
-    Test(),
+    PartTowGrade7Screen(),
+    PartTowGrade8Screen(),
+    PartTowGrade9Screen(),
   ];
 
   String getSubtitle() {

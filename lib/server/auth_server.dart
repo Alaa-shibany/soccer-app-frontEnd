@@ -25,6 +25,7 @@ class AuthServer with ChangeNotifier {
   static Map<String, dynamic> _autoMatching = {};
   static Map<String, dynamic> _veiwMatchInfo = {};
   static Map<String, dynamic> _playerDashboardMap = {};
+  static Map<String, dynamic> leagueResponse = {};
   static List<dynamic> _unDecleardMatches = [];
   static List<dynamic> _unFinishedMatches = [];
   static TeamTable? _teamTable;
@@ -546,6 +547,7 @@ class AuthServer with ChangeNotifier {
         ),
       );
       _leagueStatus = LeagueStatus.fromJson(response.data);
+      leagueResponse = response.data;
       notifyListeners();
       print(
           '................................advance part one result from server');
@@ -1092,6 +1094,49 @@ class AuthServer with ChangeNotifier {
     } catch (e) {
       print('catch error');
       print(e);
+    }
+  }
+
+  Future<bool> uploadPartTowTree({
+    required File? image,
+    required var forGrade,
+  }) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    print('hello');
+    try {
+      String? myToken = await storage.getString('token');
+      // String fileName = image!.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(image!.path),
+        'for': forGrade,
+      });
+      // Instead of including FormData directly, convert it to a Map
+      Dio.Response response = await dio().post(
+        "/admin/uploadPart2Tree",
+        data: formData, // Convert the entire body to FormData
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+
+      print(
+          '................................change part tow tree response from server');
+      print(response.data);
+      print('................................');
+      return true;
+    } on DioException catch (a) {
+      print('nice error');
+      print(a.error);
+      print(a);
+      print(a.requestOptions);
+      print(a.message);
+      print(a.response);
+
+      return false;
+    } catch (e) {
+      print('catch error');
+      print(e);
+      return false;
     }
   }
 }
