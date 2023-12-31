@@ -1,5 +1,7 @@
+import 'package:soccer_app_frontend/models/images_url.dart';
 import 'package:soccer_app_frontend/screens/part_tow_admin_screen.dart';
 import 'package:soccer_app_frontend/screens/shop_screen.dart';
+import 'package:soccer_app_frontend/screens/team_profile_screen.dart';
 
 import '/models/league_part_settings.dart';
 import '/screens/all_matches_screen.dart';
@@ -65,6 +67,12 @@ class _HomeScreenState extends State<HomeScreen> {
             LeaguePartSettings.isPartOneLocked = false;
             LeaguePartSettings.isPartTowLocked = false;
           });
+        } else if (Provider.of<AuthServer>(context, listen: false)
+                .leagueStatue()!
+                .currentStage ==
+            'END OF LEAGUE') {
+          LeaguePartSettings.isPartOneLocked = false;
+          LeaguePartSettings.isPartTowLocked = false;
         }
       });
       await Provider.of<AuthServer>(context, listen: false).FinishedMatches();
@@ -144,6 +152,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                   painter: Background(),
                 ),
+                Provider.of<AuthServer>(context, listen: false)
+                            .leagueStatue()!
+                            .currentStage ==
+                        'END OF LEAGUE'
+                    ? Lottie.asset(
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                        'assets/lotties/celebrate.json')
+                    : const SizedBox(
+                        width: 0,
+                      ),
                 Consumer(
                   builder: (context, value, child) {
                     return SingleChildScrollView(
@@ -213,9 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: mediaQuery.height / 40,
-                          ),
+
                           Padding(
                             padding:
                                 EdgeInsets.only(left: mediaQuery.width / 20),
@@ -247,10 +264,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Matches',
-                                  style: AppTextStyles.poppinsTitle,
-                                )
+                                Provider.of<AuthServer>(context, listen: false)
+                                            .leagueStatue()!
+                                            .currentStage ==
+                                        'END OF LEAGUE'
+                                    ? const Text(
+                                        'Winners',
+                                        style: TextStyle(
+                                            color: Colors.amber,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : Text(
+                                        'Matches',
+                                        style: AppTextStyles.poppinsTitle,
+                                      ),
                               ],
                             ),
                           ),
@@ -282,101 +309,202 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                               child: Provider.of<AuthServer>(context,
-                                          listen: false)
-                                      .finishedMatches
-                                      .isNotEmpty
-                                  ? FinishedMatchWidget(
-                                      teamLogoUrl1: Provider.of<AuthServer>(
-                                              context,
+                                              listen: false)
+                                          .leagueStatue()!
+                                          .currentStage ==
+                                      'END OF LEAGUE'
+                                  ? Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Opacity(
+                                          opacity: 0.4,
+                                          child: Image(
+                                            image: const AssetImage(
+                                                'assets/images/winners.png'),
+                                            width: mediaQuery.width / 3,
+                                            height: mediaQuery.height / 5,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: mediaQuery.height / 10,
+                                          child: ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: AuthServer
+                                                .leagueResponse['winners']
+                                                .length,
+                                            itemBuilder: (context, index) =>
+                                                Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      mediaQuery.width / 20),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context).pushNamed(
+                                                      TeamProfileScreen
+                                                          .routeName,
+                                                      arguments: AuthServer
+                                                                  .leagueResponse[
+                                                              'winners'][index]
+                                                          ['id']);
+                                                },
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Image(
+                                                      image: NetworkImage(
+                                                        '${imagesUrl.url}${AuthServer.leagueResponse['winners'][index]['logo']}',
+                                                      ),
+                                                      height:
+                                                          mediaQuery.height /
+                                                              15,
+                                                      width:
+                                                          mediaQuery.width / 10,
+                                                      alignment:
+                                                          Alignment.center,
+                                                    ),
+                                                    Text(
+                                                      AuthServer.leagueResponse[
+                                                              'winners'][index]
+                                                          ['name'],
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : Provider.of<AuthServer>(context,
                                               listen: false)
                                           .finishedMatches
-                                          .last['first_team']['logo'],
-                                      teamName1: Provider.of<AuthServer>(
-                                              context,
-                                              listen: false)
-                                          .finishedMatches
-                                          .last['first_team']['name'],
-                                      teamLogoUrl2: Provider.of<AuthServer>(
-                                              context,
-                                              listen: false)
-                                          .finishedMatches
-                                          .last['second_team']['logo'],
-                                      teamName2: Provider.of<AuthServer>(
-                                              context,
-                                              listen: false)
-                                          .finishedMatches
-                                          .last['second_team']['name'],
-                                      center: Container(
-                                        margin: EdgeInsets.only(
-                                            top: mediaQuery.width / 20),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Row(
+                                          .isNotEmpty
+                                      ? FinishedMatchWidget(
+                                          teamLogoUrl1: Provider.of<AuthServer>(
+                                                  context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .last['first_team']['logo'],
+                                          teamName1: Provider.of<AuthServer>(
+                                                  context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .last['first_team']['name'],
+                                          teamLogoUrl2: Provider.of<AuthServer>(
+                                                  context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .last['second_team']['logo'],
+                                          teamName2: Provider.of<AuthServer>(
+                                                  context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .last['second_team']['name'],
+                                          center: Container(
+                                            margin: EdgeInsets.only(
+                                                top: mediaQuery.width / 20),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      Provider.of<AuthServer>(
+                                                              context,
+                                                              listen: false)
+                                                          .finishedMatches
+                                                          .last[
+                                                              'firstTeamScore']
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize:
+                                                              mediaQuery.width /
+                                                                  15),
+                                                    ),
+                                                    SizedBox(
+                                                      width:
+                                                          mediaQuery.width / 40,
+                                                    ),
+                                                    Text(
+                                                      ' - ',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize:
+                                                            mediaQuery.width /
+                                                                15,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width:
+                                                          mediaQuery.width / 40,
+                                                    ),
+                                                    Text(
+                                                      Provider.of<AuthServer>(
+                                                              context,
+                                                              listen: false)
+                                                          .finishedMatches
+                                                          .last[
+                                                              'secondTeamScore']
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize:
+                                                            mediaQuery.width /
+                                                                15,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: mediaQuery.width / 90,
+                                                ),
                                                 Text(
                                                   Provider.of<AuthServer>(
                                                           context,
                                                           listen: false)
                                                       .finishedMatches
-                                                      .last['firstTeamScore']
+                                                      .last['date']
                                                       .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize:
-                                                          mediaQuery.width /
-                                                              15),
                                                 ),
-                                                SizedBox(
-                                                  width: mediaQuery.width / 40,
-                                                ),
-                                                Text(
-                                                  ' - ',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        mediaQuery.width / 15,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: mediaQuery.width / 40,
-                                                ),
-                                                Text(
-                                                  Provider.of<AuthServer>(
-                                                          context,
-                                                          listen: false)
-                                                      .finishedMatches
-                                                      .last['secondTeamScore']
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        mediaQuery.width / 15,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: mediaQuery.width / 90,
-                                            ),
-                                            Text(
-                                              Provider.of<AuthServer>(context,
-                                                      listen: false)
-                                                  .finishedMatches
-                                                  .last['date']
-                                                  .toString(),
-                                            ),
-                                            Provider.of<AuthServer>(context,
-                                                            listen: false)
-                                                        .finishedMatches
-                                                        .last['league'] ==
-                                                    1
-                                                ? Row(
-                                                    children: [
-                                                      const Text(
-                                                        'League',
+                                                Provider.of<AuthServer>(context,
+                                                                listen: false)
+                                                            .finishedMatches
+                                                            .last['league'] ==
+                                                        1
+                                                    ? Row(
+                                                        children: [
+                                                          const Text(
+                                                            'League',
+                                                            style: TextStyle(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        63,
+                                                                        63,
+                                                                        63)),
+                                                          ),
+                                                          Image(
+                                                            image: const AssetImage(
+                                                                'assets/images/matchLeague.png'),
+                                                            height: mediaQuery
+                                                                    .height /
+                                                                70,
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : const Text(
+                                                        'Friendly',
                                                         style: TextStyle(
                                                             color:
                                                                 Color.fromARGB(
@@ -385,33 +513,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     63,
                                                                     63)),
                                                       ),
-                                                      Image(
-                                                        image: const AssetImage(
-                                                            'assets/images/matchLeague.png'),
-                                                        height:
-                                                            mediaQuery.height /
-                                                                70,
-                                                      ),
-                                                    ],
-                                                  )
-                                                : const Text(
-                                                    'Friendly',
-                                                    style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 63, 63, 63)),
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
-                                      mediaQuery: mediaQuery,
-                                      matchType: Provider.of<AuthServer>(
-                                              context,
-                                              listen: false)
-                                          .finishedMatches
-                                          .last['league'],
-                                    )
-                                  : Image.asset('assets/images/start-soon.png',
-                                      fit: BoxFit.fitWidth),
+                                              ],
+                                            ),
+                                          ),
+                                          mediaQuery: mediaQuery,
+                                          matchType: Provider.of<AuthServer>(
+                                                  context,
+                                                  listen: false)
+                                              .finishedMatches
+                                              .last['league'],
+                                        )
+                                      : Image.asset(
+                                          'assets/images/start-soon.png',
+                                          fit: BoxFit.fitWidth),
                             ),
                           ),
                           SizedBox(

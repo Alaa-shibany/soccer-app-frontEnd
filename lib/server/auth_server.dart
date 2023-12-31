@@ -1208,4 +1208,38 @@ class AuthServer with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> declareWinners(Map<String, dynamic> winners) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = await storage.getString('token');
+
+      Dio.Response response = await dio().post(
+        "/admin/declareWinners",
+        data: winners,
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      message = response.data['message'];
+      notifyListeners();
+      print(
+          '................................ declare winners response from server');
+      print(response.data);
+      print('................................');
+      return true;
+    } on DioException catch (a) {
+      print(a.error);
+      print(a);
+      print(a.requestOptions);
+      print(a.message);
+      print(a.response);
+
+      return false;
+    } catch (e) {
+      print('catch error');
+      print(e);
+      return false;
+    }
+  }
 }

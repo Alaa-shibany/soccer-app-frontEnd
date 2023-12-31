@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:soccer_app_frontend/screens/admin_declare_winner_screen.dart';
 import 'package:soccer_app_frontend/screens/tree_screen.dart';
 
 import 'package:soccer_app_frontend/widgets/tree_btn_widget.dart';
 
 import '../common_widgets/BackgroundPaint.dart';
+import '../server/auth_server.dart';
 import '../widgets/app_bar_custom.dart';
 import '../widgets/navigation_drawer.dart';
 
@@ -119,6 +121,48 @@ class _PartTowTreesScreenState extends State<PartTowTreesScreen> {
                     ));
                   },
                 ),
+                SizedBox(
+                  height: mediaQuery.height / 30,
+                ),
+                AuthServer.userData == 'admin'
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const AdminDeclareWinnerScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: mediaQuery.width / 10),
+                          width: double.infinity,
+                          height: mediaQuery.height / 10,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.amber,
+                                offset: Offset(0, 3),
+                                blurRadius: 8,
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            'Declare winner',
+                            style: TextStyle(
+                                color: Colors.amber,
+                                fontWeight: FontWeight.bold,
+                                fontSize: mediaQuery.width / 25),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(
+                        height: 0,
+                      ),
               ],
             ),
           ),
