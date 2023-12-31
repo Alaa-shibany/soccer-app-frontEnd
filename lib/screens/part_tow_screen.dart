@@ -1,7 +1,7 @@
-import 'package:soccer_app_frontend/screens/part_tow_grade7_screen.dart';
-import 'package:soccer_app_frontend/screens/part_tow_grade8_screen.dart';
-import 'package:soccer_app_frontend/screens/part_tow_grade9_screen.dart';
+import 'package:soccer_app_frontend/screens/part_tow_trees_screen.dart';
+
 import 'package:soccer_app_frontend/screens/part_two_matches_screen.dart';
+import 'package:soccer_app_frontend/screens/teams_part_tow_screen.dart';
 
 import '/widgets/app_bar_custom.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -24,9 +24,8 @@ class _PartTowScreenState extends State<PartTowScreen> {
 
   final screens = [
     const PartTwoMatchesScreen(),
-    PartTowGrade7Screen(),
-    PartTowGrade8Screen(),
-    PartTowGrade9Screen(),
+    const PartTowTreesScreen(),
+    const TeamsPartTowScreen(),
   ];
 
   String getSubtitle() {
@@ -70,7 +69,7 @@ class _PartTowScreenState extends State<PartTowScreen> {
       Padding(
         padding: EdgeInsets.all(mediaQuery.height / 90),
         child: Image(
-          image: const AssetImage('assets/images/partTow7.png'),
+          image: const AssetImage('assets/images/partTow.png'),
           height: mediaQuery.height / 30,
           fit: BoxFit.contain,
         ),
@@ -78,15 +77,7 @@ class _PartTowScreenState extends State<PartTowScreen> {
       Padding(
         padding: EdgeInsets.all(mediaQuery.height / 90),
         child: Image(
-          image: const AssetImage('assets/images/partTow8.png'),
-          height: mediaQuery.height / 30,
-          fit: BoxFit.contain,
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.all(mediaQuery.height / 90),
-        child: Image(
-          image: const AssetImage('assets/images/partTow9.png'),
+          image: const AssetImage('assets/images/teamLogo.png'),
           height: mediaQuery.height / 30,
           fit: BoxFit.contain,
         ),

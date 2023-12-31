@@ -13,15 +13,17 @@ import '../server/auth_server.dart';
 import '../widgets/app_bar_custom.dart';
 import '../widgets/navigation_drawer.dart';
 
-class PartTowGrade7Screen extends StatefulWidget {
-  const PartTowGrade7Screen({super.key});
-  static const String routeName = '/part-tow-grade-7-screen';
+class TreeScreen extends StatefulWidget {
+  const TreeScreen({super.key, required this.grade, required this.tree});
+  static const String routeName = '/tree-screen';
+  final String grade;
+  final String tree;
 
   @override
-  State<PartTowGrade7Screen> createState() => _PartTowGrade7ScreenState();
+  State<TreeScreen> createState() => _TreeScreenState();
 }
 
-class _PartTowGrade7ScreenState extends State<PartTowGrade7Screen> {
+class _TreeScreenState extends State<TreeScreen> {
   bool _isLoading = false;
   File? _image;
   Map<String, dynamic> leagueData = {};
@@ -48,7 +50,7 @@ class _PartTowGrade7ScreenState extends State<PartTowGrade7Screen> {
     super.initState();
   }
 
-  Future _pickImage() async {
+  Future _pickImage(dynamic forGrade) async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
@@ -64,12 +66,12 @@ class _PartTowGrade7ScreenState extends State<PartTowGrade7Screen> {
     try {
       await Provider.of<AuthServer>(context, listen: false).uploadPartTowTree(
         image: _image,
-        forGrade: 7,
+        forGrade: forGrade,
       );
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       Navigator.of(context).pushReplacementNamed(
-        PartTowGrade7Screen.routeName,
+        TreeScreen.routeName,
       );
     } catch (e) {
       print(e);
@@ -153,7 +155,7 @@ class _PartTowGrade7ScreenState extends State<PartTowGrade7Screen> {
                         color: Colors.white,
                         onPressed: () {
                           print('change image');
-                          _pickImage();
+                          _pickImage(widget.tree);
                         },
                       )
                     : const SizedBox(
@@ -214,10 +216,11 @@ class _PartTowGrade7ScreenState extends State<PartTowGrade7Screen> {
                           ),
                         ],
                       ),
-                      child: leagueData.containsKey('treeUrileague(7)')
+                      child: leagueData
+                              .containsKey('treeUrileague(${widget.grade})')
                           ? Image(
                               image: NetworkImage(
-                                '${imagesUrl.url}${leagueData['treeUrileague(7)']}}',
+                                '${imagesUrl.url}${leagueData['treeUrileague(${widget.grade})']}',
                               ),
                               fit: BoxFit.cover,
                               alignment: Alignment.topCenter,
@@ -226,7 +229,7 @@ class _PartTowGrade7ScreenState extends State<PartTowGrade7Screen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Hmmmm..you still here',
+                                  'Hmmmm..There is no tree yet',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text('No data for you'),

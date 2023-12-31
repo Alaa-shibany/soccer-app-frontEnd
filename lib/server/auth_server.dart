@@ -43,6 +43,7 @@ class AuthServer with ChangeNotifier {
   static List<dynamic> topPredictors = [];
   static List<dynamic> topDefenders = [];
   static List<dynamic> topHonor = [];
+  static Map<String, dynamic> partTwoTeams = {};
   static bool isAuth = false;
 
   bool get authenticated => _isLoggedIn;
@@ -1126,6 +1127,74 @@ class AuthServer with ChangeNotifier {
       return true;
     } on DioException catch (a) {
       print('nice error');
+      print(a.error);
+      print(a);
+      print(a.requestOptions);
+      print(a.message);
+      print(a.response);
+
+      return false;
+    } catch (e) {
+      print('catch error');
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> QualifyToPartTow({required String id}) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = await storage.getString('token');
+
+      Dio.Response response = await dio().post(
+        "/qualifyTeamToPart2/$id",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      message = response.data['message'];
+      notifyListeners();
+      print(
+          '................................Qualify to part tow response from server');
+      print(response.data);
+      print('................................');
+      return true;
+    } on DioException catch (a) {
+      print(a.error);
+      print(a);
+      print(a.requestOptions);
+      print(a.message);
+      message = a.message!;
+      notifyListeners();
+      print(a.response);
+
+      return false;
+    } catch (e) {
+      print('catch error');
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> partTowTeams() async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = await storage.getString('token');
+
+      Dio.Response response = await dio().get(
+        "/part2/teams",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      partTwoTeams = response.data;
+      notifyListeners();
+      print(
+          '................................ part tow teams response from server');
+      print(response.data);
+      print('................................');
+      return true;
+    } on DioException catch (a) {
       print(a.error);
       print(a);
       print(a.requestOptions);

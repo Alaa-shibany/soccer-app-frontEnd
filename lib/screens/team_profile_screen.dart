@@ -152,6 +152,76 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
                     ),
                   ),
                   actions: [
+                    SizedBox(
+                      width: mediaQuery.width / 30,
+                    ),
+                    AuthServer.userData == 'admin'
+                        ? GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  content: const Text(
+                                      'Do you want to change league state for the team?'),
+                                  title: const Text('LEAGUE STATE'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        try {
+                                          await Provider.of<AuthServer>(context,
+                                                  listen: false)
+                                              .QualifyToPartTow(
+                                                  id: id.toString());
+                                        } catch (e) {
+                                          print(e);
+                                        }
+
+                                        Navigator.pop(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            content: Text(AuthServer.message),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('done'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'Qualify',
+                                        style: TextStyle(color: Colors.green),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        'Cancel',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: Image(
+                              image: const AssetImage(
+                                  'assets/images/leagueDrawer.png'),
+                              height: mediaQuery.height / 30,
+                            ),
+                          )
+                        : const SizedBox(
+                            width: 0,
+                          ),
+                    SizedBox(
+                      width: mediaQuery.width / 30,
+                    ),
                     IconButton(
                       onPressed: () {
                         Navigator.of(context).pop();
