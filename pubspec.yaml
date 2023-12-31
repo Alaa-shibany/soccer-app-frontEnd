@@ -67,6 +67,7 @@ dependencies:
   lottie: ^2.5.0
   path_provider: ^2.1.0
   iconsax: ^0.0.8
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -139,10 +140,9 @@ flutter:
     - assets/icons/tableLeagueIcon.png
     - assets/svg/student.svg
     - assets/svg/mony.svg
-    - assets/svg/bus.svg
-    - assets/svg/complaint.svg
-    - assets/svg/show1.svg
-    - assets/svg/show2.svg
+    - assets/svg/show4.svg
+    - assets/svg/show5.svg
+    - assets/svg/show6.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

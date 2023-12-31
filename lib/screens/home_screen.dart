@@ -9,7 +9,7 @@ import '/screens/user_profile_screen.dart';
 import '/server/auth_server.dart';
 import '/styles/app_text_styles.dart';
 import '/widgets/bottom%20_bar_with_circles.dart';
-import '/widgets/chatGPT_widget.dart';
+import '../widgets/image_slider_widget.dart';
 import '/widgets/finished_match_home_widget.dart';
 import '/widgets/navigation_drawer.dart';
 import 'package:iconsax/iconsax.dart';
@@ -234,16 +234,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.of(context)
                                   .pushNamed(EventScreen.routName);
                             },
-                            child: FadeImageAnimation(
-                              screenHight: mediaQuery.height,
-                              imagePaths: const [
-                                'assets/svg/show1.svg',
-                                'assets/svg/show2.svg',
-                              ],
+                            child: ImageSliderWidget(
+                              mediaQuery: mediaQuery,
                             ),
                           ),
                           SizedBox(
-                            height: mediaQuery.height / 15,
+                            height: mediaQuery.height / 30,
                           ),
                           Padding(
                             padding:
