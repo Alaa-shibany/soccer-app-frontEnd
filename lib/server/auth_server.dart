@@ -499,6 +499,42 @@ class AuthServer with ChangeNotifier {
     }
   }
 
+  Future<void> DeleteMatchResult({
+    required int matchId,
+    required Map<String, List<int>> playerResult,
+  }) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    print(
+        '...............................fdasfasdfasdfasdfdsfsdaadfsgfdghpiktrpwtp');
+    print(MapPlayerResult.DeleteResult);
+    try {
+      String? myToken = await storage.getString('token');
+      Dio.Response response = await dio().post(
+        "/retreatMatchResults/$matchId",
+        data: MapPlayerResult.DeleteResult,
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      print('................................Declear match result from server');
+      print(response.data);
+      print('................................');
+      MapPlayerResult.DeleteResult['assists']!.clear();
+      MapPlayerResult.DeleteResult['honor']!.clear();
+      MapPlayerResult.DeleteResult['saves']!.clear();
+      MapPlayerResult.DeleteResult['defense']!.clear();
+      MapPlayerResult.DeleteResultName.forEach((key, value) {
+        value.clear();
+      });
+      MapPlayerResult.DeleteResult.forEach((key, value) {
+        value.clear();
+      });
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> AdvanceToPartOne(
       {required String title,
       required String startDate,
@@ -864,29 +900,6 @@ class AuthServer with ChangeNotifier {
       notifyListeners();
       print(
           '................................restart league response from server');
-      print(response.data);
-      print('................................');
-    } on DioError catch (e) {
-      print(e.response!.data['message']);
-      message = e.response!.data['message'];
-      notifyListeners();
-    }
-  }
-
-  Future<void> retreatMatchResults(String id) async {
-    final SharedPreferences storage = await SharedPreferences.getInstance();
-    try {
-      String? myToken = storage.getString('token');
-      Dio.Response response = await dio().post(
-        "/retreatMatchResults/$id",
-        options: Dio.Options(
-          headers: {'Authorization': 'Bearer $myToken'},
-        ),
-      );
-      message = response.data['message'];
-      notifyListeners();
-      print(
-          '................................retreatMatchResults response from server');
       print(response.data);
       print('................................');
     } on DioError catch (e) {

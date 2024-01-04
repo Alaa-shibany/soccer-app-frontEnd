@@ -87,7 +87,7 @@ class _BottomBarWithCirclesState extends State<BottomBarWithCircles>
                 height: mediaQuery.height / 30,
               ),
               const Text(
-                'Part tow',
+                'Part two',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

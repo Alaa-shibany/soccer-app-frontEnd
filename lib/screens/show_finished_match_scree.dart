@@ -1,4 +1,5 @@
 import 'package:soccer_app_frontend/models/images_url.dart';
+import 'package:soccer_app_frontend/screens/delete_match_screen.dart';
 
 import '/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,7 @@ class _ShowFinishedMatchScreenState extends State<ShowFinishedMatchScreen>
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
+    final id = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -104,36 +106,24 @@ class _ShowFinishedMatchScreenState extends State<ShowFinishedMatchScreen>
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Provider.of<AuthServer>(context, listen: false)
-                                  .retreatMatchResults(
-                                viewMatchInfo['id'].toString(),
-                              );
-                              Navigator.of(context).pop();
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: const Center(
-                                      child: Icon(
-                                    Icons.info,
-                                    color: Colors.amber,
-                                    size: 45,
-                                  )),
-                                  content: Text(AuthServer.message),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('Cancle'))
-                                  ],
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => DeleteMatchScreen(
+                                    id: id,
+                                    teamOneScore:
+                                        viewMatchInfo['firstTeamScore'],
+                                    teamTowScore:
+                                        viewMatchInfo['secondTeamScore'],
+                                  ),
                                 ),
                               );
                             },
                             child: const Text('Yes'),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             child: const Text('Cancle'),
                           ),
                         ],

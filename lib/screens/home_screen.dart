@@ -557,7 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 PartTwoScreen(),
                                           ));
                                         },
-                                        child: const Text('part tow lock')),
+                                        child: const Text('part two lock')),
                                   ],
                                 )
                               : const SizedBox(
