@@ -1176,6 +1176,41 @@ class AuthServer with ChangeNotifier {
     }
   }
 
+  Future<bool> DisQualifyToPartTow({required String id}) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    try {
+      String? myToken = await storage.getString('token');
+
+      Dio.Response response = await dio().post(
+        "/disqualifyTeamFromPartTwo/$id",
+        options: Dio.Options(
+          headers: {'Authorization': 'Bearer $myToken'},
+        ),
+      );
+      message = response.data['message'];
+      notifyListeners();
+      print(
+          '................................disQualify to part tow response from server');
+      print(response.data);
+      print('................................');
+      return true;
+    } on DioException catch (a) {
+      print(a.error);
+      print(a);
+      print(a.requestOptions);
+      print(a.message);
+      message = a.message!;
+      notifyListeners();
+      print(a.response);
+
+      return false;
+    } catch (e) {
+      print('catch error');
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> partTowTeams() async {
     final SharedPreferences storage = await SharedPreferences.getInstance();
     try {

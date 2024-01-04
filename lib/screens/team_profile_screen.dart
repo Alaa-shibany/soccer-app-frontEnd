@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:soccer_app_frontend/models/images_url.dart';
@@ -43,17 +45,14 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
     } on PlatformException catch (e) {
       print(e);
     }
-    // ignore: use_build_context_synchronously
     var id = Provider.of<AuthServer>(context, listen: false).team()!.id;
 
     try {
-      // ignore: use_build_context_synchronously
       if (await Provider.of<AuthServer>(context, listen: false).uploadTeamImage(
         id: id,
         image: _image,
       )) {
         print('Yes');
-        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (context) => const AlertDialog(
@@ -198,11 +197,33 @@ class _TeamProfileScreenState extends State<TeamProfileScreen>
                                       ),
                                     ),
                                     TextButton(
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        try {
+                                          await Provider.of<AuthServer>(context,
+                                                  listen: false)
+                                              .DisQualifyToPartTow(
+                                                  id: id.toString());
+                                        } catch (e) {
+                                          print(e);
+                                        }
                                         Navigator.pop(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            content: Text(AuthServer.message),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('done'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
                                       },
                                       child: const Text(
-                                        'Cancel',
+                                        'DisQualify',
                                         style: TextStyle(color: Colors.red),
                                       ),
                                     ),
